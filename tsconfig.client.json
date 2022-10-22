@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "module": "ES2020",
+    "target": "es5"
+  },
+  "include": ["public"],
+  "exclude": ["src", "node_modules"]
+}

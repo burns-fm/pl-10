@@ -3,19 +3,19 @@
  * Created: 20/10/2022
  */
 import * as MusicMetadata from 'music-metadata';
-
+import * as FileType from 'file-type';
+import { Environment } from './constants';
 import { FatalError } from "./errors";
-
-export enum Environment {
-  Development,
-  Staging,
-  Production,
-}
 
 export const loadMusicMetadata = async (): Promise<typeof MusicMetadata> => {
   const mm = await eval("import('music-metadata')");
   return mm;
 }
+
+export const loadFileTypesLib = async (): Promise<typeof FileType> => {
+  const ft = await eval("import ('file-type')");
+  return ft;
+};
 
 export const loadEnvironment = (): Environment => {
   const { NODE_ENV } = process.env;

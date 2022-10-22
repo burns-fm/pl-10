@@ -7,7 +7,16 @@ import {
   resolve
 } from "path";
 
-export const MEDIA_DIR = process.env.MEDIA_DIR ?? resolve('media');
+export enum Environment {
+  Development,
+  Staging,
+  Production,
+}
+
+export const PORT = parseInt(process.env.BLASTER_PORT ?? '8347');
+export const HOSTNAME = process.env.BLASTER_HOSTNAME ?? 'localhost';
+export const MEDIA_DIR = process.env.BLASTER_MEDIA_DIR ?? resolve('media');
+export const MAX_FILE_NUMBER = parseInt(process.env.MAX_FILE_NUMBER ?? '10');
 
 export const STATIC_DIR = resolve('public');
 export const STYLESHEETS_DIR = resolve('public', 'app', 'styles');

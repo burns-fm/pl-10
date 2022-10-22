@@ -3,13 +3,13 @@
  * Created: 20/10/2022
  */
 
-import { readdir, readFile } from "fs/promises";
-import { resolve } from "path";
+import { readdir, readFile, stat } from "fs/promises";
+import { extname, resolve } from "path";
 import { IAudioMetadata } from 'music-metadata';
-import { MEDIA_DIR } from "../constants";
-import { Store } from "../db";
-import { loadMusicMetadata } from "../helpers";
-import { createReadStream, ReadStream } from "fs";
+import { MediaMimetype, MEDIA_DIR } from "../constants";
+import { Store } from "../store";
+import { loadFileTypesLib, loadMusicMetadata } from "../helpers";
+import { createReadStream, ReadStream, statSync } from "fs";
 
 export type Track = IAudioMetadata & { filePath: string };
 
@@ -20,27 +20,40 @@ export interface TrackSummary {
   album: Track['common']['album'];
   genre: Track['common']['genre'];
   duration: Track['format']['duration'];
+  mimetype: string;
   lossless: Track['format']['lossless'];
 }
 
-export class Media {
+export class MediaController {
   private readonly store = new Store<Track>('tape-deck');
+  private cachedTrackList:  TrackSummary[] | null = null;
 
-  public getTrackList(): TrackSummary[] {
+  public async getTrackList(): Promise<TrackSummary[]> {
+    // TODO make this a quick hash comparison of the keys or something.
+    // But really, since the tracks are loaded once at startup this shouldn't 
+    // need changed until that other process is changed.
+    if (this.cachedTrackList && this.cachedTrackList.length > 0) return this.cachedTrackList;
+
     const trackList = [];
+
     for (const key of this.store.keys) {
       const track = this.store.get(key);
 
-      if (!track) continue;
-
-      const summary = this.toTrackSummary(key, track);
+      if (!track) {
+        console.warn(`No track found in store for key ${key}`);
+        continue;
+      }
+      const { fileTypeFromFile } = await loadFileTypesLib();
+      const ft = await fileTypeFromFile(track.filePath);
+      const summary = this.toTrackSummary(key, track, ft?.mime ?? 'application/octet-stream');
       trackList.push(summary);
     }
 
-    return trackList;
+    this.cachedTrackList = trackList;
+    return this.cachedTrackList;
   }
 
-  public createTrackStream(key: string): ReadStream {
+  public async createTrackStream(key: string): Promise<{ stream: ReadStream, track: Track, size: number, }> {
     const track = this.store.get(key);
 
     if (!track) {
@@ -48,7 +61,13 @@ export class Media {
     }
 
     const filePath = resolve(MEDIA_DIR, track.filePath);
-    return createReadStream(filePath);
+    const stats = await stat(filePath);
+
+    return {
+      stream: createReadStream(filePath),
+      track,
+      size: stats.size,
+    }
   }
 
   public loadMediaFiles = async (): Promise<void> => {
@@ -56,11 +75,23 @@ export class Media {
       this.store.reset();
     }
 
+    console.log(`Loading media from ${MEDIA_DIR} ...`);
     const { parseBuffer } = await loadMusicMetadata();
-    const trackFileList = await readdir(MEDIA_DIR);
+    let trackFileList = await readdir(MEDIA_DIR);
+
+    trackFileList = trackFileList.filter((dirItem) => {
+      if (dirItem === '.DS_Store') return false;
+
+      const ext = extname(dirItem).toUpperCase().slice(1);
+
+      return Object.keys(MediaMimetype).includes(ext);
+    });
 
     for (const fileName of trackFileList) {
       const filePath = resolve(MEDIA_DIR, fileName);
+
+      console.info(`Loading file: ${filePath}`);
+
       const file = await readFile(filePath);
       const trackInfo = await parseBuffer(file);
       this.store.loadDataItem({
@@ -70,7 +101,7 @@ export class Media {
     }
   }
 
-  private toTrackSummary(key: string, track: Track): TrackSummary {
+  private toTrackSummary(key: string, track: Track, mimetype: string): TrackSummary {
     return {
       key,
       title: track.common.title,
@@ -79,6 +110,7 @@ export class Media {
       genre: track.common.genre,
       duration: track.format.duration,
       lossless: track.format.lossless,
+      mimetype,
     };
   }
 }
