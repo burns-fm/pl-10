@@ -231,7 +231,7 @@ export class Player {
   }
 
   /*** EVENTS & HANDLERS */
-  private handleKeypress = (e: KeyboardEvent) => {
+  private onKeyPress = (e: KeyboardEvent) => {
     if (e.key === ' ' && e.target === document.body) {
       e.preventDefault();
       e.stopPropagation();
@@ -280,7 +280,7 @@ export class Player {
     this.transport.volume.addEventListener('click', this.onVolumeUpdate);
 
     // Global
-    window.addEventListener('keyup', this.handleKeypress);
+    window.addEventListener('keyup', this.onKeyPress);
   }
 
   private async initialize(): Promise<void> {
