@@ -3,8 +3,9 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "module": "ES2020",
-    "target": "es5"
+    "target": "es5",
+    "outfile": "public/app/main.js"
   },
-  "include": ["public"],
-  "exclude": ["src", "node_modules"]
+  "include": ["client/**/*.ts"],
+  "exclude": ["server", "node_modules"]
 }

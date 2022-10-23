@@ -62,6 +62,9 @@ typings/
 
 # output
 build
+public/**/*.css
+public/**/*.map
+public/**/*.js
 
 # Media files
 media/*.mp3

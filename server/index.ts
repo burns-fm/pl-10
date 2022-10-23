@@ -39,11 +39,8 @@ app.use(sassMiddleware({
   debug: Boolean(process.env.DEBUG),
 }));
 
-app.use(typescriptCompileMiddleware({
-  compile: {
-    tsConfigFile: resolve('tsconfig.client.json'),
-  },
-  // cwd: resolve(STATIC_DIR, 'javascripts', 'ts'),
+app.use('/', express.static(resolve('public'), {
+  extensions: ['js', 'css', 'map'],
 }));
 
 app.use('/', MainRouter);

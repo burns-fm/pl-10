@@ -1,10 +1,23 @@
-<audio controls></audio>
-<script>
-  async function load() {
-    const audio = document.querySelector('audio');
-    const res = await fetch('/stream');
-    const tracks = await res.json();
-    audio.src = `/stream/${tracks[0].key}`;
-  }
-  load();
-</script>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('includes/head') %>
+
+  <body>
+    <h1>Site</h1>
+    <div>
+      Test test testing 123456
+    </div>
+    <audio controls></audio>
+    <div id="logo">loading</div>
+    <%- include('includes/scripts') %>
+    <script>
+      async function load() {
+        const audio = document.querySelector('audio');
+        const res = await fetch('/stream');
+        const tracks = await res.json();
+        audio.src = `/stream/${tracks[0].key}`;
+      }
+      load();
+    </script>
+  </body>
+</html>
