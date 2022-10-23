@@ -3,12 +3,16 @@
   <%- include('includes/head') %>
 
   <body>
-    <h1>Site</h1>
-    <div>
-      Test test testing 123456
-    </div>
+    <main>
+      <section class="container">
+        <%- include('includes/splash') %>
+        <%- include('includes/player') %>
+      </section>
+
+      <%- include('includes/associations') %>
+    </main>
     <audio controls></audio>
-    <div id="logo">loading</div>
+    
     <%- include('includes/scripts') %>
     <script>
       async function load() {

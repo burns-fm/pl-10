@@ -3,6 +3,8 @@
  * Created: 22/10/2022
  */
 
-import * as Icons from './icons';
-document.querySelector('#logo')!.innerHTML = Icons.PlayIcon;
-console.log(`Loaded application`);
+import { Player } from './player';
+
+const player = new Player();
+
+console.log(`Loaded application`, player);

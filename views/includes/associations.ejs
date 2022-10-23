@@ -1,0 +1,51 @@
+<!--
+© 2022-2022 Burns Recording Company
+Created: 22/10/2022
+-->
+
+<!--
+  ASSOCIATIONS
+  In here you should include any images, icons, links to grant organizations,
+  your record label, your friend's record label—that kind of thing.
+
+  If you are adding an element, ensure it's wrapped in a `div` element,
+  or otherwise you don't mind styles being applied to the root element.
+
+  For example:
+
+  If your element look s like this:
+    <div id="my-label">
+      <a href="#">
+        <img src="label-logo.png" alt="My Label" />
+      </a>
+    </div>
+
+  Then styles will be applied to the base `div` element with the ID "my-label".
+
+  Make sure to place your element *inside* the `section.inner` element.
+-->
+
+<aside class="associations" role="complementary">
+  <section class="inner">
+
+    <!-- Inline example -->
+    <div id="factor">
+      <a href="https://factor.ca" target="_blank">
+        <img
+          src="/img/FACTOR-wordmark.png"
+          alt="FACTOR Canada"
+        />
+      </a>
+    </div>
+
+    <!--
+      To keep things a little cleaner:
+      You can also define them in another file and
+      then include your associations instead
+
+    -->
+    <%- include('associations/canada') %>    
+    <%- include('associations/brc') %>
+  
+  </section>
+</aside>

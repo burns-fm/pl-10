@@ -1,0 +1,35 @@
+/*
+ * © 2022-2022 Burns Recording Company
+ * Created: 22/10/2022
+ */
+
+$spacing: 8px;
+$border-radius: 8px;
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.columns {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+
+  & .column {
+    margin: $spacing;
+    flex-basis: auto;
+    flex-grow: 1;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.container {
+  @include flex-center;
+  justify-content: space-between;
+}

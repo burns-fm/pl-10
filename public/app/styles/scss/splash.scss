@@ -1,0 +1,44 @@
+/*
+ * © 2022-2022 Burns Recording Company
+ * Created: 22/10/2022
+ */
+ @import 'layout';
+
+$splash_width: 50vw;
+$splash_height: 70vh;
+
+.splash {
+  @include flex-center;
+  flex-direction: column;
+  align-items: flex-start;
+  height: $splash_height;
+  width: $splash_width;
+
+  margin: $spacing * 2;
+
+  & h1 {
+    font-size: 6em;
+    font-weight: 900;
+    margin: 0;
+  }
+  & h2 {
+    font-size: 4em;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  & .release-date {
+    font-size: 1.4em;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  & .cover-art {
+    & > img {
+      max-height: 250px;
+      -webkit-user-drag: none;
+      user-drag: none;
+      user-select: none;
+    }
+  }
+}

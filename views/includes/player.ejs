@@ -1,0 +1,78 @@
+<!--
+© 2022-2022 Burns Recording Company
+Created: 23/10/2022
+-->
+
+<!--
+  PLAYER
+  You can re-arrange the player interface as you see fit.
+
+  Move elements in a different order to change the structure of the player.
+  Configure the layout, colours, icons, and functions in these two files:
+
+  Styles: /public/app/styles/scss/player.scss
+  Player source code: /client/player.ts
+
+  PLAYER SECTIONS
+
+  Display:
+    Place elements related to your player's display in here, like time information,
+    track metadata, bitrate information, and so on.
+
+  Transport:
+    Place elements related to the control of your player in here, like play/pause buttons,
+    playlist functions, position scrubber, volume, and so on.
+
+    Button elements in this area will have default styling applied, even without a class name.
+
+  Note:
+  Just remember, if you change any classes or IDs here, you must
+  change them to match wherever they are referenced throughout the code
+  and stylesheet files.
+-->
+
+<section class="player">
+  <div class="display">
+    <div class="track-info">
+      <!-- <marquee id="title">Track Title</marquee> -->
+      <div id="title">Track Title</div>
+      <p id="album">Album Name</p>
+    </div>
+
+    <div class="time">
+      <time class="current-time">00:00:00</time>
+      <!-- <time class="duration">00:00:00</time> -->
+    </div>
+  </div>
+  <div class="transport">
+    <div class="progress">
+      <progress
+        id="progressbar"
+        name="progressbar"
+        class="progressbar"
+        value="0.8"
+      />
+    </div>
+    
+    <div class="controls">
+      <button id="btn--play">
+        PLAY
+      </button>
+      <button id="btn--skip">
+        SKIP
+      </button>
+      <button id="btn--rand">
+        RAND
+      </button>
+
+      <div class="volume">
+        <progress
+          id="volumebar"
+          name="volumebar"
+          class="volumebar"
+          value="0.5"
+        />
+      </div>
+    </div>
+  </div>
+</section>

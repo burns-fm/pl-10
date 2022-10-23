@@ -1,0 +1,115 @@
+/*
+ * © 2022-2022 Burns Recording Company
+ * Created: 23/10/2022
+ */
+@import 'colors';
+@import 'layout';
+
+$player-height: 180px;
+$player-width: 350px;
+
+.player {
+  width: $player-width;
+  height: $player-height;
+  margin: $spacing * 2;
+
+  & .display {
+
+    &>.time {
+      width: 100%;
+      @include flex-center;
+
+      & .current-time {
+        font-size: 3em;
+        font-weight: 100;
+      }
+    }
+
+    &>.track-info {
+      & #title {
+        font-size: 1.1em;
+        font-weight: 200;
+        margin: 0;
+      }
+
+      & div#title {
+        text-align: center;
+      }
+
+      & #album {
+        text-align: center;
+        font-size: 0.8em;
+        margin: $spacing / 2;
+      }
+    }
+  }
+
+  & .transport {
+    & button {
+      background-color: $background;
+      color: $foreground;
+      border: 0;
+      border-radius: $border-radius / 2;
+      padding: $spacing ($spacing * 2.75);
+      cursor: pointer;
+
+      &:hover {
+        background-color: $foreground_10;
+      }
+
+      &:active {
+        background-color: $foreground_20;
+      }
+    }
+
+    & .controls {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    & .volume {
+      display: inline-flex;
+      width: 100px;
+    }
+
+    & .progress,
+    & .volume {
+      @include flex-center;
+      margin: $spacing 0;
+
+      & progress {
+        -webkit-appearance: none;
+        appearance: none;
+        // background-color: $background;
+        transition: 120ms ease all;
+        height: 2px;
+        width: 100%;
+
+        cursor: pointer;
+        border-radius: 4px;
+
+        &:hover {
+          height: 8px;
+        }
+      }
+    }
+
+    & progress[value]::-webkit-progress-bar {
+      background-color: $foreground_10;
+    }
+
+    & progress[value]::-webkit-progress-value {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    & progress[value]::-webkit-progress-value {
+      background-color: $foreground_50;
+      transition: 100ms ease all;
+
+      &:hover {
+        background-color: $foreground_75;
+      }
+    }
+  }
+}
