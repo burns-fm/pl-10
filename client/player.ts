@@ -115,7 +115,6 @@ export class Player {
     const res = await fetch('/stream');
     const list = await res.json();
 
-    console.log(list);
     return list;
   }
 
@@ -231,6 +230,11 @@ export class Player {
   }
 
   /*** EVENTS & HANDLERS */
+  private onPause = (e) => {
+    console.log(e) // TODO remove
+    this.transport.play.innerHTML = Icons.Play;
+  };
+
   private onKeyPress = (e: KeyboardEvent) => {
     if (e.key === ' ' && e.target === document.body) {
       e.preventDefault();
@@ -240,7 +244,7 @@ export class Player {
     } else if (e.key === 'm') {
       this.toggleMute();
     }
-  }
+  };
 
   private onVolumeUpdate = (event: MouseEvent): void => {
     const percent = event.offsetX / this.transport.volume.offsetWidth;
@@ -258,18 +262,19 @@ export class Player {
 
     const percent = this.audio.currentTime / this.data.currentTrack.duration!; // TODO checkup on this - maybe store length from the stream response header
     this.transport.position.value = percent;
-  }
+  };
 
   private onUpdateStreamSource = (): void => {
     this.display.trackInfo.title.innerHTML = this.data.currentTrack?.title ?? 'Unknown';
     this.display.trackInfo.album.innerHTML = this.data.currentTrack?.album ?? 'Unknown';
-  }
+  };
 
   /*** SETUP & TEARDOWN */
   private setupEventListeners(): void {
     // Audio Events
     this.audio.addEventListener('timeupdate', this.onUpdateTime);
     this.audio.addEventListener('loadeddata', this.onUpdateStreamSource);
+    this.audio.addEventListener('ended', this.onPause);
 
     // Transport
     this.transport.position.addEventListener('click', this.seek);

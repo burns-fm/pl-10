@@ -27,7 +27,17 @@ Once the packages are installed you'll need to build the server code and start i
 
 ### Build the server
 ```sh
-npm run build
+npm run build:server
+```
+
+### Build the client/UI
+
+You only need to build the client code. The styles are compiled on the fly from <a href="https://sass-lang.com/documentation/syntax" target="_blank">scss</a> to browser-compatible css.
+
+If you start the server and the buttons don't seem to do anything, you probably forgot to to this step.
+
+```sh
+npm run build:client
 ```
 
 ### Start the server
