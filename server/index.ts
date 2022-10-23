@@ -25,6 +25,15 @@ streamController.loadMediaFiles().catch((error: Error) => {
 app.set('views', resolve('views'));
 app.set('view engine', 'ejs');
 
+app.locals = {
+  artist: {
+    name: 'Artist Name', // TODO Set via constants/vars 
+  },
+  site: {
+    title: 'Blaster',
+  },
+};
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger(env === constants.Environment.Production ? 'combined' : 'dev'));

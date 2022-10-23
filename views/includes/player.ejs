@@ -40,37 +40,38 @@ Created: 23/10/2022
     </div>
 
     <div class="time">
-      <time class="current-time">00:00:00</time>
+      <time class="current-time" title="Playback position (HH:MM:SS)">00:00:00</time>
       <!-- <time class="duration">00:00:00</time> -->
     </div>
   </div>
   <div class="transport">
-    <div class="progress">
+    <div class="position">
       <progress
-        id="progressbar"
-        name="progressbar"
-        class="progressbar"
-        value="0.8"
+        id="position"
+        name="position"
+        title="Playback position (percent)"
       />
     </div>
     
     <div class="controls">
-      <button id="btn--play">
+      <button id="btn--play" title="Toggle Playback">
         PLAY
       </button>
-      <button id="btn--skip">
+      <button id="btn--skip" title="Skip Track">
         SKIP
       </button>
-      <button id="btn--rand">
+      <button id="btn--rand" title="Random Track">
         RAND
+      </button>
+      <button id="btn--mute" title="Toggle Mute">
+        MUTE
       </button>
 
       <div class="volume">
         <progress
-          id="volumebar"
-          name="volumebar"
-          class="volumebar"
-          value="0.5"
+          id="volume"
+          name="volume"
+          title="Adjust volume"
         />
       </div>
     </div>

@@ -1,0 +1,18 @@
+/*
+ * © 2022-2022 Burns Recording Company
+ * Created: 23/10/2022
+ */
+
+footer.footer {
+  margin-top: 2rem;
+  font-size: 0.7em;
+  font-weight: 200;
+  color: $foreground_80;
+  text-align: center;
+
+  & a {
+    color: $foreground;
+    text-decoration: underline;
+  }
+}
+
