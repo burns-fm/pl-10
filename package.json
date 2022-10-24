@@ -1,8 +1,7 @@
 {
-  "name": "blaster",
+  "name": "pl-10",
   "version": "1.0.0",
   "description": "Simple self-hosted audio streaming",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:server": "tsc",

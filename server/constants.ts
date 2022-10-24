@@ -13,9 +13,9 @@ export enum Environment {
   Production,
 }
 
-export const PORT = parseInt(process.env.BLASTER_PORT ?? '8347');
-export const HOSTNAME = process.env.BLASTER_HOSTNAME ?? 'localhost';
-export const MEDIA_DIR = process.env.BLASTER_MEDIA_DIR ?? resolve('media');
+export const PORT = parseInt(process.env.PL_10_PORT ?? '8347');
+export const HOSTNAME = process.env.PL_10_HOSTNAME ?? 'localhost';
+export const MEDIA_DIR = process.env.PL_10_MEDIA_DIR ?? resolve('media');
 export const MAX_FILE_NUMBER = parseInt(process.env.MAX_FILE_NUMBER ?? '10');
 
 export const STATIC_DIR = resolve('public');

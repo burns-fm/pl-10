@@ -1,4 +1,4 @@
-# blaster
+# PL-10
 
 Simple self-hosted audio streaming.
 
@@ -69,26 +69,26 @@ Some settings configuration is possible if you want to make some minor changes t
 <summary>
 Default Value
 <details>
-<div>`BLASTER_MAX_FILES=media`</div>
+<div>`PL_10_MAX_FILES=media`</div>
 <div>
 The media directory included in this repository at the root.
 </div>
 </details>
 </summary>
 
-You can set an alternative media directory by setting the environment variable `BLASTER_MEDIA_DIR` to where your files are stored. Only
+You can set an alternative media directory by setting the environment variable `PL_10_MEDIA_DIR` to where your files are stored. Only
 
 ### Maximum file number
 <summary>
 Default Value
 <details>
 <div>
-`BLASTER_MAX_FILES=10`
+`PL_10_MAX_FILES=10`
 </div>
 </details>
 </summary>
 
-By default, the server has a maximum number of files it will pick up. You can override that number by setting `BLASTER_MAX_FILES` to a different number.
+By default, the server has a maximum number of files it will pick up. You can override that number by setting `PL_10_MAX_FILES` to a different number.
 
 
 ## Customization

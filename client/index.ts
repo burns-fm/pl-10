@@ -5,6 +5,7 @@
 
 import { Player } from './player';
 
+
 const player = new Player();
 
-console.log(`Loaded application`, player);
+console.log(`Loaded application`, );

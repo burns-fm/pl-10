@@ -4,6 +4,7 @@
  */
 import { IAudioMetadata } from 'music-metadata';
 import * as Icons from './icons';
+import { Processor } from './processor';
 
 type PaddedTimeValue = string | number;
 type HHMMSS = `${PaddedTimeValue}:${PaddedTimeValue}:${PaddedTimeValue}`;
@@ -250,6 +251,11 @@ export class Player {
     const percent = event.offsetX / this.transport.volume.offsetWidth;
     this.setVolume(percent);
     this.transport.volume.value = percent;
+
+    const vu = document.querySelector<HTMLCanvasElement>('#vu');
+    if (vu) {
+      vu.dataset.value = String(this.audio.volume * 10);
+    }
   }
 
   private onUpdateTime = (_event: Event): void => {
@@ -288,6 +294,19 @@ export class Player {
     window.addEventListener('keyup', this.onKeyPress);
   }
 
+  private drawOscilloscope(): void {
+    const osc = document.querySelector<HTMLCanvasElement>('#osc');
+    console.log(osc);
+    if (osc) {
+      const processor = new Processor(this.audio);
+      console.log(processor);
+      processor.attachMeter(osc);
+      this.audio.onplay = _ => {
+        processor.audioContext.resume();
+      };
+    }
+  }
+
   private async initialize(): Promise<void> {
     this.audio = document.createElement('audio');
     this.transport.play.innerHTML = Icons.Play;
@@ -303,5 +322,8 @@ export class Player {
     // Load initial track
     const randomTrackKey = this.getRandomTrackKey();
     this.loadTrack(randomTrackKey);
+
+    // Post processing & metering
+    this.drawOscilloscope();
   }
 }

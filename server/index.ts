@@ -6,7 +6,6 @@
 
 import express from 'express';
 import logger from 'morgan';
-import { typescriptCompileMiddleware } from 'express-typescript-compile';
 import sassMiddleware from 'node-sass-middleware';
 import { resolve } from 'path';
 import * as constants from './constants';
@@ -30,7 +29,7 @@ app.locals = {
     name: 'Artist Name', // TODO Set via constants/vars 
   },
   site: {
-    title: 'Blaster',
+    title: 'BRC PL-10',
   },
 };
 
