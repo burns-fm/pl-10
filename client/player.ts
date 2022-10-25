@@ -184,14 +184,14 @@ export class Player {
     }
 
     this.loadTrack(nextKey);
-  }
+  };
 
   public random = (event: Event): void => {
     event.preventDefault();
 
     const randomKey = this.getRandomTrackKey();
     this.loadTrack(randomKey);
-  }
+  };
 
   public setVolume = (n = DEFAULT_VOLUME) => {
     // Assert the volume is between 0 and 1.
@@ -205,7 +205,7 @@ export class Player {
     } else {
       this.audio.muted = false;
     }
-  }
+  };
 
   public toggleMute = () => {
     if (this.audio.muted || this.audio.volume === 0) {
@@ -218,21 +218,33 @@ export class Player {
       this.audio.muted = true;
       this.transport.mute.innerHTML = Icons.VolumeZero;
     }
-  }
+  };
 
   public seek = (event: MouseEvent) => {
     if (!this.data.currentTrack || !this.data.currentTrack.duration) {
       throw new Error(`Unable to seek. No track loaded.`);
     }
+
+    const wasPlaying = !this.audio.paused;
+    this.audio.pause();
+
     const percent = event.offsetX / this.transport.position.offsetWidth;
     const { duration } = this.data.currentTrack;
+
     this.audio.currentTime = percent * duration;
     this.transport.position.value = percent;
-  }
+    
+    if (wasPlaying) {
+      this.audio.play();
+    }
+  };
 
   /*** EVENTS & HANDLERS */
-  private onPause = (e) => {
-    console.log(e) // TODO remove
+  private onPlay = () => {
+    console.info(`Now playing: ${this.data.currentTrack?.title} - ${this.data.currentTrack?.artist}`);
+  };
+
+  private onPause = (_e: Event) => {
     this.transport.play.innerHTML = Icons.Play;
   };
 
@@ -281,6 +293,7 @@ export class Player {
     this.audio.addEventListener('timeupdate', this.onUpdateTime);
     this.audio.addEventListener('loadeddata', this.onUpdateStreamSource);
     this.audio.addEventListener('ended', this.onPause);
+    this.audio.addEventListener('play', this.onPlay);
 
     // Transport
     this.transport.position.addEventListener('click', this.seek);
@@ -296,10 +309,8 @@ export class Player {
 
   private drawOscilloscope(): void {
     const osc = document.querySelector<HTMLCanvasElement>('#osc');
-    console.log(osc);
     if (osc) {
       const processor = new Processor(this.audio);
-      console.log(processor);
       processor.attachMeter(osc);
       this.audio.onplay = _ => {
         processor.audioContext.resume();

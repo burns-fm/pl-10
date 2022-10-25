@@ -9,17 +9,28 @@ $associations_height: 40px;
 
 .associations {
   @include flex-center;
-  height: $associations_height;
+  min-height: $associations_height;
+
+  @media screen and (max-width: $mobile-breakpoint) {
+    margin-top: $spacing * 4;
+  }
 
   & > section.inner {
     @include flex-center;
     justify-content: space-evenly;
-    height: $associations_height;
     width: 70%;
+
+    @media screen and (max-width: $mobile-breakpoint) {
+      flex-direction: column;
+    }
 
     & > div {
       @include flex-center;
       transition: 200ms opacity ease;
+
+      @media screen and (max-width: $mobile-breakpoint) {
+        margin: $spacing;
+      }
   
       &:hover {
         opacity: 0.9;
@@ -28,7 +39,7 @@ $associations_height: 40px;
         -webkit-user-drag: none;
         user-drag: none;
         user-select: none;
-        height: 90%;
+        height: $associations_height;
         max-height: $associations_height;
       }
     }

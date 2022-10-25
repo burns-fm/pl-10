@@ -45,11 +45,10 @@ app.use(sassMiddleware({
   sourceMap: true,
   outputStyle: 'compressed',
   debug: Boolean(process.env.DEBUG),
+  force: Boolean(process.env.DEBUG),
 }));
 
-app.use('/', express.static(resolve('public'), {
-  extensions: ['js', 'css', 'map'],
-}));
+app.use('/', express.static(resolve('public')));
 
 app.use('/', MainRouter);
 app.use('/stream', StreamRouter);

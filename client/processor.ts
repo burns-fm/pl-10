@@ -16,12 +16,10 @@ export class Processor {
   constructor(private readonly source: HTMLAudioElement) {}
 
 
-  public attachMeter(element: HTMLCanvasElement): void {
+  public attachMeter(element: HTMLCanvasElement, options?: { meterColor?: string }): void {
     if (this.streamAttached) return;
 
     this.mediaSource = this.audioContext.createMediaElementSource(this.source);
-    // TODO move to linked list of effects with utility methods
-    console.log('src', this.mediaSource);
     const node = this.audioContext.createAnalyser();
     node.fftSize = this.bufferSize;
 
@@ -39,7 +37,9 @@ export class Processor {
       context.fillStyle = 'rgb(9, 9, 9)';
       context.fillRect(0, 0, element.width, element.height);
       context.lineWidth = 1;
-      context.strokeStyle = 'rgba(240, 240, 240, 0.6)';
+      context.strokeStyle = options?.meterColor ?? 'rgba(240, 240, 240, 0.729)';
+      context.shadowColor = options?.meterColor ?? 'rgba(240, 240, 240, 0.729)';
+      context.shadowBlur = 10;
       context.beginPath();
       const sliceWidth = (element.width * 1.0) / bufferLength;
       let x = 0;

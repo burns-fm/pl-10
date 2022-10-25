@@ -4,9 +4,20 @@
 
   <body>
     <main>
-      <section class="container">
-        <%- include('includes/splash') %>
-        <%- include('includes/player') %>
+      <section class="columns">
+
+        <div class="column">
+          <div class="container center">
+            <%- include('includes/splash') %>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="container center">
+            <%- include('includes/player') %>
+          </div>
+        </div>
+
       </section>
 
       <%- include('includes/associations') %>

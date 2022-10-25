@@ -11,6 +11,9 @@ Created: 22/10/2022
   If you are adding an element, ensure it's wrapped in a `div` element,
   or otherwise you don't mind styles being applied to the root element.
 
+  If you want two elements to exist side by side, make sure to wrap them
+  in an extra `div` element.
+
   For example:
 
   If your element look s like this:
@@ -31,21 +34,17 @@ Created: 22/10/2022
     <!-- Inline example -->
     <div id="factor">
       <a href="https://factor.ca" target="_blank">
-        <img
-          src="/img/FACTOR-wordmark.png"
-          alt="FACTOR Canada"
-        />
+        <img src="/img/FACTOR-wordmark.png" alt="FACTOR Canada" />
       </a>
     </div>
-
     <!--
-      To keep things a little cleaner:
-      You can also define them in another file and
-      then include your associations instead
+        To keep things a little cleaner:
+        You can also define them in another file and
+        then include your associations instead
 
-    -->
-    <%- include('associations/canada') %>    
+      -->
+    <%- include('associations/canada') %>
     <%- include('associations/brc') %>
-  
+
   </section>
 </aside>

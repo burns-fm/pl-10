@@ -6,7 +6,7 @@
 @import 'layout';
 
 $player-height: 180px;
-$player-width: 350px;
+$player-width: 450px;
 
 .player {
   width: $player-width;
@@ -17,6 +17,7 @@ $player-width: 350px;
   background-color: $background_50;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
+  z-index: 1;
 
   & .oscilloscope {
     width: 100%;
@@ -25,10 +26,13 @@ $player-width: 350px;
     & canvas {
       width: 100%;
       clip-path: inset(2px, 2px, 2px, 2px);
+      position: absolute;
+      z-index: -1;
     }
   }
 
   & .display {
+    position: relative;
 
     & >.time {
       width: 100%;
@@ -92,14 +96,14 @@ $player-width: 350px;
     & .position,
     & .volume {
       @include flex-center;
-      margin: $spacing 0;
+      margin: ($spacing * 2) 0;
 
       & progress {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
         // background-color: $background;
-        transition: 120ms ease all;
+        transition: 180ms ease height;
         height: 2px;
         width: 100%;
 
@@ -107,7 +111,7 @@ $player-width: 350px;
         border-radius: 4px;
 
         &:hover {
-          height: 8px;
+          height: 16px;
         }
       }
     }
@@ -125,8 +129,16 @@ $player-width: 350px;
       appearance: none;
     }
 
-    & progress[value]::-webkit-progress-value,
-    & progress[value]::-moz-progress-bar {
+    & progress[value]::-webkit-progress-value {
+      background-color: $foreground_50;
+      transition: 100ms ease all;
+
+      &:hover {
+        background-color: $foreground_75;
+      }
+    }
+
+    & progress[value]::-moz-progress-bar  {
       background-color: $foreground_50;
       transition: 100ms ease all;
 

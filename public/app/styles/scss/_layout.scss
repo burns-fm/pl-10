@@ -6,6 +6,8 @@
 $spacing: 8px;
 $border-radius: 8px;
 
+$mobile-breakpoint: 768px;
+
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -30,6 +32,24 @@ $border-radius: 8px;
 }
 
 .container {
-  @include flex-center;
-  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+
+  &.split {
+    @include flex-center;
+    justify-content: space-evenly;
+    & > * {
+      margin-right: $spacing;
+    }
+    & > *:last-child {
+      margin-right: unset;
+    }
+  }
+
+  &.center {
+    @include flex-center;
+    @media screen and (max-width: $mobile-breakpoint) {
+      flex-direction: column;
+    }
+  }
 }
