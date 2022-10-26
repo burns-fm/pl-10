@@ -13,6 +13,7 @@ interface PlayerTransport {
   play: HTMLButtonElement;
   skip: HTMLButtonElement;
   rand: HTMLButtonElement;
+  osc: HTMLButtonElement;
   mute: HTMLButtonElement;
   position: HTMLProgressElement;
   volume: HTMLProgressElement;
@@ -51,6 +52,7 @@ export class Player {
     play: document.querySelector('.transport #btn--play')!,
     skip: document.querySelector('.transport #btn--skip')!,
     rand: document.querySelector('.transport #btn--rand')!,
+    osc: document.querySelector('.transport #btn--osc')!,
     mute: document.querySelector('.transport #btn--mute')!,
     position: document.querySelector('.transport #position')!,
     volume: document.querySelector('.transport #volume')!,
@@ -220,6 +222,15 @@ export class Player {
     }
   };
 
+  public toggleOsc = () => {
+    const canvas = document.querySelector('canvas')!;
+    if (canvas.hidden) {
+      canvas.hidden = false;
+    } else {
+      canvas.hidden = true;
+    }
+  };
+
   public seek = (event: MouseEvent) => {
     if (!this.data.currentTrack || !this.data.currentTrack.duration) {
       throw new Error(`Unable to seek. No track loaded.`);
@@ -300,6 +311,7 @@ export class Player {
     this.transport.play.addEventListener('click', this.togglePlayback);
     this.transport.skip.addEventListener('click', this.skipTrack);
     this.transport.rand.addEventListener('click', this.random);
+    this.transport.osc.addEventListener('click', this.toggleOsc);
     this.transport.mute.addEventListener('click', this.toggleMute);
     this.transport.volume.addEventListener('click', this.onVolumeUpdate);
 
@@ -323,6 +335,7 @@ export class Player {
     this.transport.play.innerHTML = Icons.Play;
     this.transport.skip.innerHTML = Icons.Skip;
     this.transport.rand.innerHTML = Icons.Shuffle;
+    this.transport.osc.innerHTML = Icons.Oscilloscope;
     this.transport.mute.innerHTML = Icons.VolumeFull;
 
     this.data.trackList = await this.getTrackList();

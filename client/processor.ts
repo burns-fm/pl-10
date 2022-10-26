@@ -20,6 +20,7 @@ export class Processor {
     if (this.streamAttached) return;
 
     this.mediaSource = this.audioContext.createMediaElementSource(this.source);
+
     const node = this.audioContext.createAnalyser();
     node.fftSize = this.bufferSize;
 
@@ -28,6 +29,13 @@ export class Processor {
 
     const context = element.getContext('2d')!;
     context.strokeStyle = `rgba(100, 100, 100, 0.9)`;
+
+    this.mediaSource.mediaElement.onplay = () => {
+      context.strokeStyle = options?.meterColor ?? 'rgba(240, 240, 240, 0.729)';
+    };
+    this.mediaSource.mediaElement.onpause = () => {
+      context.strokeStyle = options?.meterColor ?? 'rgba(240, 240, 240, 0.3)';
+    };
 
     function draw() {
       requestAnimationFrame(draw);

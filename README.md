@@ -78,8 +78,6 @@ Some settings configuration is possible if you want to make some minor changes t
 > *For that reason, if you want more flexibility then you should edit the template file directly.*
 > <div><small>The splash template: `/views/includes/splash.ejs`</div>
 
-<br/>
-
 ### Set the page title
 
 <details>

@@ -21,7 +21,7 @@ $player-width: 450px;
 
   & .oscilloscope {
     width: 100%;
-    height: $spacing;
+    height: $spacing + 4;
     
     & canvas {
       height: 100%;
@@ -34,6 +34,7 @@ $player-width: 450px;
 
   & .display {
     position: relative;
+    padding-bottom: 12px;
 
     & >.time {
       width: 100%;
@@ -74,13 +75,15 @@ $player-width: 450px;
       border-radius: $border-radius / 2;
       padding: $spacing ($spacing * 2.75);
       cursor: pointer;
+      transition: 130ms ease-in-out box-shadow, 400ms ease background-color;
 
       &:hover {
         background-color: $foreground_10;
+        box-shadow: 0 0 10px 1px $white_70;
       }
 
       &:active {
-        background-color: $foreground_20;
+        background-color: $foreground_30;
       }
     }
 
