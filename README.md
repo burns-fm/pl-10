@@ -13,7 +13,7 @@ Just drop your files in the `media` folder and start the server.
 - <a href="#configuration">Configuration</a>
   - <a href="#set-the-page-title">Set the page title</a>
   - <a href="#set-the-page-subtitle">Set the page subtitle</a>
-  - <a href="#set-the-supporting-text">Set the supporting text</a>
+  - <a href="#set-supporting-text">Set the supporting text</a>
   - <a href="#media-directory">Media Directory</a>
   - <a href="#max-file-number">Maximum file number</a>
 - <a href="#customization">Customization</a>
@@ -69,7 +69,7 @@ Some settings configuration is possible if you want to make some minor changes t
 
 - <a href="#set-the-page-title">Set the page title</a>
 - <a href="#set-the-page-subtitle">Set the page subtitle</a>
-- <a href="#set-the-supporting-text">Set the supporting text</a>
+- <a href="#set-supporting-text">Set the supporting text</a>
 - <a href="#media-directory">Media Directory</a>
 - <a href="#maximum-file-number">Maximum File Number</a>
 
