@@ -15,6 +15,10 @@ $mobile-breakpoint: 768px;
   align-items: center;
 }
 
+main {
+  overflow-y: scroll;
+}
+
 .columns {
   display: flex;
   justify-content: space-evenly;

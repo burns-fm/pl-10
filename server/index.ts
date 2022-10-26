@@ -25,11 +25,10 @@ app.set('views', resolve('views'));
 app.set('view engine', 'ejs');
 
 app.locals = {
-  artist: {
-    name: 'Artist Name', // TODO Set via constants/vars 
-  },
   site: {
-    title: 'BRC PL-10',
+    title: constants.PageText.Title,
+    subtitle: constants.PageText.Subtitle,
+    supportingText: constants.PageText.SupportingText,
   },
 };
 
@@ -37,6 +36,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger(env === constants.Environment.Production ? 'combined' : 'dev'));
 
+// TODO: replace the middleware with a build step or something
 app.use(sassMiddleware({
   src: resolve(constants.STYLESHEETS_DIR, 'scss'),
   dest: constants.STYLESHEETS_DIR,
@@ -45,7 +45,8 @@ app.use(sassMiddleware({
   sourceMap: true,
   outputStyle: 'compressed',
   debug: Boolean(process.env.DEBUG),
-  force: Boolean(process.env.DEBUG),
+  // force: Boolean(process.env.DEBUG),
+  force: true,
 }));
 
 app.use('/', express.static(resolve('public')));

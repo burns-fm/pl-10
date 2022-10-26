@@ -22,6 +22,12 @@ export const STATIC_DIR = resolve('public');
 export const STYLESHEETS_DIR = resolve('public', 'app', 'styles');
 export const SCRIPTS_DIR = resolve('public', 'app');
 
+export const PageText = {
+  Title: process.env.PL_10_PAGE_TITLE ?? 'BRC PL-10',
+  Subtitle: process.env.PL_10_PAGE_SUBTITLE ?? 'Web Player',
+  SupportingText: process.env.PL_10_SUPPORTING_TEXT ?? 'Simple, self-hosted streaming ',
+};
+
 export enum MediaMimetype {
   MP3 = 'audio/mpeg',
   WAV = 'audio/wav',

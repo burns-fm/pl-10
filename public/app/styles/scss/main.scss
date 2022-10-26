@@ -4,12 +4,41 @@
  */
 @import 'colors';
 
-html, body {
+body {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: $foreground;
-  background-color: $background;
-  // background: url('/img/canvas.jpg');
-  // background-size: cover;
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  background: url('/img/canvas.jpg');
+  background-size: cover;
+  -webkit-filter: blur(20px);
+  filter: blur(20px);
+  height: 100vh;
+  width: 100vw;
+  box-shadow: -10px -10px 5px 5px rgba(9,9,9,0.9),
+  10px 10px 10px 5px rgba(9,9,9,0.9);
+  z-index: -2;
+}
+
+.border {
+  $border: 30px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: calc(100vh - 60px);
+  width: calc(100vw - 60px);
+  border: $border solid $background;
+  z-index: 10;
+  pointer-events: none;
+}
+
+main {
+  position: relative;
+  max-height: 100vh;
 }
 
 ::selection {

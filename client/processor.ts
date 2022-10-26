@@ -33,8 +33,8 @@ export class Processor {
       requestAnimationFrame(draw);
 
       node.getByteTimeDomainData(data);
-      // context.fillStyle = 'transparent';
       context.fillStyle = 'rgb(9, 9, 9)';
+      // context.fillStyle = 'transparent';
       context.fillRect(0, 0, element.width, element.height);
       context.lineWidth = 1;
       context.strokeStyle = options?.meterColor ?? 'rgba(240, 240, 240, 0.729)';

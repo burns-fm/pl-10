@@ -6,7 +6,7 @@
 import { readdir, readFile, stat } from "fs/promises";
 import { extname, resolve } from "path";
 import { IAudioMetadata } from 'music-metadata';
-import { MediaMimetype, MEDIA_DIR } from "../constants";
+import { MAX_FILE_NUMBER, MediaMimetype, MEDIA_DIR } from "../constants";
 import { Store } from "../store";
 import { loadFileTypesLib, loadMusicMetadata } from "../helpers";
 import { createReadStream, ReadStream, statSync } from "fs";
@@ -86,6 +86,8 @@ export class MediaController {
 
       return Object.keys(MediaMimetype).includes(ext);
     });
+
+    trackFileList = trackFileList.slice(0, MAX_FILE_NUMBER);
 
     for (const fileName of trackFileList) {
       const filePath = resolve(MEDIA_DIR, fileName);

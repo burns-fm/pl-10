@@ -10,7 +10,7 @@ $player-width: 450px;
 
 .player {
   width: $player-width;
-  height: $player-height;
+  // height: $player-height;
   margin: $spacing * 2;
   padding: $spacing * 1.5;
 
@@ -21,9 +21,10 @@ $player-width: 450px;
 
   & .oscilloscope {
     width: 100%;
-    height: 40px;
+    height: $spacing;
     
     & canvas {
+      height: 100%;
       width: 100%;
       clip-path: inset(2px, 2px, 2px, 2px);
       position: absolute;
@@ -103,7 +104,7 @@ $player-width: 450px;
         -moz-appearance: none;
         appearance: none;
         // background-color: $background;
-        transition: 180ms ease height;
+        transition: 180ms ease-in-out height, 100ms ease width;;
         height: 2px;
         width: 100%;
 
@@ -111,14 +112,14 @@ $player-width: 450px;
         border-radius: 4px;
 
         &:hover {
-          height: 16px;
+          height: 10px;
         }
       }
     }
 
     & progress[value],
     & progress[value]::-webkit-progress-bar {
-      background-color: $foreground_10;
+      background-color: $foreground_20;
       border: 0;
     }
 
@@ -131,7 +132,7 @@ $player-width: 450px;
 
     & progress[value]::-webkit-progress-value {
       background-color: $foreground_50;
-      transition: 100ms ease all;
+      // transition: 120ms ease all;
 
       &:hover {
         background-color: $foreground_75;
@@ -140,7 +141,7 @@ $player-width: 450px;
 
     & progress[value]::-moz-progress-bar  {
       background-color: $foreground_50;
-      transition: 100ms ease all;
+      // transition: 120ms ease all;
 
       &:hover {
         background-color: $foreground_75;
