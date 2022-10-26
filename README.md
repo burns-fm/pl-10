@@ -86,7 +86,7 @@ Some settings configuration is possible if you want to make some minor changes t
 <summary>
 Default Value
 </summary>
-<div>`PL_10_PAGE_TITLE="BRC PL-10"`</div>
+<div>PL_10_PAGE_TITLE="BRC PL-10"</div>
 <div>
 The media directory included in this repository at the root.
 </div>
@@ -102,7 +102,7 @@ Use this for the main page text. Ideal for an artist name or album name, or shor
 <summary>
 Default Value
 </summary>
-<div>`PL_10_PAGE_SUBTITLE="Web Player"`</div>
+<div>PL_10_PAGE_SUBTITLE="Web Player"</div>
 </details>
 
 If you want to use the default layout and set the subtitle text, use the following environment variable `PL_10_PAGE_SUBTITLE`.
@@ -115,7 +115,7 @@ Use this for an artist name or album name. Something like that.
 <summary>
 Default Value
 </summary>
-<div>`PL_10_SUPPORTING_TEXT="Simple, self-hosted streaming"`</div>
+<div>PL_10_SUPPORTING_TEXT="Simple, self-hosted streaming"</div>
 </details>
 
 If you want to use the default layout and set the supporting text, use the following environment variable `PL_10_SUPPORTING_TEXT`.
@@ -128,7 +128,7 @@ Use this if you have some extra info you want to include like a promotional tagl
 <summary>
 Default Value
 </summary>
-<div>*None*</div>
+<div>None</div>
 </details>
 
 #### Example
@@ -146,7 +146,7 @@ The copyright symbol and date are already set for you, so just add any more text
 <summary>
 Default Value
 <details>
-<div>`PL_10_MAX_FILES=media`</div>
+<div>PL_10_MAX_FILES=media</div>
 <div>
 The media directory included in this repository at the root.
 </div>
@@ -160,7 +160,7 @@ You can set an alternative media directory by setting the environment variable `
 Default Value
 <details>
 <div>
-`PL_10_MAX_FILES=10`
+PL_10_MAX_FILES=10
 </div>
 </details>
 </summary>
