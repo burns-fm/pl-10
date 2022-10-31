@@ -14,7 +14,8 @@ $player-width: 450px;
   margin: $spacing * 2;
   padding: $spacing * 1.5;
 
-  background-color: $background_50;
+  // background-color: $background_50;
+  background-color: $background;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   z-index: 1;
@@ -75,11 +76,11 @@ $player-width: 450px;
       border-radius: $border-radius / 2;
       padding: $spacing ($spacing * 2.75);
       cursor: pointer;
-      transition: 130ms ease-in-out box-shadow, 400ms ease background-color;
+      transition: 250ms ease all;
 
       &:hover {
         background-color: $foreground_10;
-        box-shadow: 0 0 10px 1px $white_70;
+        // box-shadow: 0 0 10px 1px $white_70;
       }
 
       &:active {

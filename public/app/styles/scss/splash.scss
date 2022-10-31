@@ -7,23 +7,20 @@
 .splash {
   @include flex-center;
   flex-direction: column;
-  align-items: flex-start;
+  // align-items: flex-start;
+  align-items: center;
 
   margin: $spacing * 2;
 
-  @media screen and (max-width: $mobile-breakpoint) {
-    align-items: center;
-    h1, h2 {
-      text-align: center;
-    }
-  }
-
   & h1 {
+    display: inline-block;
+    width: min-content;
     font-size: 6em;
     font-weight: 900;
     margin: 0;
   }
   & h2 {
+    display: inline-block;
     font-size: 4em;
     font-weight: 300;
     margin: 0;
@@ -35,8 +32,18 @@
     margin: 0;
   }
 
+  @media screen and (max-width: $mobile-breakpoint) {
+    align-items: center;
+    h1, h2 {
+      text-align: center;
+    }
+  }
+
   & .cover-art {
+    @include flex-center;
     margin-top: $spacing * 4;
+    width: 100%;
+
     & > img {
       max-height: 250px;
       -webkit-user-drag: none;

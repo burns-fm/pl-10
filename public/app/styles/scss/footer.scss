@@ -2,6 +2,7 @@
  * © 2022-2022 Burns Recording Company
  * Created: 23/10/2022
  */
+@import 'layout';
 
 footer.footer {
   margin-top: 2rem;
@@ -9,6 +10,7 @@ footer.footer {
   font-weight: 200;
   color: $foreground_80;
   text-align: center;
+  margin-bottom: $spacing * 10;
 
   & a {
     color: $foreground;

@@ -7,7 +7,11 @@ import { runCompatibilityCheck } from './helpers/checks';
 import { Player } from './player';
 
 runCompatibilityCheck();
+let player;
+player = new Player();
 
-const player = new Player();
-
-console.log(`Loaded application`);
+if (!player) {
+  throw new Error(`Failed to load player`);
+} else {
+  console.log(`Loaded application`);
+}

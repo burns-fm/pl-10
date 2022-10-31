@@ -37,7 +37,9 @@ $associations_height: 40px;
       }
       & img {
         -webkit-user-drag: none;
+        -moz-user-drag: none;
         user-drag: none;
+        -moz-user-select: none;
         user-select: none;
         height: $associations_height;
         max-height: $associations_height;

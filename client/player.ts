@@ -5,6 +5,7 @@
 import { IAudioMetadata } from 'music-metadata';
 import * as Icons from './icons';
 import { Processor } from './processor';
+import { UUID_REGEX } from './constants';
 
 type PaddedTimeValue = string | number;
 type HHMMSS = `${PaddedTimeValue}:${PaddedTimeValue}:${PaddedTimeValue}`;
@@ -344,10 +345,30 @@ export class Player {
     this.setVolume(DEFAULT_VOLUME);
 
     // Load initial track
-    const randomTrackKey = this.getRandomTrackKey();
-    this.loadTrack(randomTrackKey);
+    const trackKey = this.getTrackIdFromUrl() ?? this.getRandomTrackKey();
+
+    this.loadTrack(trackKey);
 
     // Post processing & metering
     this.drawOscilloscope();
+  }
+
+  private getTrackIdFromUrl(url: string = window.location.href): string | null {
+    const u = new URL(url);
+    const key = u.searchParams.get('t')?.trim();
+
+    if (!key) {
+      return null;
+    }
+
+    const keyInTrackList = Boolean(this.data.trackList?.find((track) => track.key === key));
+
+    if (key.length === 0 || !keyInTrackList) {
+      console.error(`Invalid key in URL. Loading a random track instead.`);
+      alert(`Couldn't find the track you're trying to load. Loading a random track instead.`);
+      return null;
+    }
+
+    return key;
   }
 }
