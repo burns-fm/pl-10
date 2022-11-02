@@ -22,7 +22,7 @@ router.get('/:key', async (req: Request, res: Response) => {
   const { fileTypeFromStream } = await loadFileTypesLib();
   const fileType = await fileTypeFromStream(stream);
   res.setHeader('Content-Type', `${fileType?.mime || 'application/octet-stream'}`);
-  res.setHeader('Content-Length', size);
+  // res.setHeader('Content-Length', size);
   stream.pipe(res);
 });
 

@@ -11,6 +11,8 @@ $associations_height: 40px;
   @include flex-center;
   min-height: $associations_height;
 
+  margin-top: $spacing * 2;
+
   @media screen and (max-width: $mobile-breakpoint) {
     margin-top: $spacing * 4;
   }

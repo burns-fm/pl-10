@@ -23,3 +23,14 @@ export const errorPage = {
 } as const;
 
 export const UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+
+export const PL_10_SETTINGS_KEY = 'pl-10-settings';
+export const PL_10_DEFAULT_SETTINGS = {
+  oscilloscope: {
+    visible: true
+  },
+  volume: {
+    visible: true, // not implemented
+    default: 0.5, // not implemented
+  }
+};

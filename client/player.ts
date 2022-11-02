@@ -5,7 +5,8 @@
 import { IAudioMetadata } from 'music-metadata';
 import * as Icons from './icons';
 import { Processor } from './processor';
-import { UUID_REGEX } from './constants';
+import { settings } from './helpers/settings';
+// import { isSafari } from './helpers/checks';
 
 type PaddedTimeValue = string | number;
 type HHMMSS = `${PaddedTimeValue}:${PaddedTimeValue}:${PaddedTimeValue}`;
@@ -224,11 +225,18 @@ export class Player {
   };
 
   public toggleOsc = () => {
-    const canvas = document.querySelector('canvas')!;
+    const canvas = document.querySelector('canvas');
+
+    if (!canvas) return;
+
+    const settingsPath = 'oscilloscope.visible';
+
     if (canvas.hidden) {
       canvas.hidden = false;
+      settings.set(settingsPath, true);
     } else {
       canvas.hidden = true;
+      settings.set(settingsPath, false);
     }
   };
 
@@ -312,9 +320,27 @@ export class Player {
     this.transport.play.addEventListener('click', this.togglePlayback);
     this.transport.skip.addEventListener('click', this.skipTrack);
     this.transport.rand.addEventListener('click', this.random);
-    this.transport.osc.addEventListener('click', this.toggleOsc);
     this.transport.mute.addEventListener('click', this.toggleMute);
     this.transport.volume.addEventListener('click', this.onVolumeUpdate);
+
+    // Visualizer / Oscilloscope
+    const canvas = document.querySelector('canvas');
+    if (canvas) {
+      this.transport.osc.addEventListener('click', this.toggleOsc);
+      // if (!isSafari()) {
+      if (settings.get('oscilloscope.visible')) {
+        canvas.hidden = false;
+      } else {
+        console.info(`Your settings were loaded from your last session and the oscilloscope (visualizer) was hidden last time you were here. If you want it back, just hit the button.`);
+        canvas.hidden = true;
+        // NOTE: commented this out with the safari line above. still working it out.
+        //       It's the AudioContext situation with safari that actually needs fixed.
+        //
+        // this.transport.osc.setAttribute('hidden', 'true');
+        // const oscContainer = document.querySelector<HTMLDivElement>('.oscilloscope')!;
+        // oscContainer.style.opacity = '0';
+      }
+    }
 
     // Global
     window.addEventListener('keyup', this.onKeyPress);

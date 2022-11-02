@@ -22,18 +22,7 @@
       
       <main>
 
-        <section class="columns">
-
-          <div class="column">
-            <!--
-              SPLASH
-              This is where the main heading content goes. If you don't change anything, this will appear on the left on desktop,
-              and on the top of the page on mobile.
-            -->
-            <div class="container center">
-              <%- include('includes/splash') %>
-            </div>
-          </div>
+        <section class="columns vertical">
 
           <div class="column">
             <!--
@@ -46,13 +35,41 @@
             </div>
           </div>
 
+          <div class="column">
+            <!--
+              SPLASH
+              This is where the main heading content goes. If you don't change anything, this will appear on the left on desktop,
+              and on the top of the page on mobile.
+            -->
+            <div>
+              <%- include('includes/splash') %>
+            </div>
+          </div>
+
         </section>
 
         <!--
           ASSOCIATIONS, FOOTER, OTHER CONTENT
           Here is where you can load other page components like any associations, label info, and footer info.
           Above these two lines is a great place to add in other segments if you want some longer-form information on the page.
+
+          How will adding more components affect the layout?
+            By default, the page styles make the area containing the text and player scrollable, so the more you add, the 
+            more user will be able to scroll the page. One size fits all.
+
+            If you want to see how this looks, past the section below above the other two includes (without spaces in the tags).
+
+            <section class="container center column">
+              < %- include('includes/templates/example') %>
+              < %- include('includes/templates/example') %>
+              < %- include('includes/templates/example') %>
+              < %- include('includes/templates/example') %>
+              < %- include('includes/templates/example') %>
+              < %- include('includes/templates/example') %>
+              <hr />
+            </section>
         -->
+
         <%- include('includes/associations') %>
         <%- include('includes/footer') %>
       </main>
@@ -61,7 +78,7 @@
     <!--
       NOTE:
       This loads the player and associated code. Do not move, alter, or change this unless you know what you're doing
-      as you may break the player itself and your page will not load correctly.
+      as you may break the player itself and your page will not load
     -->
     <%- include('includes/scripts') %>
   </body>

@@ -5,13 +5,13 @@
 @import 'colors';
 @import 'layout';
 
-$player-height: 180px;
 $player-width: 450px;
 
 .player {
-  width: $player-width;
-  // height: $player-height;
-  margin: $spacing * 2;
+  min-width: $player-width;
+  width: 100vw;
+  // max-width: $player-width + 450px;
+  margin: 0 ($spacing * 2);
   padding: $spacing * 1.5;
 
   // background-color: $background_50;
@@ -19,6 +19,14 @@ $player-width: 450px;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   z-index: 1;
+
+  @media screen and (max-width: $max-width) {
+    width: 70vw;
+  }
+
+  @media screen and (max-width: 524px) {
+    min-width: calc(100vw - 60px);
+  }
 
   & .oscilloscope {
     width: 100%;
@@ -69,6 +77,11 @@ $player-width: 450px;
   }
 
   & .transport {
+    // position: -webkit-sticky;
+    // position: -moz-sticky;
+    // position: sticky;
+    // top: 30px;
+    
     & button {
       background-color: $background;
       color: $foreground;

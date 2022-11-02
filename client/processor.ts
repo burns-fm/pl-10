@@ -1,6 +1,10 @@
 /**
  * © 2022-2022 Burns Recording Company
  * Created: 23/10/2022
+ * 
+ * The code was derived from:
+ * https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode#basic_usage
+ * Much obliged.
  */
 
 export type BufferSize = 512 | 1024 | 2048 | 4096;
@@ -14,7 +18,6 @@ export class Processor {
   private bufferSize: BufferSize = 1024;
 
   constructor(private readonly source: HTMLAudioElement) {}
-
 
   public attachMeter(element: HTMLCanvasElement, options?: { meterColor?: string }): void {
     if (this.streamAttached) return;

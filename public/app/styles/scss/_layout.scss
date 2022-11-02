@@ -24,6 +24,10 @@ main {
   justify-content: space-evenly;
   flex-direction: row;
 
+  &.vertical {
+    flex-direction: column;
+  }
+
   & .column {
     margin: $spacing;
     flex-basis: auto;
@@ -51,6 +55,10 @@ main {
   }
 
   &.center {
+    &.column {
+      flex-direction: column;
+    }
+    
     @include flex-center;
     @media screen and (max-width: $mobile-breakpoint) {
       flex-direction: column;
