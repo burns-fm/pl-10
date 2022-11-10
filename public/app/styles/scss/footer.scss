@@ -12,6 +12,22 @@ footer.footer {
   text-align: center;
   margin-bottom: $spacing * 10;
 
+  &.bottom {
+    position: absolute;
+    bottom: -40px;;
+
+    $border: 30px;
+
+    &.right {
+      right: $border + 5px;
+      text-align: right;
+    }
+    &.left {
+      left: $border + 5px;
+      text-align: left;
+    }
+  }
+
   & a {
     color: $foreground;
     text-decoration: underline;

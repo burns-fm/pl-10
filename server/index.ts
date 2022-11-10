@@ -29,6 +29,7 @@ app.locals = {
     title: constants.PageText.Title,
     subtitle: constants.PageText.Subtitle,
     supportingText: constants.PageText.SupportingText,
+    copyright: constants.PageText.Copyright,
   },
 };
 

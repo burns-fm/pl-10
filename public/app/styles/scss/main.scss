@@ -26,12 +26,14 @@ html, body {
 }
 
 .background {
+  $blur: 4px;
   position: absolute;
-  background: url('/img/cover-art.png');
+  // background: url('/img/cover-art.png');
+  background: url('/img/RugSpin.jpg');
   background-size: cover;
   background-position: center;
-  -webkit-filter: blur(20px);
-  filter: blur(20px);
+  -webkit-filter: blur($blur);
+  filter: blur($blur);
   height: 100%;
   width: 100%;
   box-shadow: -10px -10px 5px 5px rgba(9,9,9,0.9),

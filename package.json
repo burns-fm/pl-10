@@ -1,12 +1,13 @@
 {
-  "name": "pl-10",
+  "name": "BRC002_pl-10",
   "version": "1.0.0",
-  "description": "Simple self-hosted audio streaming",
+  "description": "robfairley.ca",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:server": "tsc",
     "watch:server": "tsc --w",
-    "build:client": "spack",
+    "build:client": "node scripts/build",
+    "watch:client": "node scripts/watch",
     "build": "npm run build:server && npm run build:client",
     "start": "node scripts/start",
     "start:dev": "echo 'Not yet configured'",
@@ -33,6 +34,7 @@
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.3",
     "@types/node-sass-middleware": "^0.0.32",
+    "chokidar": "^3.5.3",
     "typescript": "^4.8.4"
   }
 }
