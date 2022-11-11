@@ -15,11 +15,11 @@ export class Processor {
   public audioContext: AudioContext = new AudioContext();
   public mediaSource: MediaElementAudioSourceNode;
 
-  private bufferSize: BufferSize = 1024;
+  private bufferSize: BufferSize = 4096;
 
   constructor(private readonly source: HTMLAudioElement) {}
 
-  public attachMeter(element: HTMLCanvasElement, options?: { meterColor?: string }): void {
+  public attachMeter(element: HTMLCanvasElement, options?: { meterColor?: string, meterLineWidth?: number, }): void {
     if (this.streamAttached) return;
 
     this.mediaSource = this.audioContext.createMediaElementSource(this.source);
@@ -40,19 +40,20 @@ export class Processor {
       context.strokeStyle = options?.meterColor ?? 'rgba(240, 240, 240, 0.3)';
     };
 
-    function draw() {
+    function draw(time: DOMHighResTimeStamp): void {
       requestAnimationFrame(draw);
+
+      if ((time / 1000) % 2 === 0) return;
 
       node.getByteTimeDomainData(data);
       context.fillStyle = 'rgb(9, 9, 9)';
-      // context.fillStyle = 'transparent';
       context.fillRect(0, 0, element.width, element.height);
-      context.lineWidth = 1;
-      context.strokeStyle = options?.meterColor ?? 'rgba(240, 240, 240, 0.729)';
-      context.shadowColor = options?.meterColor ?? 'rgba(240, 240, 240, 0.729)';
-      context.shadowBlur = 10;
+      context.lineWidth = options?.meterLineWidth ?? 4;
+      context.strokeStyle = options?.meterColor ?? 'rgba(240, 240, 240, 0.436)';
+      context.shadowColor = options?.meterColor ?? 'rgba(173, 229, 255, 0.85)';
+      context.shadowBlur = 40;
       context.beginPath();
-      const sliceWidth = (element.width * 1.0) / bufferLength;
+      const sliceWidth = (element.width * 3.0) / bufferLength;
       let x = 0;
 
       for (let i = 0; i < bufferLength; i++) {
@@ -72,7 +73,7 @@ export class Processor {
       context.stroke();
     }
 
-    draw();
+    draw(0);
 
     this.mediaSource.connect(node);
     this.mediaSource.connect(this.audioContext.destination);

@@ -3,9 +3,9 @@
  * Created: 20/10/2022
  */
 
-import { randomBytes } from "crypto";
+import { createHash, randomBytes } from "crypto";
 
-export class Store<T> {
+export class Store<T extends Record<string, any>> {
   static KEY_LENGTH = 16;
   static KEY_ENCODING: BufferEncoding = 'hex';
 
@@ -27,8 +27,8 @@ export class Store<T> {
     return this._data.get(key);
   }
 
-  public loadDataItem(item: T): string {
-    const key = this.generateKey();
+  public loadDataItem(item: T, keySeed?: string): string {
+    const key = this.generateKey(`${keySeed ?? JSON.stringify(item)}`);
     this._data.set(key, item);
     return key;
   }
@@ -51,7 +51,11 @@ export class Store<T> {
     }
   }
 
-  private generateKey(): string {
+  public generateRandomKey(): string {
     return randomBytes(Store.KEY_LENGTH).toString(Store.KEY_ENCODING);
+  }
+
+  private generateKey(data: string): string {
+    return createHash('md5').update(data).digest('hex');
   }
 }

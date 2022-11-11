@@ -16,6 +16,7 @@ interface PlayerTransport {
   skip: HTMLButtonElement;
   rand: HTMLButtonElement;
   osc: HTMLButtonElement;
+  shr: HTMLButtonElement;
   mute: HTMLButtonElement;
   position: HTMLProgressElement;
   volume: HTMLProgressElement;
@@ -55,6 +56,7 @@ export class Player {
     skip: document.querySelector('.transport #btn--skip')!,
     rand: document.querySelector('.transport #btn--rand')!,
     osc: document.querySelector('.transport #btn--osc')!,
+    shr: document.querySelector('.transport #btn--shr')!,
     mute: document.querySelector('.transport #btn--mute')!,
     position: document.querySelector('.transport #position')!,
     volume: document.querySelector('.transport #volume')!,
@@ -259,6 +261,22 @@ export class Player {
     }
   };
 
+  public getShareLink(): string {
+    if (!this.data.currentTrack) {
+      return window.location.href;
+    }
+    return `${window.location.href}?t=${this.data.currentTrack.key}`;
+  }
+
+  public copyShareLink = async (): Promise<void> => {
+    const { clipboard } = navigator;
+
+    const link = this.getShareLink();
+    await clipboard.writeText('');
+    await clipboard.writeText(link);
+    alert('Copied share link to your clipboard');
+  }
+
   /*** EVENTS & HANDLERS */
   private onPlay = () => {
     console.info(`Now playing: ${this.data.currentTrack?.title} - ${this.data.currentTrack?.artist}`);
@@ -322,6 +340,7 @@ export class Player {
     this.transport.rand.addEventListener('click', this.random);
     this.transport.mute.addEventListener('click', this.toggleMute);
     this.transport.volume.addEventListener('click', this.onVolumeUpdate);
+    this.transport.shr.addEventListener('click', this.copyShareLink);
 
     // Visualizer / Oscilloscope
     const canvas = document.querySelector('canvas');
@@ -364,6 +383,7 @@ export class Player {
     this.transport.rand.innerHTML = Icons.Shuffle;
     this.transport.osc.innerHTML = Icons.Oscilloscope;
     this.transport.mute.innerHTML = Icons.VolumeFull;
+    this.transport.shr.innerHTML = Icons.Share;
 
     this.data.trackList = await this.getTrackList();
 
