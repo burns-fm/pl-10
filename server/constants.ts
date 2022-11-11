@@ -31,7 +31,7 @@ export const PageText = {
 
 export enum MediaMimetype {
   MP3 = 'audio/mpeg',
-  WAV = 'audio/wav',
+  // WAV = 'audio/wav',
   // FLAC = 'audio/flac',
 }
 
