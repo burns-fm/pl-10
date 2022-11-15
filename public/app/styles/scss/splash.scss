@@ -27,11 +27,16 @@
     font-size: 1.4em;
     font-weight: 300;
     margin: 0;
+    max-width: 90%;
   }
 
   @media screen and (max-width: $mobile-breakpoint) {
     align-items: center;
     h1, h2 {
+      text-align: center;
+    }
+
+    & .supporting-text {
       text-align: center;
     }
   }

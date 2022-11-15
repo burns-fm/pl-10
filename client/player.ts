@@ -6,6 +6,7 @@ import { IAudioMetadata } from 'music-metadata';
 import * as Icons from './icons';
 import { Processor } from './processor';
 import { settings } from './helpers/settings';
+import { copyText } from './helpers/checks';
 // import { isSafari } from './helpers/checks';
 
 type PaddedTimeValue = string | number;
@@ -90,7 +91,7 @@ export class Player {
   public loadTrack(key: string): void {
     try {
       this.data.currentTrack = this.getTrackByKey(key);
-
+      
       const streamUrl = `/stream/${key}`;
       const resume = !this.audio.paused;
 
@@ -115,7 +116,13 @@ export class Player {
       throw new Error(error);
     }
     const rand = Math.floor((Math.random() * Date.now()) % this.data.trackList?.length);
-    return this.data.trackList[rand]?.key;
+    let randomKey = this.data.trackList[rand]?.key;
+
+    if (randomKey === this.data.currentTrack?.key) {
+      return this.getRandomTrackKey();
+    }
+
+    return randomKey;
   }
 
   private async getTrackList(): Promise<TrackSummary[]> {
@@ -269,12 +276,8 @@ export class Player {
   }
 
   public copyShareLink = async (): Promise<void> => {
-    const { clipboard } = navigator;
-
     const link = this.getShareLink();
-    await clipboard.writeText('');
-    await clipboard.writeText(link);
-    alert('Copied share link to your clipboard');
+    copyText(link);
   }
 
   /*** EVENTS & HANDLERS */
@@ -329,7 +332,7 @@ export class Player {
   private setupEventListeners(): void {
     // Audio Events
     this.audio.addEventListener('timeupdate', this.onUpdateTime);
-    this.audio.addEventListener('loadeddata', this.onUpdateStreamSource);
+    this.audio.addEventListener('loadedmetadata', this.onUpdateStreamSource);
     this.audio.addEventListener('ended', this.onPause);
     this.audio.addEventListener('play', this.onPlay);
 
@@ -378,6 +381,7 @@ export class Player {
 
   private async initialize(): Promise<void> {
     this.audio = document.createElement('audio');
+    this.audio.preload = 'metadata';
     this.transport.play.innerHTML = Icons.Play;
     this.transport.skip.innerHTML = Icons.Skip;
     this.transport.rand.innerHTML = Icons.Shuffle;

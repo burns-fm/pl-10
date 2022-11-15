@@ -32,7 +32,7 @@ export function runCompatibilityCheck(): void {
     </div>
     ${
       errorPage.showErrorDetails
-      ? `<pre>ERROR NAME:\n${error.name}\nMESSAGE:\n${error.message}\nSTACK:\n${error.stack}</pre>`
+      ? `<textarea>ERROR NAME:\n${error.name}\nMESSAGE:\n${error.message}\nSTACK:\n${error.stack}</textarea>`
       : ''
       }
     `;
@@ -46,3 +46,18 @@ export const isSafari = () => {
   navigator.userAgent.indexOf('CriOS') == -1 &&
   navigator.userAgent.indexOf('FxiOS') == -1;
 };
+
+export const isIos = () => navigator.userAgent.match(/ipad|iphone/i);
+
+export const copyText = async (text: string) => {
+  const copied = () => alert('Copied share link to clipboard');
+
+  if (isIos()) {
+    return prompt('Copy the shareable link below:', text);
+  }
+
+  await navigator.clipboard.writeText('');
+  await navigator.clipboard.writeText(text);
+  console.log(await navigator.clipboard.readText())
+  return copied();
+}

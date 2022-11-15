@@ -20,6 +20,10 @@ $player-width: 450px;
   backdrop-filter: blur(10px);
   z-index: 1;
 
+  @media screen and (max-width: 768px) {
+    padding-top: 40px;
+  }
+
   @media screen and (max-width: $max-width) {
     width: 70vw;
   }
@@ -81,7 +85,7 @@ $player-width: 450px;
     // position: -moz-sticky;
     // position: sticky;
     // top: 30px;
-    
+
     & button {
       background-color: $background;
       color: $foreground;
@@ -104,6 +108,7 @@ $player-width: 450px;
     & .controls {
       display: flex;
       justify-content: space-between;
+      overflow-x: auto;
     }
 
     & .volume {
@@ -127,6 +132,10 @@ $player-width: 450px;
 
         cursor: pointer;
         border-radius: 4px;
+
+        @media screen and (max-width: $mobile-breakpoint) {
+          height: 10px;
+        }
 
         &:hover {
           height: 10px;
