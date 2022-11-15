@@ -33,7 +33,7 @@ html, body {
   background-size: cover;
   background-position: center;
   -webkit-filter: blur($blur);
-  filter: blur($blur);
+  filter: blur($blur) brightness(0.8);
   height: 100%;
   width: 100%;
   box-shadow: -10px -10px 5px 5px rgba(9,9,9,0.9),

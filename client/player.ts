@@ -4,9 +4,9 @@
  */
 import { IAudioMetadata } from 'music-metadata';
 import * as Icons from './icons';
-import { Processor } from './processor';
+import { Scope } from './scope';
 import { settings } from './helpers/settings';
-import { copyText } from './helpers/checks';
+import { copyText, isSafari } from './helpers/checks';
 // import { isSafari } from './helpers/checks';
 
 type PaddedTimeValue = string | number;
@@ -79,6 +79,7 @@ export class Player {
   };
 
   audio: HTMLAudioElement;
+  scope: Scope;
 
   constructor() {
     this.initialize().catch((error) => {
@@ -91,7 +92,7 @@ export class Player {
   public loadTrack(key: string): void {
     try {
       this.data.currentTrack = this.getTrackByKey(key);
-      
+
       const streamUrl = `/stream/${key}`;
       const resume = !this.audio.paused;
 
@@ -167,15 +168,21 @@ export class Player {
   }
 
   /*** TRANSPORT FUNCTIONS */
-  public togglePlayback = (event?: MouseEvent): void => {
+  public togglePlayback = async (event?: MouseEvent): Promise<void> => {
     event?.preventDefault();
 
     if (this.audio.paused) {
       this.audio.play();
       this.transport.play.innerHTML = Icons.Pause;
+      if (!this.scope.audioContext) {
+        this.scope.audioContext = new AudioContext();
+      }
+      await this.scope.audioContext?.resume();
+      this.drawOscilloscope();
     } else {
       this.audio.pause();
       this.transport.play.innerHTML = Icons.Play;
+      // this.clearOscilloscope();
     }
   };
 
@@ -255,7 +262,10 @@ export class Player {
     }
 
     const wasPlaying = !this.audio.paused;
-    this.audio.pause();
+    
+    if (wasPlaying) {
+      this.audio.pause();
+    }
 
     const percent = event.offsetX / this.transport.position.offsetWidth;
     const { duration } = this.data.currentTrack;
@@ -281,7 +291,7 @@ export class Player {
   }
 
   /*** EVENTS & HANDLERS */
-  private onPlay = () => {
+  private onPlay = async () => {
     console.info(`Now playing: ${this.data.currentTrack?.title} - ${this.data.currentTrack?.artist}`);
   };
 
@@ -289,12 +299,12 @@ export class Player {
     this.transport.play.innerHTML = Icons.Play;
   };
 
-  private onKeyPress = (e: KeyboardEvent) => {
-    if (e.key === ' ' && e.target === document.body) {
+  private onKeyPress = async (e: KeyboardEvent) => {
+    if (e.key === ' ') {
       e.preventDefault();
       e.stopPropagation();
 
-      this.togglePlayback();
+      await this.togglePlayback();
     } else if (e.key === 'm') {
       this.toggleMute();
     }
@@ -338,6 +348,7 @@ export class Player {
 
     // Transport
     this.transport.position.addEventListener('click', this.seek);
+    this.transport.position.addEventListener('touchend', (e) => this.seek(e as any));
     this.transport.play.addEventListener('click', this.togglePlayback);
     this.transport.skip.addEventListener('click', this.skipTrack);
     this.transport.rand.addEventListener('click', this.random);
@@ -371,12 +382,15 @@ export class Player {
   private drawOscilloscope(): void {
     const osc = document.querySelector<HTMLCanvasElement>('#osc');
     if (osc) {
-      const processor = new Processor(this.audio);
-      processor.attachMeter(osc);
-      this.audio.onplay = _ => {
-        processor.audioContext.resume();
-      };
+      this.scope.attachMeter(osc);
     }
+  }
+
+  private async clearOscilloscope(): Promise<void> {
+    const osc = document.querySelector<HTMLCanvasElement>('#osc');
+    if (!osc) return;
+
+    await this.scope.audioContext?.close();
   }
 
   private async initialize(): Promise<void> {
@@ -398,9 +412,7 @@ export class Player {
     const trackKey = this.getTrackIdFromUrl() ?? this.getRandomTrackKey();
 
     this.loadTrack(trackKey);
-
-    // Post processing & metering
-    this.drawOscilloscope();
+    this.scope = new Scope(this.audio);
   }
 
   private getTrackIdFromUrl(url: string = window.location.href): string | null {

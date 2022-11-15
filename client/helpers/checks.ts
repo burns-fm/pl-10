@@ -58,6 +58,5 @@ export const copyText = async (text: string) => {
 
   await navigator.clipboard.writeText('');
   await navigator.clipboard.writeText(text);
-  console.log(await navigator.clipboard.readText())
   return copied();
 }

@@ -43,6 +43,9 @@ $player-width: 450px;
       position: absolute;
       z-index: -1;
     }
+    &.hidden {
+      visibility: hidden;
+    }
   }
 
   & .display {
