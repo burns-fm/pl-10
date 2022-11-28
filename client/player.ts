@@ -262,7 +262,9 @@ export class Player {
       this.setVolume(0);
       this.audio.muted = true;
       this.transport.mute.innerHTML = Icons.VolumeZero;
-      this.transport.mute.classList.add('active');
+      if (this.display.meta.hidden) {
+        this.transport.mute.classList.add('active');
+      }
     }
   };
 
@@ -375,6 +377,9 @@ export class Player {
         break;
       case 'm':
         this.toggleMute();
+        break;
+      case 'o':
+        this.toggleOsc();
         break;
       case 'v':
         this.toggleVolumeSlider();

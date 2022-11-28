@@ -11,7 +11,7 @@ import { isSafari } from './helpers/checks';
 export type BufferSize = 512 | 1024 | 2048 | 4096;
 
 export const scopeDefault = {
-  background: 'rgb(9, 9, 9)',
+  background: 'rgb(51, 51, 51)',
   meter: {
     line: `rgba(100, 100, 100, 0.9)`,
     line2: 'rgba(240, 240, 240, 0.729)',

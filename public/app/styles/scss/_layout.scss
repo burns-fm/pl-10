@@ -8,9 +8,16 @@ $border-radius: 8px;
 
 $mobile-breakpoint: 768px;
 
+$max-width: 520px;
+
 @mixin flex-center {
   display: flex;
   justify-content: center;
   align-content: center;
   align-items: center;
+}
+
+.container {
+  max-width: $max-width;
+  width: $max-width;
 }
