@@ -25,10 +25,18 @@ interface PlayerTransport {
 
 interface PlayerDisplay {
   currentTime: HTMLTimeElement;
+  main: HTMLDivElement;
+  meta: HTMLDivElement;
   duration: HTMLTimeElement | null | undefined;
+  pages: {
+    volumeSlider: HTMLDivElement | null | undefined;
+  };
   trackInfo: {
     title: HTMLMarqueeElement | HTMLDivElement;
     album: HTMLParagraphElement;
+  };
+  opts: {
+    showVolumeSlider: boolean;
   };
 }
 
@@ -52,6 +60,14 @@ export interface TrackSummary {
 export const DEFAULT_VOLUME = 0.75;
 
 export class Player {
+  private createVolumeControl = () => {
+    const slider = document.createElement('progress');
+      slider.classList.add('volume');
+      slider.id = 'volume';
+      slider.title = 'Adjust volume';
+    return slider;
+  };
+
   transport: PlayerTransport = {
     play: document.querySelector('.transport #btn--play')!,
     skip: document.querySelector('.transport #btn--skip')!,
@@ -59,16 +75,24 @@ export class Player {
     osc: document.querySelector('.transport #btn--osc')!,
     shr: document.querySelector('.transport #btn--shr')!,
     mute: document.querySelector('.transport #btn--mute')!,
-    position: document.querySelector('.transport #position')!,
-    volume: document.querySelector('.transport #volume')!,
+    position: document.querySelector('.display #position')!,
+    volume: this.createVolumeControl(),
   };
 
   display: PlayerDisplay = {
     currentTime: document.querySelector('.time .current-time')!,
     duration: document.querySelector<HTMLTimeElement>('.time .duration'),
+    main: document.querySelector<HTMLDivElement>('.display')!,
+    meta: document.querySelector<HTMLDivElement>('.display .meta')!,
+    pages: {
+      volumeSlider: null,
+    },
     trackInfo: {
       title: document.querySelector('.track-info #title')!,
       album: document.querySelector('.track-info #album')!,
+    },
+    opts: {
+      showVolumeSlider: false,
     },
   };
 
@@ -173,7 +197,6 @@ export class Player {
 
     if (this.audio.paused) {
       this.audio.play();
-      this.transport.play.innerHTML = Icons.Pause;
       if (!this.scope.audioContext) {
         this.scope.audioContext = new AudioContext();
       }
@@ -181,7 +204,6 @@ export class Player {
       this.drawOscilloscope();
     } else {
       this.audio.pause();
-      this.transport.play.innerHTML = Icons.Play;
       // this.clearOscilloscope();
     }
   };
@@ -232,12 +254,50 @@ export class Player {
       this.setVolume(this.data.lastVolume);
       this.audio.muted = false;
       this.transport.mute.innerHTML = Icons.VolumeFull;
+      if (!this.display.meta.hidden) {
+        this.transport.mute.classList.remove('active');
+      }
     } else {
       this.data.lastVolume = this.audio.volume;
       this.setVolume(0);
       this.audio.muted = true;
       this.transport.mute.innerHTML = Icons.VolumeZero;
+      this.transport.mute.classList.add('active');
     }
+  };
+
+  public toggleVolumeSlider = () => {
+    const sliderContainerId = 'volume-display';
+
+    const hideMainDisplay = (v: boolean) => {
+      this.display.meta.hidden = v;
+      this.display.opts.showVolumeSlider = v;
+    };
+    
+    if (!this.display.pages.volumeSlider) {
+      this.transport.mute.classList.add('active');
+      hideMainDisplay(true);
+      
+      this.display.pages.volumeSlider = document.createElement('div');
+      this.display.pages.volumeSlider.id = sliderContainerId;
+      this.display.pages.volumeSlider.classList.add('page');
+      this.display.pages.volumeSlider.innerHTML = `<h2>VOLUME</h2>`;
+      this.display.pages.volumeSlider.appendChild(this.transport.volume);
+      this.display.main.appendChild(this.display.pages.volumeSlider);
+
+      const muteButton = document.createElement('button');
+      muteButton.textContent = 'TOGGLE MUTE';
+      muteButton.addEventListener('click', this.toggleMute);
+      this.display.pages.volumeSlider.appendChild(muteButton);
+
+    } else {
+      this.display.pages.volumeSlider.remove();
+      this.display.pages.volumeSlider = null;
+      
+      hideMainDisplay(false);
+      this.transport.mute.classList.remove('active');
+    }
+    console.log(this.display.main.children);
   };
 
   public toggleOsc = () => {
@@ -250,9 +310,11 @@ export class Player {
     if (canvas.hidden) {
       canvas.hidden = false;
       settings.set(settingsPath, true);
+      this.transport.osc.classList.add('active');
     } else {
       canvas.hidden = true;
       settings.set(settingsPath, false);
+      this.transport.osc.classList.remove('active');
     }
   };
 
@@ -293,20 +355,31 @@ export class Player {
   /*** EVENTS & HANDLERS */
   private onPlay = async () => {
     console.info(`Now playing: ${this.data.currentTrack?.title} - ${this.data.currentTrack?.artist}`);
+    this.transport.play.innerHTML = Icons.Pause;
+    this.transport.play.classList.add('active');
   };
 
   private onPause = (_e: Event) => {
     this.transport.play.innerHTML = Icons.Play;
+    this.transport.play.classList.remove('active');
   };
 
   private onKeyPress = async (e: KeyboardEvent) => {
-    if (e.key === ' ') {
-      e.preventDefault();
-      e.stopPropagation();
 
-      await this.togglePlayback();
-    } else if (e.key === 'm') {
-      this.toggleMute();
+    switch (e.key) {
+      case ' ':
+        e.preventDefault();
+        e.stopPropagation();
+
+        await this.togglePlayback();
+        break;
+      case 'm':
+        this.toggleMute();
+        break;
+      case 'v':
+        this.toggleVolumeSlider();
+        break;
+      default: return;
     }
   };
 
@@ -334,7 +407,9 @@ export class Player {
   };
 
   private onUpdateStreamSource = (): void => {
-    this.display.trackInfo.title.innerHTML = this.data.currentTrack?.title ?? 'Unknown';
+    const title = this.data.currentTrack?.title ?? 'Unknown';
+    this.display.trackInfo.title.innerHTML = title;
+    this.display.trackInfo.title.title = title;
     this.display.trackInfo.album.innerHTML = this.data.currentTrack?.album ?? 'Unknown';
   };
 
@@ -344,6 +419,7 @@ export class Player {
     this.audio.addEventListener('timeupdate', this.onUpdateTime);
     this.audio.addEventListener('loadedmetadata', this.onUpdateStreamSource);
     this.audio.addEventListener('ended', this.onPause);
+    this.audio.addEventListener('pause', this.onPause);
     this.audio.addEventListener('play', this.onPlay);
 
     // Transport
@@ -352,9 +428,17 @@ export class Player {
     this.transport.play.addEventListener('click', this.togglePlayback);
     this.transport.skip.addEventListener('click', this.skipTrack);
     this.transport.rand.addEventListener('click', this.random);
-    this.transport.mute.addEventListener('click', this.toggleMute);
+    this.transport.mute.addEventListener('click', this.toggleVolumeSlider);
     this.transport.volume.addEventListener('click', this.onVolumeUpdate);
     this.transport.shr.addEventListener('click', this.copyShareLink);
+
+    this.display.trackInfo.title.addEventListener('mouseover', (e) => {
+      (e.target as HTMLMarqueeElement).stop();
+    });
+
+    this.display.trackInfo.title.addEventListener('mouseout', e => {
+      (e.target as HTMLMarqueeElement).start();
+    });
 
     // Visualizer / Oscilloscope
     const canvas = document.querySelector('canvas');
@@ -362,9 +446,11 @@ export class Player {
       this.transport.osc.addEventListener('click', this.toggleOsc);
       // if (!isSafari()) {
       if (settings.get('oscilloscope.visible')) {
+        this.transport.osc.classList.add('active');
         canvas.hidden = false;
       } else {
         console.info(`Your settings were loaded from your last session and the oscilloscope (visualizer) was hidden last time you were here. If you want it back, just hit the button.`);
+        this.transport.osc.classList.remove('active');
         canvas.hidden = true;
         // NOTE: commented this out with the safari line above. still working it out.
         //       It's the AudioContext situation with safari that actually needs fixed.

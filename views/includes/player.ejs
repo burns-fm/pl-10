@@ -36,19 +36,22 @@ Created: 23/10/2022
     <div class="oscilloscope">
       <canvas id="osc" />
     </div>
+    
+    <div class="meta">
+  
+      <div class="track-info">
+        <marquee id="title">Track Title</marquee>
+        <!-- <div id="title">...</div> -->
+        <p id="album">...</p>
+      </div>
+  
+      <div class="time">
+        <time class="current-time" title="Playback position (HH:MM:SS)">00:00:00</time>
+        <!-- <time class="duration">00:00:00</time> -->
+      </div>
 
-    <div class="track-info">
-      <!-- <marquee id="title">Track Title</marquee> -->
-      <div id="title">...</div>
-      <p id="album">...</p>
     </div>
 
-    <div class="time">
-      <time class="current-time" title="Playback position (HH:MM:SS)">00:00:00</time>
-      <!-- <time class="duration">00:00:00</time> -->
-    </div>
-  </div>
-  <div class="transport">
     <div class="position">
       <progress
         id="position"
@@ -56,6 +59,9 @@ Created: 23/10/2022
         title="Playback position"
       />
     </div>
+  </div>
+  <div class="transport">
+    
     
     <div class="controls">
       <button id="btn--play" title="Toggle Playback">
@@ -77,13 +83,14 @@ Created: 23/10/2022
         MUTE
       </button>
 
-      <div class="volume">
+      <!-- <div class="volume">
         <progress
           id="volume"
           name="volume"
           title="Adjust volume"
         />
-      </div>
+      </div> -->
+
     </div>
   </div>
 </section>

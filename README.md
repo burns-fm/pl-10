@@ -6,6 +6,7 @@ Just drop your files in the `media` folder and start the server.
 
 ## Contents
 
+- <a href="#usage">Usage</a>
 - <a href="#setup">Setup</a>
 - <a href="#startup">Startup</a>
   - <a href="#build-the-server">Build the server</a>
@@ -17,6 +18,12 @@ Just drop your files in the `media` folder and start the server.
   - <a href="#media-directory">Media Directory</a>
   - <a href="#max-file-number">Maximum file number</a>
 - <a href="#customization">Customization</a>
+
+## Usage
+
+> **Notes on mobile compatibility:** Some effort has been made so far to be mobile-friendly.
+> There are still glitches in playback, seeking, and less importantly, displaying the visualizer.
+> This is due to differences between browser implementation of the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
 
 ## Setup
 
