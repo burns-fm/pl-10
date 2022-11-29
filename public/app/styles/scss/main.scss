@@ -12,7 +12,6 @@ html, body {
   color: $foreground;
   background-color: $background;
   @include flex-center;
-
 }
 
 ::selection { 
