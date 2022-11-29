@@ -1,85 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!--
+<!--
     NOTE:
     This next line helps load helpful metadata and the page styles.
     Do not alter it or remove it unless you know what you're doing or your page will
     not render correctly.
   -->
-  <%- include('includes/head') %>
+<%- include('includes/head') %>
 
-  <body>
-    <section class="page-wrapper">
-      <!--
+<body>
+  <section class="page-wrapper">
+    <!--
         BACKGROUND IMAGE AND BORDER
         If you don't want to have a background image or colour in the content area, you can
         either comment out the element below or delete it entirely.
 
         Same with the inset border on that section.
        -->
-      <div class="background"></div>
-      <div class="border"></div>
-      
-      <main>
+    <div class="background"></div>
+    <div class="border"></div>
 
-        <section class="columns vertical">
+    <main>
 
-          <div class="column">
-            <!--
-              PLAYER
-              This is where the player will be rendered. If you don't change anything, it will appear on the right on desktop,
-              and go below the splash on mobile.
-            -->
-            <div class="container center">
-              <%- include('includes/player') %>
-            </div>
-          </div>
+      <!--
+        TITLE
+        Uncomment the block below to include a title on the top of your page.
+        This uses the default set in your variables.
+       -->
+      <!-- <div class="container center">
+        </ %- include('includes/title') %>
+      </div> -->
 
-          <div class="column">
-            <!--
-              SPLASH
-              This is where the main heading content goes. If you don't change anything, this will appear on the left on desktop,
-              and on the top of the page on mobile.
-            -->
-            <div>
-              <%- include('includes/splash') %>
-            </div>
-          </div>
+      <!--
+        COVER ART
+        This adds a large cover art image above the player.
+        You can set one of several sizes. Use one of these in the 'class':
+          - jumbo
+          - large
+          - medium
+          - small
+      -->
+      <div class="container">
+        <%- include('includes/cover-art') %>
+      </div>
 
-        </section>
+      <!--
+        PLAYER
+        This is where the player will be rendered. If you don't change anything, it will appear on the right on desktop,
+        and go below the splash on mobile.
+      -->
+      <div class="container center">
+        <%- include('includes/player') %>
+      </div>
 
-        <!--
-          ASSOCIATIONS, FOOTER, OTHER CONTENT
-          Here is where you can load other page components like any associations, label info, and footer info.
-          Above these two lines is a great place to add in other segments if you want some longer-form information on the page.
+      <!--
+        SPLASH
+        This is where the main heading content goes. If you don't change anything, this will appear on the left on desktop,
+        and on the top of the page on mobile.
+      -->
+      <div>
+        <%- include('includes/splash') %>
+      </div>
 
-          How will adding more components affect the layout?
-            By default, the page styles make the area containing the text and player scrollable, so the more you add, the 
-            more user will be able to scroll the page. One size fits all.
 
-            If you want to see how this looks, past the section below above the other two includes (without spaces in the tags).
+      <!--
+        ASSOCIATIONS, FOOTER, OTHER CONTENT
+        Here is where you can load other page components like any associations, label info, and footer info.
+        Above these two lines is a great place to add in other segments if you want some longer-form information on the page.
 
-            <section class="container center column">
-              < %- include('includes/templates/example') %>
-              < %- include('includes/templates/example') %>
-              < %- include('includes/templates/example') %>
-              < %- include('includes/templates/example') %>
-              < %- include('includes/templates/example') %>
-              < %- include('includes/templates/example') %>
-              <hr />
-            </section>
-        -->
+        How will adding more components affect the layout?
+          By default, the page styles make the area containing the text and player scrollable, so the more you add, the 
+          more user will be able to scroll the page. One size fits all.
 
-        <%- include('includes/associations') %>
-        <%- include('includes/footer') %>
-      </main>
-    </section>
-    
-    <!--
+          If you want to see how this looks, past the section below above the other two includes (without spaces in the tags).
+
+          <section class="container center column">
+            < %- include('includes/templates/example') %>
+            < %- include('includes/templates/example') %>
+            < %- include('includes/templates/example') %>
+            < %- include('includes/templates/example') %>
+            < %- include('includes/templates/example') %>
+            < %- include('includes/templates/example') %>
+            <hr />
+          </section>
+      -->
+
+      <%- include('includes/associations') %>
+      <%- include('includes/footer') %>
+    </main>
+  </section>
+
+  <!--
       NOTE:
       This loads the player and associated code. Do not move, alter, or change this unless you know what you're doing
       as you may break the player itself and your page will not load
     -->
-    <%- include('includes/scripts') %>
-  </body>
+  <%- include('includes/scripts') %>
+</body>
+
 </html>

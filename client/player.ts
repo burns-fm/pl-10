@@ -266,7 +266,7 @@ export class Player {
 
     if (this.display.pages.volumeSlider) {
       this.transport.mute.classList.add('active');
-      this.display.pages.volumeSlider.querySelector('#current-volume')!.textContent = `${this.audio.volume * 100}`;
+      this.display.pages.volumeSlider.querySelector('#current-volume')!.textContent = `${Math.round(this.audio.volume * 100)}`;
     }
   };
 
@@ -286,7 +286,7 @@ export class Player {
       this.display.pages.volumeSlider.id = sliderContainerId;
       this.display.pages.volumeSlider.classList.add('page');
       this.display.pages.volumeSlider.innerHTML = `<h2>VOLUME</h2>`;
-      this.display.pages.volumeSlider.innerHTML += `<span id="current-volume">${this.audio.volume * 100}</span>`
+      this.display.pages.volumeSlider.innerHTML += `<span id="current-volume">${Math.round(this.audio.volume * 100)}</span>`
       this.display.pages.volumeSlider.appendChild(this.transport.volume);
       this.display.main.appendChild(this.display.pages.volumeSlider);
 
@@ -307,10 +307,17 @@ export class Player {
 
   public toggleOsc = () => {
     const canvas = document.querySelector('canvas');
-
-    if (!canvas) return;
-
+    if (!canvas) 
+    return;
     const settingsPath = 'oscilloscope.visible';
+
+    if (isSafari()) {
+      alert(`Sorry, your browser doesn't support the visualizer yet.`);
+      canvas.hidden = true;
+      settings.set(settingsPath, false);
+      this.transport.osc.classList.remove('active');
+      return;
+    }
 
     if (canvas.hidden) {
       canvas.hidden = false;
@@ -370,12 +377,11 @@ export class Player {
   };
 
   private onKeyPress = async (e: KeyboardEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
 
     switch (e.key) {
       case ' ':
-        e.preventDefault();
-        e.stopPropagation();
-
         await this.togglePlayback();
         break;
       case 'm':
@@ -387,7 +393,8 @@ export class Player {
       case 'v':
         this.toggleVolumeSlider();
         break;
-      default: return;
+      default:
+        return;
     }
   };
 
@@ -402,7 +409,7 @@ export class Player {
     }
 
     if (this.display.pages.volumeSlider) {
-      this.display.pages.volumeSlider.querySelector('#current-volume')!.textContent = `${this.audio.volume * 100}`;
+      this.display.pages.volumeSlider.querySelector('#current-volume')!.textContent = `${Math.round(this.audio.volume * 100)}`;
     }
   }
 
@@ -456,20 +463,22 @@ export class Player {
     const canvas = document.querySelector('canvas');
     if (canvas) {
       this.transport.osc.addEventListener('click', this.toggleOsc);
-      // if (!isSafari()) {
-      if (settings.get('oscilloscope.visible')) {
-        this.transport.osc.classList.add('active');
-        canvas.hidden = false;
-      } else {
-        console.info(`Your settings were loaded from your last session and the oscilloscope (visualizer) was hidden last time you were here. If you want it back, just hit the button.`);
-        this.transport.osc.classList.remove('active');
-        canvas.hidden = true;
-        // NOTE: commented this out with the safari line above. still working it out.
-        //       It's the AudioContext situation with safari that actually needs fixed.
-        //
-        // this.transport.osc.setAttribute('hidden', 'true');
-        // const oscContainer = document.querySelector<HTMLDivElement>('.oscilloscope')!;
-        // oscContainer.style.opacity = '0';
+
+      if (!isSafari()) {
+        if (settings.get('oscilloscope.visible')) {
+          this.transport.osc.classList.add('active');
+          canvas.hidden = false;
+        } else {
+          console.info(`Your settings were loaded from your last session and the oscilloscope (visualizer) was hidden last time you were here. If you want it back, just hit the button.`);
+          this.transport.osc.classList.remove('active');
+          canvas.hidden = true;
+          // NOTE: commented this out with the safari line above. still working it out.
+          //       It's the AudioContext situation with safari that actually needs fixed.
+          //
+          // this.transport.osc.setAttribute('hidden', 'true');
+          // const oscContainer = document.querySelector<HTMLDivElement>('.oscilloscope')!;
+          // oscContainer.style.opacity = '0';
+        }
       }
     }
 

@@ -4,3 +4,15 @@
  */
 @import 'layout';
 @import 'fonts';
+
+.splash {
+  max-width: 100%;
+
+  & > *:first-child {
+    margin-top: $spacing;
+  }
+
+  & > * {
+    margin: 0 $spacing * 2;
+  }
+}

@@ -16,3 +16,71 @@
     }
   }
 }
+
+.brc {
+  &--title {
+    @include flex-center;
+
+    max-width: 100%;
+
+    & h1 {
+      font-weight: 600;
+      font-size: 3em;
+      margin: 0;
+    }
+  }
+
+  &--cover-art {
+    @include flex-center;
+    
+    max-width: 100%;
+    position: relative;
+
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    user-drag: none;
+  
+    & img {
+      margin: $spacing * 2;
+      width: 80%;
+      -moz-user-select: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      user-drag: none;
+    }
+
+    &.jumbo {
+      & img {
+        width: 100%;
+      }
+    }
+
+    &.large {
+      & img {
+        width: 80%;
+      }
+    }
+
+    &.medium {
+      & img {
+        width: 60%;
+      }
+    }
+
+    &.small {
+      & img {
+        width: 30%;
+      }
+    }
+
+    @media screen and (max-width: $max-width) {
+      & img {
+        width: 80%;
+      }
+    }
+  }
+  
+}
