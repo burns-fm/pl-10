@@ -262,9 +262,11 @@ export class Player {
       this.setVolume(0);
       this.audio.muted = true;
       this.transport.mute.innerHTML = Icons.VolumeZero;
-      if (this.display.meta.hidden) {
-        this.transport.mute.classList.add('active');
-      }
+    }
+
+    if (this.display.pages.volumeSlider) {
+      this.transport.mute.classList.add('active');
+      this.display.pages.volumeSlider.querySelector('#current-volume')!.textContent = `${this.audio.volume * 100}`;
     }
   };
 
@@ -284,6 +286,7 @@ export class Player {
       this.display.pages.volumeSlider.id = sliderContainerId;
       this.display.pages.volumeSlider.classList.add('page');
       this.display.pages.volumeSlider.innerHTML = `<h2>VOLUME</h2>`;
+      this.display.pages.volumeSlider.innerHTML += `<span id="current-volume">${this.audio.volume * 100}</span>`
       this.display.pages.volumeSlider.appendChild(this.transport.volume);
       this.display.main.appendChild(this.display.pages.volumeSlider);
 
@@ -395,7 +398,11 @@ export class Player {
 
     const vu = document.querySelector<HTMLCanvasElement>('#vu');
     if (vu) {
-      vu.dataset.value = String(this.audio.volume * 10);
+      vu.dataset.value = String(this.audio.volume * 20);
+    }
+
+    if (this.display.pages.volumeSlider) {
+      this.display.pages.volumeSlider.querySelector('#current-volume')!.textContent = `${this.audio.volume * 100}`;
     }
   }
 

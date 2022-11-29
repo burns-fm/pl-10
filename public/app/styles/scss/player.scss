@@ -155,10 +155,6 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
         margin: 0 ($spacing / 2);
       }
 
-      & h2 {
-        margin-bottom: $spacing;
-      }
-
       & progress {
         margin-bottom: $spacing;
       }
@@ -226,7 +222,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
     }
 
     &:hover {
-      background-color: $foreground_10;
+      background-color: $foreground_20;
       // box-shadow: 0 0 10px 1px $white_70;
 
       &.active {
