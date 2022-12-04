@@ -8,4 +8,4 @@ Until this documentation is more complete, it's recommended that you only change
 
 ---
 
-&copy 2022 Burns Recording Company
+&copy; 2022 Burns Recording Company
