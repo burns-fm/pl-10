@@ -7,7 +7,6 @@ import * as Icons from './icons';
 import { Scope } from './scope';
 import { settings } from './helpers/settings';
 import { copyText, isSafari } from './helpers/checks';
-// import { isSafari } from './helpers/checks';
 
 type PaddedTimeValue = string | number;
 type HHMMSS = `${PaddedTimeValue}:${PaddedTimeValue}:${PaddedTimeValue}`;
@@ -205,7 +204,6 @@ export class Player {
       this.drawOscilloscope();
     } else {
       this.audio.pause();
-      // this.clearOscilloscope();
     }
   };
 
