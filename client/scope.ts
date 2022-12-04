@@ -32,7 +32,6 @@ export class Scope {
 
   createAudioContext(): void {
     this.audioContext = new AudioContext();
-    console.log(this.audioContext);
   }
 
   async closeAudioContext(): Promise<void> {
@@ -41,7 +40,7 @@ export class Scope {
       return;
     }
 
-    this.audioContext.close();
+    await this.audioContext.close();
     this.audioContext = null;
   }
 
@@ -109,7 +108,7 @@ export class Scope {
     this.mediaSource.connect(this.node);
     this.mediaSource.connect(this.audioContext.destination);
     if (isSafari()) {
-      console.log(this.mediaSource, this.audioContext);
+      console.warn(`The visualizer doesn't currently work in Safari.`);
     }
     this.streamAttached = true;
   }

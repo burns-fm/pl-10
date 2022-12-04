@@ -67,10 +67,7 @@ public/**/*.map
 public/**/*.js
 
 # Media files
-media/*.mp3
-media/*.aif
-media/*.wav
-media/*.flac
+media/*
 
 # Authenticate details, etc.
 *-login-details*

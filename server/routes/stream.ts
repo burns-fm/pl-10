@@ -19,10 +19,8 @@ router.get('/', async (_req, res: Response) => {
 router.get('/:key', async (req: Request, res: Response) => {
   const { key } = req.params;
   const { stream, size } = await controller.createTrackStream(key);
-  const { fileTypeFromStream } = await loadFileTypesLib();
-  const fileType = await fileTypeFromStream(stream);
-  res.setHeader('Content-Type', `${fileType?.mime || 'application/octet-stream'}`);
-  // res.setHeader('Content-Length', size);
+  const track = await controller.getTrack(key);
+  res.setHeader('Content-Type', `${track.mimetype}`);
   stream.pipe(res);
 });
 

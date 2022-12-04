@@ -29,8 +29,8 @@ export const PL_10_DEFAULT_SETTINGS = {
   oscilloscope: {
     visible: true
   },
-  volume: {
-    visible: true, // not implemented
-    default: 0.5, // not implemented
-  }
+  // volume: {
+  //   visible: true, // not implemented
+  //   default: 0.5, // not implemented
+  // }
 };

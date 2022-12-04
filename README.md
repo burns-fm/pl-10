@@ -18,6 +18,8 @@ Just drop your files in the `media` folder and start the server.
   - <a href="#media-directory">Media Directory</a>
   - <a href="#max-file-number">Maximum file number</a>
 - <a href="#customization">Customization</a>
+  - <a href="#front-end">Front End</a>
+
 
 ## Usage
 
@@ -174,7 +176,16 @@ By default, the server has a maximum number of files it will pick up. You can ov
 
 ## Customization
 
-TODO
+### Front End
+
+You can change several things about the look of the page.
+
+  * Player and other functional code: <a href="./client/README.md">See the readme</a>
+  * Player and page styles, colours, fonts: <code>TODO</code>
+
+### Back End
+
+<code>TODO</code>
 
 ---
 

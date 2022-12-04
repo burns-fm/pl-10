@@ -121,7 +121,8 @@ export class Player {
       const resume = !this.audio.paused;
 
       this.audio.pause();
-      this.audio.src = streamUrl;
+      this.audio.setAttribute('src', streamUrl);
+      this.audio.setAttribute('type', this.data.currentTrack.mimetype);
 
       this.resetPosition();
       this.resetTime();
@@ -302,7 +303,6 @@ export class Player {
       hideMainDisplay(false);
       this.transport.mute.classList.remove('active');
     }
-    console.log(this.display.main.children);
   };
 
   public toggleOsc = () => {
@@ -345,7 +345,7 @@ export class Player {
     const { duration } = this.data.currentTrack;
 
     this.audio.currentTime = percent * duration;
-    this.transport.position.value = percent;
+    this.transport.position.value = parseFloat(`${percent}`);
     
     if (wasPlaying) {
       this.audio.play();
@@ -422,7 +422,7 @@ export class Player {
     this.display.currentTime.textContent = this.getTimeString(this.audio.currentTime);
 
     const percent = this.audio.currentTime / this.data.currentTrack.duration!; // TODO checkup on this - maybe store length from the stream response header
-    this.transport.position.value = percent;
+    this.transport.position.value = parseFloat(`${percent}`);
   };
 
   private onUpdateStreamSource = (): void => {
