@@ -234,7 +234,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
     position: absolute;
     bottom: -10px;
     left: 5px;
-    width: 452px;
+    width: calc(100% - 10px);
   }
 
   & .volume,

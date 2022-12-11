@@ -5,7 +5,6 @@
 
 import { Request, Response, Router } from 'express';
 import { MediaController } from '../controllers/media';
-import { loadFileTypesLib } from '../helpers';
 
 const router = Router();
 
@@ -18,7 +17,7 @@ router.get('/', async (_req, res: Response) => {
 
 router.get('/:key', async (req: Request, res: Response) => {
   const { key } = req.params;
-  const { stream, size } = await controller.createTrackStream(key);
+  const { stream, size: _size } = await controller.createTrackStream(key);
   const track = await controller.getTrack(key);
   res.setHeader('Content-Type', `${track.mimetype}`);
   stream.pipe(res);

@@ -25,10 +25,10 @@ export const STYLESHEETS_DIR = resolve('public', 'app', 'styles');
 export const SCRIPTS_DIR = resolve('public', 'app');
 
 export const PageText = {
-  Title: process.env.PL_10_PAGE_TITLE ?? 'BRC PL-10',
-  Subtitle: process.env.PL_10_PAGE_SUBTITLE ?? 'Web Player',
-  SupportingText: process.env.PL_10_SUPPORTING_TEXT ?? 'Simple, self-hosted streaming ',
-  Copyright: process.env.PL_10_COPYRIGHT ?? 'Anonymous',
+  Title: process.env.PL_10_PAGE_TITLE ?? 'Rob Fairley',
+  Subtitle: process.env.PL_10_PAGE_SUBTITLE ?? 'Golden Tone',
+  SupportingText: process.env.PL_10_SUPPORTING_TEXT ?? '...',
+  Copyright: process.env.PL_10_COPYRIGHT ?? 'Burns Recording Company & Rob Fairley',
 };
 
 /**

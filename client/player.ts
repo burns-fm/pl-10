@@ -197,11 +197,6 @@ export class Player {
 
     if (this.audio.paused) {
       this.audio.play();
-      if (!this.scope.audioContext) {
-        this.scope.audioContext = new AudioContext();
-      }
-      await this.scope.audioContext?.resume();
-      this.drawOscilloscope();
     } else {
       this.audio.pause();
     }
@@ -309,15 +304,16 @@ export class Player {
     return;
     const settingsPath = 'oscilloscope.visible';
 
-    if (isSafari()) {
-      alert(`Sorry, your browser doesn't support the visualizer yet.`);
-      canvas.hidden = true;
-      settings.set(settingsPath, false);
-      this.transport.osc.classList.remove('active');
-      return;
-    }
+    // if (isSafari()) {
+    //   alert(`Sorry, your browser doesn't support the visualizer yet.`);
+    //   canvas.hidden = true;
+    //   settings.set(settingsPath, false);
+    //   this.transport.osc.classList.remove('active');
+    //   return;
+    // }
 
     if (canvas.hidden) {
+      this.drawOscilloscope();
       canvas.hidden = false;
       settings.set(settingsPath, true);
       this.transport.osc.classList.add('active');
@@ -325,6 +321,7 @@ export class Player {
       canvas.hidden = true;
       settings.set(settingsPath, false);
       this.transport.osc.classList.remove('active');
+      this.clearOscilloscope();
     }
   };
 
@@ -367,11 +364,15 @@ export class Player {
     console.info(`Now playing: ${this.data.currentTrack?.title} - ${this.data.currentTrack?.artist}`);
     this.transport.play.innerHTML = Icons.Pause;
     this.transport.play.classList.add('active');
+    if (settings.get('oscilloscope.visible') as boolean && !this.scope.streamAttached) {
+      this.drawOscilloscope();
+    }
   };
 
   private onPause = (_e: Event) => {
     this.transport.play.innerHTML = Icons.Play;
     this.transport.play.classList.remove('active');
+    this.clearOscilloscope();
   };
 
   private onKeyPress = async (e: KeyboardEvent) => {
@@ -487,6 +488,7 @@ export class Player {
   private drawOscilloscope(): void {
     const osc = document.querySelector<HTMLCanvasElement>('#osc');
     if (osc) {
+      this.scope.audioContext?.resume();
       this.scope.attachMeter(osc);
     }
   }
@@ -495,7 +497,7 @@ export class Player {
     const osc = document.querySelector<HTMLCanvasElement>('#osc');
     if (!osc) return;
 
-    await this.scope.audioContext?.close();
+    this.scope.detachMeter();
   }
 
   private async initialize(): Promise<void> {

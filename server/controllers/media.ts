@@ -54,7 +54,6 @@ export class MediaController {
     }
 
     this.cachedTrackList = trackList;
-    console.log(trackList);
     return this.cachedTrackList;
   }
 
@@ -106,7 +105,7 @@ export class MediaController {
       this.store.reset();
     }
 
-    console.log(`Loading media from ${MEDIA_DIR} ...`);
+    console.info(`Loading media from ${MEDIA_DIR} ...`);
     const { parseBuffer } = await loadMusicMetadata();
     let trackFileList = await readdir(MEDIA_DIR);
 
