@@ -49,7 +49,6 @@ export const PageText = {
  * in the player.
  * If they're supported by the browser, they should still play ok, though!
  * 
- * 
  */
 export enum MediaMimetype {
   AAC = 'audio/aac',

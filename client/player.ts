@@ -112,7 +112,7 @@ export class Player {
     });
   }
 
-  public loadTrack(key: string): void {
+  loadTrack(key: string): void {
     try {
       this.data.currentTrack = this.getTrackByKey(key);
 
@@ -192,44 +192,62 @@ export class Player {
   }
 
   /*** TRANSPORT FUNCTIONS */
-  public togglePlayback = async (event?: MouseEvent): Promise<void> => {
+  togglePlayback = async (event?: MouseEvent): Promise<void> => {
     event?.preventDefault();
 
     if (this.audio.paused) {
-      this.audio.play();
+      if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
+this.scope.audioContext?.resume();
+      this.play();
     } else {
-      this.audio.pause();
+      this.pause();
     }
   };
 
-  public skipTrack = (event: MouseEvent): void => {
-    event.preventDefault();
+  play = () => {
+    this.audio.play();
+    if (settings.get('oscilloscope.visible') as boolean) {
+      this.drawOscilloscope();
+    }
+  };
 
+  pause = () => {
+    this.audio.pause();
+    this.clearOscilloscope();
+  };
+
+  skipTrack = (event: MouseEvent): void => {
+    event.preventDefault();
+    
     if (!this.data.trackList) {
       throw new Error(`Unable to skip track. No track list loaded.`);
     }
-
+    
     const currentIndex = this.data.trackList?.findIndex(t => t.key === this.data.currentTrack?.key) ?? 0;
     const nextTrack = this.data.trackList[currentIndex + 1];
-
+    
     let nextKey;
     if (nextTrack) {
       nextKey = nextTrack.key;
     } else {
       nextKey = this.data.trackList[0].key;
     }
-
+    
+    if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
+this.scope.audioContext?.resume();
     this.loadTrack(nextKey);
   };
 
-  public random = (event: Event): void => {
+  random = (event: Event): void => {
     event.preventDefault();
 
     const randomKey = this.getRandomTrackKey();
+    if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
+this.scope.audioContext?.resume();
     this.loadTrack(randomKey);
   };
 
-  public setVolume = (n = DEFAULT_VOLUME) => {
+  setVolume = (n = DEFAULT_VOLUME) => {
     // Assert the volume is between 0 and 1.
     const v = n < 0 ? 0 : n > 1 ? 1 : n;
 
@@ -243,7 +261,7 @@ export class Player {
     }
   };
 
-  public toggleMute = () => {
+  toggleMute = () => {
     if (this.audio.muted || this.audio.volume === 0) {
       this.setVolume(this.data.lastVolume);
       this.audio.muted = false;
@@ -264,7 +282,7 @@ export class Player {
     }
   };
 
-  public toggleVolumeSlider = () => {
+  toggleVolumeSlider = () => {
     const sliderContainerId = 'volume-display';
 
     const hideMainDisplay = (v: boolean) => {
@@ -298,7 +316,7 @@ export class Player {
     }
   };
 
-  public toggleOsc = () => {
+  toggleOsc = () => {
     const canvas = document.querySelector('canvas');
     if (!canvas) 
     return;
@@ -313,7 +331,6 @@ export class Player {
     // }
 
     if (canvas.hidden) {
-      this.drawOscilloscope();
       canvas.hidden = false;
       settings.set(settingsPath, true);
       this.transport.osc.classList.add('active');
@@ -321,11 +338,10 @@ export class Player {
       canvas.hidden = true;
       settings.set(settingsPath, false);
       this.transport.osc.classList.remove('active');
-      this.clearOscilloscope();
     }
   };
 
-  public seek = (event: MouseEvent) => {
+  seek = (event: MouseEvent) => {
     if (!this.data.currentTrack || !this.data.currentTrack.duration) {
       throw new Error(`Unable to seek. No track loaded.`);
     }
@@ -333,7 +349,7 @@ export class Player {
     const wasPlaying = !this.audio.paused;
     
     if (wasPlaying) {
-      this.audio.pause();
+      this.pause();
     }
 
     const percent = event.offsetX / this.transport.position.offsetWidth;
@@ -343,36 +359,35 @@ export class Player {
     this.transport.position.value = parseFloat(`${percent}`);
     
     if (wasPlaying) {
-      this.audio.play();
+      if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
+this.scope.audioContext?.resume();
+      this.play();
     }
   };
 
-  public getShareLink(): string {
+  getShareLink(): string {
     if (!this.data.currentTrack) {
       return window.location.href;
     }
     return `${window.location.href}?t=${this.data.currentTrack.key}`;
   }
 
-  public copyShareLink = async (): Promise<void> => {
+  copyShareLink = async (): Promise<void> => {
     const link = this.getShareLink();
     copyText(link);
   }
 
   /*** EVENTS & HANDLERS */
-  private onPlay = async () => {
+  private onPlay = () => {
     console.info(`Now playing: ${this.data.currentTrack?.title} - ${this.data.currentTrack?.artist}`);
     this.transport.play.innerHTML = Icons.Pause;
     this.transport.play.classList.add('active');
-    if (settings.get('oscilloscope.visible') as boolean && !this.scope.streamAttached) {
-      this.drawOscilloscope();
-    }
+    console.log(this.scope.audioContext?.state);
   };
 
   private onPause = (_e: Event) => {
     this.transport.play.innerHTML = Icons.Play;
     this.transport.play.classList.remove('active');
-    this.clearOscilloscope();
   };
 
   private onKeyPress = async (e: KeyboardEvent) => {
@@ -381,7 +396,7 @@ export class Player {
 
     switch (e.key) {
       case ' ':
-        await this.togglePlayback();
+        await this.togglePlayback(e as any);
         break;
       case 'm':
         this.toggleMute();
@@ -463,7 +478,7 @@ export class Player {
     if (canvas) {
       this.transport.osc.addEventListener('click', this.toggleOsc);
 
-      if (!isSafari()) {
+      // if (!isSafari()) {
         if (settings.get('oscilloscope.visible')) {
           this.transport.osc.classList.add('active');
           canvas.hidden = false;
@@ -471,14 +486,8 @@ export class Player {
           console.info(`Your settings were loaded from your last session and the oscilloscope (visualizer) was hidden last time you were here. If you want it back, just hit the button.`);
           this.transport.osc.classList.remove('active');
           canvas.hidden = true;
-          // NOTE: commented this out with the safari line above. still working it out.
-          //       It's the AudioContext situation with safari that actually needs fixed.
-          //
-          // this.transport.osc.setAttribute('hidden', 'true');
-          // const oscContainer = document.querySelector<HTMLDivElement>('.oscilloscope')!;
-          // oscContainer.style.opacity = '0';
         }
-      }
+      // }
     }
 
     // Global
@@ -488,7 +497,6 @@ export class Player {
   private drawOscilloscope(): void {
     const osc = document.querySelector<HTMLCanvasElement>('#osc');
     if (osc) {
-      this.scope.audioContext?.resume();
       this.scope.attachMeter(osc);
     }
   }

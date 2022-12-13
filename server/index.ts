@@ -43,7 +43,7 @@ app.use(sassMiddleware({
   dest: constants.STYLESHEETS_DIR,
   prefix: '/styles',
   indentedSyntax: false, // false = .scss
-  sourceMap: true,
+  sourceMap: false,
   outputStyle: 'compressed',
   debug: Boolean(process.env.DEBUG),
   // force: Boolean(process.env.DEBUG),
