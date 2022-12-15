@@ -334,7 +334,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
 
     & kbd {
       border-radius: 2px;
-      padding: $spacing / 2.5;
+      padding: $spacing / 2.5 $spacing;
       border-top: 1px solid white;
       border-left: 2px solid silver;
       border-right: 2px solid silver;

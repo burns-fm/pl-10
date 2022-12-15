@@ -196,9 +196,8 @@ export class Player {
     event?.preventDefault();
 
     if (this.audio.paused) {
-      if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
-this.scope.audioContext?.resume();
       this.play();
+      await this.scope.audioContext?.resume();
     } else {
       this.pause();
     }
@@ -216,7 +215,7 @@ this.scope.audioContext?.resume();
     this.clearOscilloscope();
   };
 
-  skipTrack = (event: MouseEvent): void => {
+  skipTrack = async (event: MouseEvent): Promise<void> => {
     event.preventDefault();
     
     if (!this.data.trackList) {
@@ -234,16 +233,16 @@ this.scope.audioContext?.resume();
     }
     
     if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
-this.scope.audioContext?.resume();
+    await this.scope.audioContext?.resume();
     this.loadTrack(nextKey);
   };
 
-  random = (event: Event): void => {
+  random = async (event: Event): Promise<void> => {
     event.preventDefault();
 
     const randomKey = this.getRandomTrackKey();
     if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
-this.scope.audioContext?.resume();
+    await this.scope.audioContext?.resume();
     this.loadTrack(randomKey);
   };
 
@@ -341,7 +340,7 @@ this.scope.audioContext?.resume();
     }
   };
 
-  seek = (event: MouseEvent) => {
+  seek = async (event: MouseEvent): Promise<void> => {
     if (!this.data.currentTrack || !this.data.currentTrack.duration) {
       throw new Error(`Unable to seek. No track loaded.`);
     }
@@ -360,7 +359,7 @@ this.scope.audioContext?.resume();
     
     if (wasPlaying) {
       if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
-this.scope.audioContext?.resume();
+      await this.scope.audioContext?.resume();
       this.play();
     }
   };
@@ -494,6 +493,13 @@ this.scope.audioContext?.resume();
     window.addEventListener('keyup', this.onKeyPress);
   }
 
+  private setupAudioContexts = () => {
+    if (!this.scope.audioContext) {
+      this.scope.audioContext = new AudioContext();
+    }
+    console.log(`AC`, this.scope.audioContext);
+  };
+
   private drawOscilloscope(): void {
     const osc = document.querySelector<HTMLCanvasElement>('#osc');
     if (osc) {
@@ -528,6 +534,7 @@ this.scope.audioContext?.resume();
 
     this.loadTrack(trackKey);
     this.scope = new Scope(this.audio);
+    this.setupAudioContexts();
   }
 
   private getTrackIdFromUrl(url: string = window.location.href): string | null {

@@ -17,7 +17,15 @@ router.get('/', async (_req, res: Response) => {
 
 router.get('/:key', async (req: Request, res: Response) => {
   const { key } = req.params;
-  const { stream, size: _size } = await controller.createTrackStream(key);
+  const rangeHeader = req.headers.range;
+
+  let start = 0;
+  if (rangeHeader) {
+    const startingByteMatch = rangeHeader.match(/\d+/);
+    start = startingByteMatch ? parseInt(startingByteMatch[0]) : 0;
+  }
+
+  const { stream, size: _size } = await controller.createTrackStream(key, start);
   const track = await controller.getTrack(key);
   res.setHeader('Content-Type', `${track.mimetype}`);
   stream.pipe(res);

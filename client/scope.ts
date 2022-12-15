@@ -42,8 +42,8 @@ export class Scope {
     }
     
     if (!this.audioContext) {
-      console.info(`Creating audio context...`);
-      this.audioContext = new AudioContext();
+      // console.info(`Creating audio context...`);
+      throw new Error('Cannot attach scope. Audio context not initialized.');
     }
 
     if (!this.element) {
@@ -152,6 +152,7 @@ export class Scope {
       
       if (this.mediaSource && this.node) {
         this.mediaSource.disconnect(this.node);
+        this.node = null;
         
         if (this.audioContext) {
           this.mediaSource.disconnect(this.audioContext.destination);
@@ -159,7 +160,7 @@ export class Scope {
         
         this.mediaSource.disconnect();
       }
-  
+
       this.attached = false;
     } catch(e) {
       console.error(e);

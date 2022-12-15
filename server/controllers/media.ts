@@ -73,7 +73,7 @@ export class MediaController {
   /**
    * Creates a read stream for the requested track by the key.
    */
-  async createTrackStream(key: string): Promise<{ stream: ReadStream, track: Track, size: number, }> {
+  async createTrackStream(key: string, start?: number): Promise<{ stream: ReadStream, track: Track, size: number, }> {
     const track = this.store.get(key);
 
     if (!track) {
@@ -84,7 +84,7 @@ export class MediaController {
     const stats = await stat(filePath);
 
     return {
-      stream: createReadStream(filePath),
+      stream: createReadStream(filePath, { start }),
       track,
       size: stats.size,
     }
