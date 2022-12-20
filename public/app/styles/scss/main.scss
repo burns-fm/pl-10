@@ -12,6 +12,10 @@ html, body {
   color: $foreground;
   background-color: $background;
   @include flex-center;
+  background: url('/img/RugSpin.jpg');
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 ::selection { 

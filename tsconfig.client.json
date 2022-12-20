@@ -3,7 +3,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "module": "ES2020",
-    "target": "es5",
+    "target": "ES3",
     "outfile": "public/app/main.js"
   },
   "include": ["client/**/*.ts"],

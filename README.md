@@ -1,6 +1,6 @@
 # PL-10
 
-Simple self-hosted audio streaming.
+Simple self-hosted audio streaming for the web
 
 Just drop your files in the `media` folder and start the server.
 

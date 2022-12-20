@@ -46,8 +46,7 @@ app.use(sassMiddleware({
   sourceMap: false,
   outputStyle: 'compressed',
   debug: Boolean(process.env.DEBUG),
-  // force: Boolean(process.env.DEBUG),
-  force: true,
+  force: Boolean(process.env.DEBUG),
 }));
 
 app.use('/', express.static(resolve('public')));

@@ -12,11 +12,11 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
 .player {
   margin: 0 ($spacing * 2);
   padding: $spacing * 1.5;
+  border-radius: 2px;
 
-  background-color: $background;
+  background-color: $background_70;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  z-index: 1;
 
   @media screen and (max-width: $max-width) {
     min-width: unset;
@@ -24,7 +24,12 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
 
   & .oscilloscope {
     width: 100%;
-    height: $spacing + 4;
+    height: 100%;
+    background-color: $background_80;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
 
     & canvas {
       height: 100%;
@@ -41,18 +46,18 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
   }
 
   & .display {
+    @include flex-center;
     position: relative;
     padding-bottom: 12px;
     height: 125px;
 
     background: $noise;
-    font-family: 'LCDRounded';
+    font-family: 'LCDRounded', 'Courier New', 'Courier', monospace;
 
     border: 1px solid rgba(242, 255, 255, 0.4);
     box-shadow: inset 0 0 1px 6px rgba(242, 255, 255, 0.1);
 
     text-shadow: 0px 0px 8px rgba(164, 250, 255, 0.976);
-
 
     &::before {
       position: absolute;
@@ -60,7 +65,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
       left: -10px;
       width: 30px;
       height: 30px;
-      z-index: 2;
+      z-index: 3;
       background: rgba(255, 255, 255, 0.517);
       background: rgb(255, 255, 255);
       background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(241, 251, 249, 1) 0%, rgba(100, 105, 104, 0) 14%, rgba(246, 255, 255, 0.25231336719982256) 16%, rgba(0, 0, 0, 0) 18%);
@@ -77,7 +82,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
       left: 0;
       height: calc(100% - 10px);
       width: calc(100% - 10px);
-      z-index: 1;
+      z-index: 2;
       background: rgb(242, 255, 255);
       background: linear-gradient(148deg, rgba(242, 255, 255, 0.202) 3%, rgba(183, 245, 236, 0.189) 4%, rgba(22, 10, 10, 0) 35%), linear-gradient(-78deg, rgba(242, 255, 255, 0.202) 3%, rgba(183, 245, 236, 0.189) 4%, rgba(22, 10, 10, 0) 25%);
       box-shadow: inset 0 0 10px 2px rgba(242, 255, 255, 0.2);
@@ -92,14 +97,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
       & .current-time {
         font-size: 36px;
         font-weight: 100;
-        font-family: 'LCDRounded';
-
-        &.seg {
-          background-color: $foreground;
-          color: $background;
-          font-family: '14SegmentLED';
-          line-height: 0.6;
-        }
+        font-family: 'LCDRounded', 'Courier New', 'Courier', monospace;
       }
     }
 
@@ -108,7 +106,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
         font-size: 3em;
         font-weight: 200;
         margin: 0;
-        font-family: 'LCDRounded';
+        font-family: 'LCDRounded', 'Courier New', 'Courier', monospace;
         text-align: center;
         text-transform: uppercase;
         white-space: nowrap;
@@ -124,7 +122,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
 
         font-size: 2em;
         margin: 0;
-        font-family: 'LCDRounded';
+        font-family: 'LCDRounded', 'Courier New', 'Courier', monospace;
         line-height: 0.8;
       }
     }
@@ -151,7 +149,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
         padding: ($spacing / 3) ($spacing * 3);
         box-shadow: none;
         text-shadow: 0 0 4px rgba(242,255,255,0.6);
-        font-family: 'LCDRounded';
+        font-family: 'LCDRounded', 'Courier New', 'Courier', monospace;
         font-size: 20px;
 
         opacity: 0.7;

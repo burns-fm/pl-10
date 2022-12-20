@@ -203,9 +203,10 @@ export class Player {
     }
   };
 
-  play = () => {
-    this.audio.play();
+  play = async () => {
+    await this.audio.play();
     if (settings.get('oscilloscope.visible') as boolean) {
+      await this.scope.audioContext?.resume();
       this.drawOscilloscope();
     }
   };
@@ -225,7 +226,7 @@ export class Player {
     const currentIndex = this.data.trackList?.findIndex(t => t.key === this.data.currentTrack?.key) ?? 0;
     const nextTrack = this.data.trackList[currentIndex + 1];
     
-    let nextKey;
+    let nextKey: string;
     if (nextTrack) {
       nextKey = nextTrack.key;
     } else {
@@ -381,7 +382,6 @@ export class Player {
     console.info(`Now playing: ${this.data.currentTrack?.title} - ${this.data.currentTrack?.artist}`);
     this.transport.play.innerHTML = Icons.Pause;
     this.transport.play.classList.add('active');
-    console.log(this.scope.audioContext?.state);
   };
 
   private onPause = (_e: Event) => {
@@ -497,7 +497,6 @@ export class Player {
     if (!this.scope.audioContext) {
       this.scope.audioContext = new AudioContext();
     }
-    console.log(`AC`, this.scope.audioContext);
   };
 
   private drawOscilloscope(): void {
@@ -525,6 +524,9 @@ export class Player {
     this.transport.shr.innerHTML = Icons.Share;
 
     this.data.trackList = await this.getTrackList();
+
+    console.log(`Loaded ${this.data.trackList.length} tracks. Tracklist ready.`);
+    console.log('Track list:', this.data.trackList);
 
     this.setupEventListeners();
     this.setVolume(DEFAULT_VOLUME);
