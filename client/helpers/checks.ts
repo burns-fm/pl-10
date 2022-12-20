@@ -60,3 +60,5 @@ export const copyText = async (text: string) => {
   await navigator.clipboard.writeText(text);
   return copied();
 }
+
+export const isMobile = (): boolean => 'ontouchstart' in document.documentElement;

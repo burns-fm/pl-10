@@ -213,7 +213,10 @@ export class Player {
 
   pause = () => {
     this.audio.pause();
-    this.clearOscilloscope();
+    // Note: this stopped allowing playback after pausing and toggling the scope.
+    // If something else goes wrong this might be a good place to look. For now,
+    // skipping this call works. It might have been designed wrong to begin with...
+    // this.clearOscilloscope();
   };
 
   skipTrack = async (event: MouseEvent): Promise<void> => {
@@ -317,9 +320,11 @@ export class Player {
   };
 
   toggleOsc = () => {
-    const canvas = document.querySelector('canvas');
-    if (!canvas) 
-    return;
+    const canvas = document.querySelector<HTMLCanvasElement>('#osc');
+    if (!canvas) {
+      console.log('No oscilloscope canvas element found');
+      return;
+    }
     const settingsPath = 'oscilloscope.visible';
 
     // if (isSafari()) {
@@ -455,8 +460,8 @@ export class Player {
     this.audio.addEventListener('play', this.onPlay);
 
     // Transport
-    this.transport.position.addEventListener('click', this.seek);
-    this.transport.position.addEventListener('touchend', (e) => this.seek(e as any));
+    this.transport.position.addEventListener('mousedown', this.seek);
+    this.transport.position.addEventListener('touchstart', (e) => this.seek(e as any));
     this.transport.play.addEventListener('click', this.togglePlayback);
     this.transport.skip.addEventListener('click', this.skipTrack);
     this.transport.rand.addEventListener('click', this.random);
@@ -473,7 +478,7 @@ export class Player {
     });
 
     // Visualizer / Oscilloscope
-    const canvas = document.querySelector('canvas');
+    const canvas = document.querySelector<HTMLCanvasElement>('#osc');
     if (canvas) {
       this.transport.osc.addEventListener('click', this.toggleOsc);
 
