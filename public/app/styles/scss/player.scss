@@ -90,6 +90,11 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
       pointer-events: none;
     }
 
+    & .meta {
+      margin-top: $spacing;
+      width: 90%;
+    }
+
     & .time {
       width: 100%;
       @include flex-center;
@@ -113,8 +118,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
         line-height: 0.8;
 
         max-height: 40px;
-        max-width: 60%;
-        margin-left: 20%;
+        max-width: 100%;
       }
 
       & #album {
