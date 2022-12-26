@@ -7,9 +7,9 @@
     "build:server": "tsc",
     "watch:server": "tsc --w",
     "build:client": "node scripts/build && npm run build:client:styles",
-    "build:client:styles": "node-sass --recursive --source-map-contents --output ./public/app/styles ./public/app/styles/scss/main.scss",
+    "build:client:styles": "sass ./public/app/styles/scss/main.scss ./public/app/styles/main.css",
     "watch:client": "node scripts/watch",
-    "watch:client:styles": "node-sass --watch --recursive --source-map-contents --output ./public/app/styles ./public/app/styles/scss/main.scss",
+    "watch:client:styles": "sass -w ./public/app/styles/scss/main.scss ./public/app/styles/main.css",
     "build": "npm run build:server && npm run build:client",
     "start": "node scripts/start",
     "start:dev": "echo 'Not yet configured'",
@@ -39,9 +39,14 @@
     "@types/node": "^18.11.3",
     "@types/node-sass-middleware": "^0.0.32",
     "chokidar": "^3.5.3",
+    "sass": "^1.57.1",
     "typescript": "^4.8.4"
   },
   "engines": {
     "node": "17.5.0"
-  }
+  },
+  "repository": {
+    "url": "https://github.com/burns-fm/pl-10"
+  },
+  "homepage": "https://burns.fm"
 }
