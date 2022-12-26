@@ -6,7 +6,7 @@
 
 import express from 'express';
 import logger from 'morgan';
-import sassMiddleware from 'node-sass-middleware';
+// import sassMiddleware from 'node-sass-middleware';
 import { resolve } from 'path';
 import * as constants from './constants';
 import { loadEnvironment } from './helpers';
