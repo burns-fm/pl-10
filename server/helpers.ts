@@ -24,11 +24,9 @@ export const loadEnvironment = (): Environment => {
     return Environment.Development;
   }
 
-  const env: Environment = parseInt(NODE_ENV);
-
-  if (!Object.values(Environment).includes(env)) {
+  if (!Object.values(Environment).includes(NODE_ENV as Environment)) {
     throw new FatalError('Environment (NODE_ENV)', `Invalid environment set: ${NODE_ENV}`);
   }
 
-  return env;
+  return NODE_ENV as Environment;
 }

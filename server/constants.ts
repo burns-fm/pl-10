@@ -8,12 +8,12 @@ import {
 } from "path";
 
 export enum Environment {
-  Development,
-  Staging,
-  Production,
+  Test = 'test',
+  Development = 'development',
+  Production = 'production',
 }
 
-export const DEBUG = process.env.PL_10_DEBUG == 'true';
+export const DEBUG = process.env.DEBUG == 'true';
 
 export const PORT = parseInt(process.env.PL_10_PORT ?? '8347');
 export const HOSTNAME = process.env.PL_10_HOSTNAME ?? 'localhost';
@@ -25,9 +25,9 @@ export const STYLESHEETS_DIR = resolve('public', 'app', 'styles');
 export const SCRIPTS_DIR = resolve('public', 'app');
 
 export const PageText = {
-  Title: process.env.PL_10_PAGE_TITLE ?? 'Rob Fairley',
-  Subtitle: process.env.PL_10_PAGE_SUBTITLE ?? 'Golden Tone',
-  SupportingText: process.env.PL_10_SUPPORTING_TEXT ?? '...',
+  Title: process.env.PL_10_PAGE_TITLE ?? 'BRC',
+  Subtitle: process.env.PL_10_PAGE_SUBTITLE ?? 'PL-10',
+  SupportingText: process.env.PL_10_SUPPORTING_TEXT ?? 'Simple, self-hosted streaming solution',
   Copyright: process.env.PL_10_COPYRIGHT ?? 'Burns Recording Company & Rob Fairley',
 };
 

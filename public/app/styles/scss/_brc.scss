@@ -42,8 +42,10 @@
     -moz-user-drag: none;
     user-drag: none;
     
+    padding: 1rem 0;
+
     & img {
-      box-shadow: 0px 0px 40px 4px $background_80;
+      box-shadow: 0px 0px 40px 4px $background_90;
       border-radius: 2px;
       margin: $spacing * 2;
       width: 80%;

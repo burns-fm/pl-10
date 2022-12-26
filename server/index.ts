@@ -37,17 +37,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger(env === constants.Environment.Production ? 'combined' : 'dev'));
 
-// TODO: replace the middleware with a build step or something
-app.use(sassMiddleware({
-  src: resolve(constants.STYLESHEETS_DIR, 'scss'),
-  dest: constants.STYLESHEETS_DIR,
-  prefix: '/styles',
-  indentedSyntax: false, // false = .scss
-  sourceMap: false,
-  outputStyle: 'compressed',
-  debug: Boolean(process.env.DEBUG),
-  force: Boolean(process.env.DEBUG),
-}));
+// Use the below for development only.
+// app.use(sassMiddleware({
+//   src: resolve(constants.STYLESHEETS_DIR, 'scss'),
+//   dest: constants.STYLESHEETS_DIR,
+//   prefix: '/styles',
+//   indentedSyntax: false, // false = .scss
+//   sourceMap: false,
+//   outputStyle: 'compressed',
+//   debug: Boolean(process.env.DEBUG),
+//   force: Boolean(process.env.DEBUG),
+// }));
 
 app.use('/', express.static(resolve('public')));
 

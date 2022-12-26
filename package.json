@@ -1,17 +1,19 @@
 {
-  "name": "BRC002_pl-10",
+  "name": "@burns-fm/pl-10",
   "version": "1.0.0",
-  "description": "robfairley.ca",
+  "description": "Self-hosted audio streaming",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:server": "tsc",
     "watch:server": "tsc --w",
-    "build:client": "node scripts/build",
+    "build:client": "node scripts/build && npm run build:client:styles",
+    "build:client:styles": "node-sass --recursive --source-map-contents --output ./public/app/styles ./public/app/styles/scss/main.scss",
     "watch:client": "node scripts/watch",
+    "watch:client:styles": "node-sass --watch --recursive --source-map-contents --output ./public/app/styles ./public/app/styles/scss/main.scss",
     "build": "npm run build:server && npm run build:client",
     "start": "node scripts/start",
     "start:dev": "echo 'Not yet configured'",
-    "start:debug": "echo 'Not yet configured'"
+    "start:debug": "DEBUG=true npm start"
   },
   "author": {
     "name": "Rob Fairley",

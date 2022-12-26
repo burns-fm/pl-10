@@ -19,6 +19,8 @@ Just drop your files in the `media` folder and start the server.
   - <a href="#max-file-number">Maximum file number</a>
 - <a href="#customization">Customization</a>
   - <a href="#front-end">Front End</a>
+  - <a href="#back-end">Back End</a>
+- <a href="#libraries-and-other-references">Libraries and other references</a>
 
 
 ## Usage
@@ -185,7 +187,28 @@ You can change several things about the look of the page.
 
 ### Back End
 
-<code>TODO</code>
+If you are familiar with JavaScript, HTTP, NPM workflows, then you should find changing the backend functionality relatively simple.
+
+In-depth documentation won't be included with PL-10 at launch, but if you know what you're doing, the best starting point is the set of scripts in `package.json` and the files in the `./server` folder.
+
+## Libraries and other references
+
+This project uses several open source fonts, code libraries, and icon sets.
+
+If you need to understand how to work with some of the files included, you might find more information in the list below.
+
+| Name | URL | Usage |
+| --- | --- | --- |
+| Inter | <a href="https://rsms.me/inter/" target="_blank">https://rsms.me/inter/</a> | Titles, body test, small footer text, etc.
+| JD LCD Rounded | <a href="https://jeckodevelopment.com/fonts/jd-lcd-rounded" target="_blank">https://jeckodevelopment.com/fonts/jd-lcd-rounded</a> | Player display components |
+| Feather Icons | <a href="https://feathericons.com" target="_blank">https://feathericons.com</a> | Player transport and other icons |
+| TypeScript | <a href="https://www.typescriptlang.org" target="_blank">https://www.typescriptlang.org</a> | Programming language used for the client and server code|
+| ExpressJS | <a href="https://expressjs.com" target="_blank">https://expressjs.com</a> | HTTP Server framework |
+| music-metadata | <a href="https://github.com/borewit/music-metadata" target="_blank">https://github.com/borewit/music-metadata</a> | Parsing metadata from audio files |
+| EJS | <a href="https://ejs.co" target="_blank">https://ejs.co</a> | HTML-based templating language used for setting up the `views` files |
+| SASS/SCSS | <a href="https://sass-lang.com" target="_blank">https://sass-lang.com</a> | The style language used for customizing the look of the HTML (see `./public/app/styles/scss`) |
+
+
 
 ---
 
