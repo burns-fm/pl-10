@@ -15,7 +15,9 @@
     "start": "NODE_ENV=production node scripts/start",
     "start:dev": "NODE_ENV=development npm start",
     "start:debug": "NODE_ENV=development DEBUG=true npm start",
-    "container:build": "docker build -t pl-10 ."
+    "container:build": "docker build -t pl-10 .",
+    "container:start:dev": "docker run -d -p 8347:8347 pl-10",
+    "container:start:prod": "docker run -d -p 8347:80 pl-10"
   },
   "author": {
     "name": "Rob Fairley",
