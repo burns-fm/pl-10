@@ -1,3 +1,5 @@
+<img src="./public/img/brc-wordmark.png" height="50" alt="Burns Recording Company" />
+
 # PL-10
 
 Simple self-hosted audio streaming for the web
@@ -212,4 +214,4 @@ If you need to understand how to work with some of the files included, you might
 
 ---
 
-2022 <a href="https://burns.fm">BRC</a>
+&copy; 2022 <a href="https://burns.fm">BRC</a>
