@@ -27,6 +27,7 @@ RUN npm run build:client:styles
 RUN npm run build:server
 
 ENV PL_10_HOSTNAME="0.0.0.0"
+ENV NODE_ENV="production"
 EXPOSE 8347
 
 CMD ["npm", "start"]
