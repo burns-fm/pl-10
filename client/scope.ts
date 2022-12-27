@@ -94,7 +94,6 @@ export class Scope {
       const timeDomainSize = this.node!.frequencyBinCount;
       const data = new Uint8Array(timeDomainSize);
       this.node!.getByteTimeDomainData(data);
-      console.log(data);
       this.canvasContext.fillStyle = scopeDefault.background;
       this.canvasContext.fillRect(0, 0, this.element.width, this.element.height);
       this.canvasContext.lineWidth = this.options.meterLineWidth ?? 3;

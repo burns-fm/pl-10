@@ -431,10 +431,16 @@ export class Player {
     }
   }
 
-  private onUpdateTime = (_event: Event): void => {
+  private onUpdateTime = (event: Event): void => {
     if (!this.data.currentTrack) {
       this.audio.pause();
       throw new Error(`Cannot update time. No track loaded.`);
+    }
+    
+    // Catch if the player somehow doesn't fire the 'ended' event.
+    if (this.data.currentTrack.duration && this.audio.currentTime >= this.data.currentTrack.duration) {
+      this.onPause(event);
+      return;
     }
 
     this.display.currentTime.textContent = this.getTimeString(this.audio.currentTime);
