@@ -56,12 +56,22 @@ npm run build:server
 
 ### Build the client/UI
 
-You only need to build the client code. The styles are compiled on the fly from <a href="https://sass-lang.com/documentation/syntax" target="_blank">scss</a> to browser-compatible css.
-
 If you start the server and the buttons don't seem to do anything, you probably forgot to to this step.
 
 ```sh
 npm run build:client
+```
+
+If you want to rebuild the styles only then run
+
+```sh
+npm run build:client:styles
+```
+
+If you want to see your changes on the page as you edit the styles, then while your server is running, run this command in another terminal window to auto-compile your styles every time you save:
+
+```sh
+npm run watch:client:styles
 ```
 
 ### Start the server
