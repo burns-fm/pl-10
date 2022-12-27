@@ -2,48 +2,31 @@
  * © 2022-2022 Burns Recording Company
  * Created: 02/11/2022
  */
+const { Parcel } = require('@parcel/core');
+const path = require('node:path');
+const fs = require('node:fs/promises');
 
-const swc = require("@swc/core");
-const path = require("node:path");
-const fs = require("node:fs/promises");
-
-const SOURCE_DIR = path.resolve("client");
-const ENTRY_FILE = path.resolve(SOURCE_DIR, "index.ts");
-const OUTPUT_DIR = path.resolve("public", "app");
-const IS_PRODUCTION_ENV = process.env.NODE_ENV === 'production';
-const config = {
-  mode: 'production',
-  entry: ENTRY_FILE,
-  target: 'browser',
-  minify: IS_PRODUCTION_ENV,
-  jsc: {
-    target: 'es2016',
-  },
-};
+const SOURCE_DIR = path.resolve('client');
+const ENTRY_FILE = path.resolve(SOURCE_DIR, 'index.ts');
+const OUTPUT_DIR = path.resolve('public', 'app');
 
 async function build() {
-  console.log(`Bundling for ${config.jsc.target}. Minifying: ${IS_PRODUCTION_ENV}`);
   try {
-    const output = await swc.bundle(config);
+  console.log(`Bundling client code...`);
+   const bundler = new Parcel({
+    entries: ENTRY_FILE,
+    mode: process.env.NODE_ENV,
+    targets: {
+      default: {
+        distDir: OUTPUT_DIR,
+      },
+    },
+    defaultConfig: '@parcel/config-default',
+   });
 
-    try {
-      const s = await fs.stat(OUTPUT_DIR);
-      if (!s.isDirectory()) {
-        await fs.mkdir(OUTPUT_DIR);
-      }
-    } catch (_e) {
-      await fs.mkdir(OUTPUT_DIR);
-    }
-
-    for (const filename of Object.keys(output)) {
-      const fp = path.resolve(OUTPUT_DIR, filename.replace(/\.ts$/, '.js'));
-      let code = output[filename].code;
-      if (IS_PRODUCTION_ENV) {
-        code = await swc.minify(output[filename].code);
-      }
-      await fs.writeFile(fp, typeof code === 'string' ? code : code.code);
-      await fs.writeFile(fp + '.map', output[filename].map);
-    }
+   const result = await bundler.run();
+   const bundles = result.bundleGraph.getBundles();
+   console.log(`Bundled in ${result.buildTime}ms`);
   } catch (e) {
     console.error(e);
     process.exit(1);

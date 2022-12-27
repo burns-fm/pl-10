@@ -71,3 +71,6 @@ media/*
 
 # Authenticate details, etc.
 *-login-details*
+
+# Build cache
+.parcel-cache
