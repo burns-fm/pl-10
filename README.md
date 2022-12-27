@@ -180,7 +180,9 @@ The media directory included in this repository at the root.
 </details>
 </summary>
 
-You can set an alternative media directory by setting the environment variable `PL_10_MEDIA_DIR` to where your files are stored. Only
+You can set an alternative media directory by setting the environment variable `PL_10_MEDIA_DIR` to where your files are stored. Not all file types are supported yet. See: [server/constants.ts](server/constants.ts)
+
+While the server could theoretically stream any audio file type that includes parse-able metadata, the client code relies on browser compatibility and not all file types are guaranteed to work with every browser. So, Pl-10 by default tries to work with as many browsers as possible for audio playback. You can change those settings if it suits your project.
 
 ### Maximum file number
 <summary>
