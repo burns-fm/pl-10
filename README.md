@@ -8,6 +8,7 @@ Just drop your files in the `media` folder and start the server.
 
 ## Contents
 
+- <a href="#demo">Demo</a>
 - <a href="#usage">Usage</a>
 - <a href="#setup">Setup</a>
 - <a href="#startup">Startup</a>
@@ -24,6 +25,11 @@ Just drop your files in the `media` folder and start the server.
   - <a href="#back-end">Back End</a>
 - <a href="#libraries-and-other-references">Libraries and other references</a>
 
+## Demo
+
+There is an interactive demo running at: https://pl-10.x.burns.fm
+
+Note: the machine its running on is not suited for large audiences, so performance may not be ideal.
 
 ## Usage
 
