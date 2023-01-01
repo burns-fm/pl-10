@@ -27,7 +27,7 @@ export const SCRIPTS_DIR = resolve('public', 'app');
 export const PageText = {
   Title: process.env.PL_10_PAGE_TITLE ?? 'BRC',
   Subtitle: process.env.PL_10_PAGE_SUBTITLE ?? 'PL-10',
-  SupportingText: process.env.PL_10_SUPPORTING_TEXT ?? 'Simple, self-hosted streaming solution',
+  SupportingText: process.env.PL_10_SUPPORTING_TEXT ?? 'Self-hosted audio stremaing',
   Copyright: process.env.PL_10_COPYRIGHT ?? 'Burns Recording Company & Rob Fairley',
 };
 

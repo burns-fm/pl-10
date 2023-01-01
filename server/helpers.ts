@@ -13,7 +13,7 @@ export const loadMusicMetadata = async (): Promise<typeof MusicMetadata> => {
 }
 
 export const loadFileTypesLib = async (): Promise<typeof FileType> => {
-  const ft = await eval("import ('file-type')");
+  const ft = await eval("import('file-type')");
   return ft;
 };
 

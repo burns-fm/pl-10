@@ -8,7 +8,7 @@ import { resolve } from "path";
 import { IAudioMetadata } from 'music-metadata';
 import { ACCEPTED_MEDIA_MIMETYPES, DEBUG, IGNORE_FILES, MAX_FILE_NUMBER, MEDIA_DIR } from "../constants";
 import { Store } from "../store";
-import { loadFileTypesLib, loadMusicMetadata } from "../helpers";
+import { loadMusicMetadata } from "../helpers";
 import { createReadStream, ReadStream } from "fs";
 import { lookup as getMimeType } from 'mime-types';
 
@@ -73,7 +73,7 @@ export class MediaController {
   /**
    * Creates a read stream for the requested track by the key.
    */
-  async createTrackStream(key: string, start?: number): Promise<{ stream: ReadStream, track: Track, size: number, }> {
+  async createTrackStream(key: string, start?: number, end?: number): Promise<{ stream: ReadStream, track: Track, size: number, }> {
     const track = this.store.get(key);
 
     if (!track) {
@@ -84,7 +84,7 @@ export class MediaController {
     const stats = await stat(filePath);
 
     return {
-      stream: createReadStream(filePath, { start }),
+      stream: createReadStream(filePath, { start, end }),
       track,
       size: stats.size,
     }

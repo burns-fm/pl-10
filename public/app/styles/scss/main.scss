@@ -8,17 +8,27 @@
 
 $max-width: 1114px;
 
+@keyframes load {
+  from {
+    filter: saturate(0%);
+  }
+  to {
+    filter: saturate(100%);
+  }
+}
+
 html, body {
   @include flex-center;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: $foreground;
   background-color: $background;
-  background: url('/img/RugSpin.jpg');
+  background: url('/img/RugSpin-1440.jpg');
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
   width: 100vw;
   margin: 0;
+  animation: load 1s;
 }
 
 ::selection { 

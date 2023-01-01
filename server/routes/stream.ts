@@ -20,12 +20,17 @@ router.get('/:key', async (req: Request, res: Response) => {
   const rangeHeader = req.headers.range;
 
   let start = 0;
+  let end: number | undefined = undefined;
+
   if (rangeHeader) {
-    const startingByteMatch = rangeHeader.match(/\d+/);
-    start = startingByteMatch ? parseInt(startingByteMatch[0]) : 0;
+    const byteMatches = rangeHeader.match(/\d+/gm);
+    start = byteMatches ? parseInt(byteMatches[0]) : 0;
+    end = (byteMatches && byteMatches.length >= 2)
+      ? parseInt(byteMatches[1] ?? 0)
+      : undefined;
   }
 
-  const { stream, size: _size } = await controller.createTrackStream(key, start);
+  const { stream, size: _size } = await controller.createTrackStream(key, start, end);
   const track = await controller.getTrack(key);
   res.setHeader('Content-Type', `${track.mimetype}`);
   stream.pipe(res);
