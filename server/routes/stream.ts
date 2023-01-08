@@ -5,6 +5,7 @@
 
 import { Request, Response, Router } from 'express';
 import { MediaController } from '../controllers/media';
+import { DEBUG } from '../constants';
 
 const router = Router();
 
@@ -17,22 +18,29 @@ router.get('/', async (_req, res: Response) => {
 
 router.get('/:key', async (req: Request, res: Response) => {
   const { key } = req.params;
-  const rangeHeader = req.headers.range;
-
+  const rangeHeader = req.headers.range?.trim();
+  
   let start = 0;
   let end: number | undefined = undefined;
 
   if (rangeHeader) {
-    const byteMatches = rangeHeader.match(/\d+/gm);
-    start = byteMatches ? parseInt(byteMatches[0]) : 0;
-    end = (byteMatches && byteMatches.length >= 2)
-      ? parseInt(byteMatches[1] ?? 0)
-      : undefined;
+    if (rangeHeader !== 'bytes=0-1') {
+      const byteMatches = rangeHeader.match(/\d+/gm);
+      start = byteMatches ? parseInt(byteMatches[0]) : 0;
+      end = (byteMatches && byteMatches.length >= 2)
+        ? parseInt(byteMatches[1] ?? 0)
+        : undefined;
+    }
   }
 
-  const { stream, size: _size } = await controller.createTrackStream(key, start, end);
+  const { stream, size } = await controller.createTrackStream(key, start, end);
   const track = await controller.getTrack(key);
   res.setHeader('Content-Type', `${track.mimetype}`);
+  
+  stream.on('data', (chunk: any[]) => {
+    DEBUG && console.debug(`Sending track ${key} chunk ${chunk.length} bytes to ${req.ip}...`);
+  });
+
   stream.pipe(res);
 });
 

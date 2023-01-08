@@ -6,7 +6,7 @@ import { IAudioMetadata } from 'music-metadata';
 import * as Icons from './icons';
 import { Scope } from './scope';
 import { settings } from './helpers/settings';
-import { copyText, isSafari } from './helpers/checks';
+import { copyText, isMobile, isSafari } from './helpers/checks';
 
 type PaddedTimeValue = string | number;
 type HHMMSS = `${PaddedTimeValue}:${PaddedTimeValue}:${PaddedTimeValue}`;
@@ -346,28 +346,62 @@ export class Player {
     }
   };
 
-  seek = async (event: MouseEvent): Promise<void> => {
+  seek = async (event: MouseEvent | TouchEvent, wasPlaying?: boolean): Promise<void> => {
     if (!this.data.currentTrack || !this.data.currentTrack.duration) {
       throw new Error(`Unable to seek. No track loaded.`);
     }
-
-    const wasPlaying = !this.audio.paused;
     
     if (wasPlaying) {
       this.pause();
     }
 
-    const percent = event.offsetX / this.transport.position.offsetWidth;
+    const offsetX = 'offsetX' in event
+      ? event.offsetX
+      : (event as any).pageX - (event.target as HTMLProgressElement).getBoundingClientRect().left;
+
+    const percent = offsetX / this.transport.position.offsetWidth;
     const { duration } = this.data.currentTrack;
 
     this.audio.currentTime = percent * duration;
     this.transport.position.value = parseFloat(`${percent}`);
-    
+  };
+
+  mouseDown = async (event: MouseEvent): Promise<void> => {
+    event.preventDefault();
+    const wasPlaying = !this.audio.paused;
+
+    await this.seek(event, wasPlaying);
     if (wasPlaying) {
       if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
       await this.scope.audioContext?.resume();
-      this.play();
+      await this.play();
     }
+  };
+
+  touchWasPlaying = false;
+
+  touchStart = async (event: TouchEvent): Promise<void> => {
+    event.preventDefault();
+    this.touchWasPlaying = !this.audio.paused;
+    await this.seek(event, this.touchWasPlaying);
+  };
+
+  touchMove = async (event: TouchEvent): Promise<void> => {
+    event.preventDefault();
+    await this.seek(event, this.touchWasPlaying);
+  };
+
+  touchEnd = async (event: TouchEvent): Promise<void> => {
+    event.preventDefault();
+    await this.seek(event, this.touchWasPlaying);
+    
+    if (this.touchWasPlaying) {
+      if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
+      await this.scope.audioContext?.resume();
+      await this.play();
+    }
+
+    this.touchWasPlaying = false;
   };
 
   getShareLink(): string {
@@ -458,6 +492,8 @@ export class Player {
 
   /*** SETUP & TEARDOWN */
   private setupEventListeners(): void {
+    const isMobileDevice = isMobile();
+
     // Audio Events
     this.audio.addEventListener('timeupdate', this.onUpdateTime);
     this.audio.addEventListener('loadedmetadata', this.onUpdateStreamSource);
@@ -466,13 +502,17 @@ export class Player {
     this.audio.addEventListener('play', this.onPlay);
 
     // Transport
-    this.transport.position.addEventListener('mousedown', this.seek);
-    this.transport.position.addEventListener('touchstart', (e) => this.seek(e as any));
+    if (isMobileDevice) {
+      this.transport.position.addEventListener('touchstart', this.touchStart);
+      this.transport.position.addEventListener('touchmove', this.touchMove);
+      this.transport.position.addEventListener('touchend', this.touchEnd);
+    } else {
+      this.transport.position.addEventListener('mousedown', this.mouseDown);
+    }
     this.transport.play.addEventListener('click', this.togglePlayback);
     this.transport.skip.addEventListener('click', this.skipTrack);
     this.transport.rand.addEventListener('click', this.random);
     this.transport.mute.addEventListener('click', this.toggleVolumeSlider);
-    this.transport.volume.addEventListener('click', this.onVolumeUpdate);
     this.transport.shr.addEventListener('click', this.copyShareLink);
 
     this.display.trackInfo.title.addEventListener('mouseover', (e) => {
@@ -482,6 +522,13 @@ export class Player {
     this.display.trackInfo.title.addEventListener('mouseout', e => {
       (e.target as HTMLMarqueeElement).start();
     });
+
+    if (!isMobileDevice) {
+      this.transport.volume.addEventListener('click', this.onVolumeUpdate);
+      this.setVolume(DEFAULT_VOLUME);
+    } else {
+      this.setVolume(1);
+    }
 
     // Visualizer / Oscilloscope
     const canvas = document.querySelector<HTMLCanvasElement>('#osc');
@@ -540,7 +587,6 @@ export class Player {
     console.log('Track list:', this.data.trackList);
 
     this.setupEventListeners();
-    this.setVolume(DEFAULT_VOLUME);
 
     // Load initial track
     const trackKey = this.getTrackIdFromUrl() ?? this.getRandomTrackKey();

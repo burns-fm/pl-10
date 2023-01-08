@@ -196,7 +196,7 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
     transition: 175ms ease all;
 
     &>* {
-      filter: blur(0.01px) brightness(1.1);
+      filter: brightness(1.1);
       opacity: 0.9;
     }
 
