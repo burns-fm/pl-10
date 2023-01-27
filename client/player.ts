@@ -298,7 +298,12 @@ export class Player {
       hideMainDisplay(true);
       this.display.pages.volumeSlider = document.createElement('div');
       this.display.pages.volumeSlider.id = sliderContainerId;
-      this.display.pages.volumeSlider.classList.add(['page', isSafari() && 'disabled'].join(' '));
+      this.display.pages.volumeSlider.classList.add('page');
+
+      if (isSafari()) {
+        this.display.pages.volumeSlider.classList.add('disabled');
+      }
+
       this.display.pages.volumeSlider.innerHTML = `<h2>VOLUME</h2>`;
       this.display.pages.volumeSlider.innerHTML += `<span id="current-volume">${Math.round(this.audio.volume * 100)}</span>`
       this.display.pages.volumeSlider.appendChild(this.transport.volume);
