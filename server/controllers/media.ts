@@ -73,20 +73,25 @@ export class MediaController {
   /**
    * Creates a read stream for the requested track by the key.
    */
-  async createTrackStream(key: string, start?: number, end?: number): Promise<{ stream: ReadStream, track: Track, size: number, }> {
-    const track = this.store.get(key);
+  async createTrackStream(key: string, start?: number, end?: number): Promise<{ stream: ReadStream, track: Track, size: number, } | { error: string; }> {
+    try {
+      const track = this.store.get(key);
 
-    if (!track) {
-      throw new Error(`Track with key ${key} not found.`);
-    }
+      if (!track) {
+        throw new Error(`Track with key ${key} not found.`);
+      }
 
-    const filePath = resolve(MEDIA_DIR, track.filePath);
-    const stats = await stat(filePath);
+      const filePath = resolve(MEDIA_DIR, track.filePath);
+      const stats = await stat(filePath);
 
-    return {
-      stream: createReadStream(filePath, { start, end }),
-      track,
-      size: stats.size,
+      return {
+        stream: createReadStream(filePath, { start, end }),
+        track,
+        size: stats.size,
+      };
+    } catch(e) {
+      console.error(e);
+      return { error: `Error loading stream: ${e}` };
     }
   }
 

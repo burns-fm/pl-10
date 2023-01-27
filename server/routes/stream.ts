@@ -33,7 +33,14 @@ router.get('/:key', async (req: Request, res: Response) => {
     }
   }
 
-  const { stream, size } = await controller.createTrackStream(key, start, end);
+  const createStreamResult = await controller.createTrackStream(key, start, end);
+
+  if ('error' in createStreamResult) {
+    return res.status(400).send(createStreamResult.error);
+  }
+
+  const { stream, size } = createStreamResult;
+
   const track = await controller.getTrack(key);
   res.setHeader('Content-Type', `${track.mimetype}`);
   
