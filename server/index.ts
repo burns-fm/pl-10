@@ -35,7 +35,7 @@ app.locals = {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(logger(env === constants.Environment.Production ? 'combined' : 'dev'));
+app.use(logger(env === constants.Environment.Production ? 'combined' : 'dev'));
 
 // Use the below for development only.
 // app.use(sassMiddleware({
