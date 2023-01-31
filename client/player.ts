@@ -2,11 +2,12 @@
  * © 2022-2022 Burns Recording Company
  * Created: 23/10/2022
  */
+
 import { IAudioMetadata } from 'music-metadata';
 import * as Icons from './icons';
 import { Scope } from './scope';
 import { settings } from './helpers/settings';
-import { copyText, isMobile, isSafari } from './helpers/checks';
+import { copyText, isChrome, isMobile, isSafari } from './helpers/checks';
 
 type PaddedTimeValue = string | number;
 type HHMMSS = `${PaddedTimeValue}:${PaddedTimeValue}:${PaddedTimeValue}`;
@@ -259,26 +260,25 @@ export class Player {
     
     if (n === 0) {
       this.audio.muted = true;
+      this.transport.mute.innerHTML = Icons.VolumeZero;
     } else {
       this.audio.muted = false;
+      this.data.lastVolume = this.audio.volume;
     }
   };
 
   toggleMute = () => {
     if (this.audio.muted || this.audio.volume === 0) {
       this.setVolume(this.data.lastVolume);
-      this.audio.muted = false;
       this.transport.mute.innerHTML = Icons.VolumeFull;
       if (!this.display.meta.hidden) {
         this.transport.mute.classList.remove('active');
       }
     } else {
-      this.data.lastVolume = this.audio.volume;
       this.setVolume(0);
-      this.audio.muted = true;
-      this.transport.mute.innerHTML = Icons.VolumeZero;
     }
-
+    (window as any).e = this.audio;
+    console.log(this.audio.muted, this.audio.volume)
     if (this.display.pages.volumeSlider) {
       this.transport.mute.classList.add('active');
       this.display.pages.volumeSlider.querySelector('#current-volume')!.textContent = `${Math.round(this.audio.volume * 100)}`;
@@ -300,7 +300,7 @@ export class Player {
       this.display.pages.volumeSlider.id = sliderContainerId;
       this.display.pages.volumeSlider.classList.add('page');
 
-      if (isSafari()) {
+      if (isMobile()) {
         this.display.pages.volumeSlider.classList.add('disabled');
       }
 
@@ -350,13 +350,9 @@ export class Player {
     }
   };
 
-  seek = async (event: MouseEvent | TouchEvent, wasPlaying?: boolean): Promise<void> => {
+  seek = async (event: MouseEvent | TouchEvent, _wasPlaying?: boolean): Promise<void> => {
     if (!this.data.currentTrack || !this.data.currentTrack.duration) {
       throw new Error(`Unable to seek. No track loaded.`);
-    }
-    
-    if (wasPlaying) {
-      this.pause();
     }
 
     const offsetX = 'offsetX' in event
@@ -364,48 +360,29 @@ export class Player {
       : (event as any).pageX - (event.target as HTMLProgressElement).getBoundingClientRect().left;
 
     const percent = offsetX / this.transport.position.offsetWidth;
-    const { duration } = this.data.currentTrack;
-
-    this.audio.currentTime = percent * duration;
-    this.transport.position.value = parseFloat(`${percent}`);
+    const newPosition = percent * this.data.currentTrack.duration;
+    this.audio.currentTime = newPosition;
+    this.transport.position.value = percent;
   };
 
   mouseDown = async (event: MouseEvent): Promise<void> => {
     event.preventDefault();
-    const wasPlaying = !this.audio.paused;
-
-    await this.seek(event, wasPlaying);
-    if (wasPlaying) {
-      if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
-      await this.scope.audioContext?.resume();
-      await this.play();
-    }
+    await this.seek(event);
   };
-
-  touchWasPlaying = false;
 
   touchStart = async (event: TouchEvent): Promise<void> => {
     event.preventDefault();
-    this.touchWasPlaying = !this.audio.paused;
-    await this.seek(event, this.touchWasPlaying);
+    await this.seek(event);
   };
 
   touchMove = async (event: TouchEvent): Promise<void> => {
     event.preventDefault();
-    await this.seek(event, this.touchWasPlaying);
+    await this.seek(event);
   };
 
   touchEnd = async (event: TouchEvent): Promise<void> => {
     event.preventDefault();
-    await this.seek(event, this.touchWasPlaying);
-    
-    if (this.touchWasPlaying) {
-      if (!this.scope.audioContext) { this.scope.audioContext = new AudioContext(); }
-      await this.scope.audioContext?.resume();
-      await this.play();
-    }
-
-    this.touchWasPlaying = false;
+    await this.seek(event);
   };
 
   getShareLink(): string {
@@ -434,7 +411,7 @@ export class Player {
 
   private onKeyPress = async (e: KeyboardEvent) => {
     e.preventDefault();
-    e.stopPropagation();
+    // e.stopPropagation();
 
     switch (e.key) {
       case ' ':
@@ -452,6 +429,8 @@ export class Player {
       default:
         return;
     }
+
+    return e.target === document.body;
   };
 
   private onVolumeUpdate = (event: MouseEvent): void => {
@@ -584,6 +563,10 @@ export class Player {
     this.transport.osc.innerHTML = Icons.Oscilloscope;
     this.transport.mute.innerHTML = Icons.VolumeFull;
     this.transport.shr.innerHTML = Icons.Share;
+
+    if (isChrome()) {
+      this.transport.position.classList.add('readonly');
+    }
 
     this.data.trackList = await this.getTrackList();
 

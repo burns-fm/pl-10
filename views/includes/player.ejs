@@ -78,7 +78,14 @@ Created: 23/10/2022
       <button id="btn--shr" title="Share this track">
         SHR
       </button>
-      <button id="btn--mute" title="Show volume options">
+      
+      <!--
+        NOTE: Volume controls are not currently enabled due to a bug.
+        The bug involves the use of a media source connecting to the audio
+        element. We can resolve this by wiring a gain node into the signal chain
+        and wiring our volume controls to that node.
+       -->
+      <button id="btn--mute" title="Show volume options" class="disabled">
         VOL
       </button>
 

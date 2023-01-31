@@ -37,7 +37,7 @@ export class Scope {
 
   public attachMeter = (element: HTMLCanvasElement, options: MeterOptions = { meterColor: scopeDefault.meter.line2, meterLineWidth: 3, }): void => {
     if (this.attached) {
-      console.warn(`Stream already attached (${!!this.attached})`);
+      console.info(`Stream already attached (${!!this.attached})`);
       return;
     }
     

@@ -47,6 +47,10 @@ export const isSafari = () => {
   navigator.userAgent.indexOf('FxiOS') == -1;
 };
 
+export const isChrome = () => {
+  return Boolean(navigator.userAgent.match(/(C|c)hrom(e|ium)/i));
+}
+
 export const isIos = () => navigator.userAgent.match(/ipad|iphone/i);
 
 export const copyText = async (text: string) => {

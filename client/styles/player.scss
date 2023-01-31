@@ -218,6 +218,18 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
       background-color: $foreground_30;
       border-bottom: 3px solid rgba(242, 255, 255, 0.183);
     }
+
+    &.disabled {
+      pointer-events: none;
+      cursor:context-menu;
+      background: $foreground_10;
+      border-bottom: 3px solid rgba(242, 255, 255, 0.183);
+
+      &:active {
+        background-color: unset;
+        filter: unset;
+      }
+    }
   }
 
   & .controls {
@@ -232,13 +244,6 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
 
   }
 
-  & .position {
-    position: absolute;
-    bottom: -10px;
-    left: 5px;
-    width: calc(100% - 10px);
-  }
-
   & .volume,
   & .position {
     opacity: 0.3;
@@ -246,6 +251,22 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
 
     &:hover {
       opacity: 0.6;
+    }
+  }
+
+  & .position {
+    position: absolute;
+    bottom: -10px;
+    left: 5px;
+    width: calc(100% - 10px);
+
+    & .readonly {
+      cursor: default;
+      pointer-events: none;
+
+      &:hover {
+        opacity: unset;
+      }
     }
   }
 
