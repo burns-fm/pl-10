@@ -43,6 +43,7 @@ router.get('/:key', async (req: Request, res: Response) => {
 
   const track = await controller.getTrack(key);
   res.setHeader('Content-Type', `${track.mimetype}`);
+  res.setHeader('Content-Length', size);
   
   stream.on('data', (chunk: any[]) => {
     DEBUG && console.debug(`Sending track ${key} chunk ${chunk.length} bytes to ${req.ip}...`);
