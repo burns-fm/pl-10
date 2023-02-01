@@ -14,6 +14,11 @@ import { lookup as getMimeType } from 'mime-types';
 
 export type Track = IAudioMetadata & { filePath: string; mimetype: string; };
 
+/**
+ * Short version of the track metadata. Useful for sending data to the
+ * web browser or other client when you don't need all of the metadata
+ * (like for current track displays or track lists)
+ */
 export interface TrackSummary {
   key: string;
   title: Track['common']['title'];
@@ -25,6 +30,10 @@ export interface TrackSummary {
   lossless: Track['format']['lossless'];
 }
 
+/**
+ * Functions related to reading audio files and directories, opening streams,
+ * reading metadata, and other related I/O and audio file library functions.
+ */
 export class MediaController {
   private readonly store = new Store<Track>('tape-deck');
   private cachedTrackList:  TrackSummary[] | null = null;

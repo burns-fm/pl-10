@@ -59,6 +59,15 @@ export interface TrackSummary {
 
 export const DEFAULT_VOLUME = 0.75;
 
+/**
+ * Use this to create a player instance. You should only try to mount
+ * one instance of this class.
+ * @note Improved comments and documentation are coming for this file, so
+ * in the meantime you should only edit this code if you're confident you
+ * know what you're doing, or if you're just playing around with it and don't
+ * mind "breaking a few eggs".
+ * It's not too complicated, it's just long and could use some cleanup.
+ */
 export class Player {
   private createVolumeControl = () => {
     const slider = document.createElement('progress');

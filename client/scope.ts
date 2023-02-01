@@ -87,6 +87,11 @@ export class Scope {
     };
 
     let handle: number;
+
+    /**
+     * This method will be drawn when the browser draws a new frame and will read the
+     * current audio data frame then draw the scope visual
+     */
     const draw = (time: DOMHighResTimeStamp): void => {
       handle = requestAnimationFrame(draw);
       this.handle = handle;
