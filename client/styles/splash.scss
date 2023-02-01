@@ -6,7 +6,7 @@
 @import 'fonts';
 @import 'colors';
 
-$light-text-shadow: 0px 0px 10px $background_90;
+$light_text_shadow: 0px 0px 10px $background_90;
 
 .splash {
   @include flex-center;
@@ -26,16 +26,16 @@ $light-text-shadow: 0px 0px 10px $background_90;
     font-weight: 800;
     text-transform: uppercase;
     color: $yellow;
-    text-shadow: $light-text-shadow
+    text-shadow: $light_text_shadow
   }
   h2 {
     font-size: 3em;
     font-weight: 300;
-    text-shadow: $light-text-shadow
+    text-shadow: $light_text_shadow
   }
 
   p {
     font-size: 1.1em;
-    text-shadow: $light-text-shadow;
+    text-shadow: $light_text_shadow;
   }
 }

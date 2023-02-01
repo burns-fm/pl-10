@@ -6,12 +6,21 @@
 import { runCompatibilityCheck } from './helpers/checks';
 import { Player } from './player';
 
-runCompatibilityCheck();
+/**
+ * Player startup
+ * 
+ * 1. Check that the user's browser can run the client code
+ * 2. Start a player instance. If you try and do this more than once,
+ *    you might get some strange effects or crash your (or worse, your listeners') browser.
+ * 3. If the player still didn't start properly for some reason, throw an error and call it a day.
+ */
+
+runCompatibilityCheck(); // (1)
 let player;
-player = new Player();
+player = new Player(); // (2)
 
 if (!player) {
-  throw new Error(`Failed to load player`);
+  throw new Error(`Failed to load player`); // (3)
 } else {
   console.log(`Loaded application`);
 }

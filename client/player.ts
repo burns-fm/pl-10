@@ -394,7 +394,7 @@ export class Player {
 
   copyShareLink = async (): Promise<void> => {
     const link = this.getShareLink();
-    copyText(link);
+    copyText(link, 'Copy the shareable link below:');
   }
 
   /*** EVENTS & HANDLERS */
@@ -543,7 +543,7 @@ export class Player {
   private drawOscilloscope(): void {
     const osc = document.querySelector<HTMLCanvasElement>('#osc');
     if (osc) {
-      this.scope.attachMeter(osc);
+      this.scope.attach(osc);
     }
   }
 

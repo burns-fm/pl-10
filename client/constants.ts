@@ -24,13 +24,16 @@ export const errorPage = {
 
 export const UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
 
+/**
+ * The key for accessing the stored settings in the user's browser suing LocalStorage when using the web version.
+ */
 export const PL_10_SETTINGS_KEY = 'pl-10-settings';
+/**
+ * The default settings the player will use when a user first loads the web version.
+ * This will also be used if they clear their cache and LocalStorage.
+ */
 export const PL_10_DEFAULT_SETTINGS = {
   oscilloscope: {
     visible: true
   },
-  // volume: {
-  //   visible: true, // not implemented
-  //   default: 0.5, // not implemented
-  // }
 };

@@ -31,9 +31,8 @@ export class MediaController {
   private hasLoaded = false;
 
   /**
-   * Get a list of track summaries for displaying a track list,
-   * for loading the track listing into the player on page load,
-   * and so on.
+   * Get a list of track summaries. {@link TrackSummary} objects contain just a few metadata properties
+   * which makes this useful for sending a list of available tracks to a client/player.
    */
   async getTrackList(): Promise<TrackSummary[]> {
     if (this.cachedTrackList && this.cachedTrackList.length > 0)
@@ -58,7 +57,7 @@ export class MediaController {
   }
 
   /**
-   * Get the saved metadata for an individual track
+   * Get the saved metadata for an individual track using the key
    */
   async getTrack(key: string): Promise<Track> {
     const track = this.store.get(key);
@@ -72,6 +71,12 @@ export class MediaController {
 
   /**
    * Creates a read stream for the requested track by the key.
+   * 
+   * First it looks the track up in the store defined at the top of this class. Using the stored metadata,
+   * it checks that the audio file actually exists and then returns an open stream with some attached file metadata.
+   * 
+   * If you want to know more about how this works, check out the NodeJS documentation:
+   * @link https://nodejs.org/dist/latest-v18.x/docs/api/fs.html#fscreatereadstreampath-options
    */
   async createTrackStream(key: string, start?: number, end?: number): Promise<{ stream: ReadStream, track: Track, size: number, } | { error: string; }> {
     try {
@@ -98,7 +103,7 @@ export class MediaController {
   /**
    * This will look up any compatible audio files in your configured media folder,
    * including the metadata.
-   * @note This should run at startup only, and only run once unless it is adapted to that use.
+   * @note This should run at startup only, and only run once.
    */
   loadMediaFiles = async (): Promise<void> => {
     if (this.hasLoaded) {
@@ -106,25 +111,33 @@ export class MediaController {
       return;
     }
 
+    // If this method is being run, it resets the existing store completely.
+    // It will generate an entirely new track list from the audio files in your media directory.
     if (this.store.size !== 0) {
       this.store.reset();
     }
 
+    // Reads the media directory you set up and gets the list of files
     console.info(`Loading media from ${MEDIA_DIR} ...`);
     const { parseBuffer } = await loadMusicMetadata();
     let trackFileList = await readdir(MEDIA_DIR);
 
+    // If there is a maximum number of files set, this will limit the list by that number.
     trackFileList = trackFileList.slice(0, MAX_FILE_NUMBER);
-
+    
+    // For each of the filenames in the list we have to put together the complete path to the audio file (1)
+    // Using the full file path, we get the file metadata (2) and make sure it's valid. If it's not, we just skip it.
+    // Then the file is read into a buffer (3). Using the buffer we read the ID3 and other metadata from the file (4)
+    // Using the metadata we create a track "key" (5) and using the key, store the track file path and metadata in the store(6).
     for (const fileName of trackFileList) {
       if (IGNORE_FILES.includes(fileName)) {
         DEBUG && console.info(`Invalid file: ${fileName}. Skipping...`);
         continue;
       }
 
-      const filePath = resolve(MEDIA_DIR, fileName);
+      const filePath = resolve(MEDIA_DIR, fileName); // (1)
       
-      const mimetype = getMimeType(filePath) || 'application/octet-stream';
+      const mimetype = getMimeType(filePath) || 'application/octet-stream'; // (2)
       
       if (!ACCEPTED_MEDIA_MIMETYPES.includes(mimetype)) {
         DEBUG && console.info(`File not supported: ${filePath}. Unsupported mime type: ${mimetype}`);
@@ -132,12 +145,12 @@ export class MediaController {
       }
       
       console.info(`Loading file: ${filePath}`);
-      const file = await readFile(filePath);
-      const trackInfo = await parseBuffer(file);
+      const file = await readFile(filePath); // (3)
+      const trackInfo = await parseBuffer(file); // (4)
 
-      const keySeed = this.getKeySeed(trackInfo);
+      const keySeed = this.getKeySeed(trackInfo); // (5)
 
-      this.store.loadDataItem({
+      this.store.loadDataItem({ // (6)
         filePath,
         mimetype,
         ...trackInfo
@@ -149,15 +162,22 @@ export class MediaController {
     this.hasLoaded = true;
   };
 
+  /**
+   * This attempts to set up a repeatable hash. This will be used to calculate an MD5
+   * and assumes you won't have more than one track with the exact same title and artist name in the metadata.
+   * If you want more than one track with the same name, add additional info like "(Take 2)"
+   * 
+   * @note We want these to be the same every time the server starts so that the shareable links are consistent
+   */
   private getKeySeed(trackInfo: IAudioMetadata): string {
-    // This attempts to set up a repeatable hash. This will be used to calculate an MD5
-    // and assumes you won't have more than one track with the exact same title and artist name in the metadata.
-    // If you want more than one track with the same name, add additional info like "(Take 2)"
-    //
-    // We want these to be the same every time the server starts so that the shareable links are consistent
     return `${trackInfo.format.duration}${trackInfo.common.title ?? Math.random()}:${trackInfo.common.artist ?? Math.random()}`;
   }
 
+  /**
+   * Reduces the full {@link Track} record down to a few essential properties.
+   * @param key The key associated with the track
+   * @param track The full track record
+   */
   private toTrackSummary(key: string, track: Track): TrackSummary {
     return {
       key,

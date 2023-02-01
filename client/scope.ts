@@ -20,6 +20,10 @@ export const scopeDefault = {
 
 export interface MeterOptions { meterColor?: string; meterLineWidth?: number; }
 
+/**
+ * An oscilloscope that displays using an HTML canvas element. It reads the audio data
+ * and draws a waveform to the selected element.
+ */
 export class Scope {
   public attached = false;
 
@@ -35,14 +39,17 @@ export class Scope {
 
   constructor(private readonly source: HTMLAudioElement) {}
 
-  public attachMeter = (element: HTMLCanvasElement, options: MeterOptions = { meterColor: scopeDefault.meter.line2, meterLineWidth: 3, }): void => {
+  /**
+   * Attach the scope to an HTML canvas element.
+   * You can pass in some options to customize the look of the scope like the line thickness and color.
+   */
+  public attach = (element: HTMLCanvasElement, options: MeterOptions = { meterColor: scopeDefault.meter.line2, meterLineWidth: 3, }): void => {
     if (this.attached) {
       console.info(`Stream already attached (${!!this.attached})`);
       return;
     }
     
     if (!this.audioContext) {
-      // console.info(`Creating audio context...`);
       throw new Error('Cannot attach scope. Audio context not initialized.');
     }
 
@@ -133,6 +140,10 @@ export class Scope {
     }
   }
 
+  /**
+   * Detach the meter from the audio context.
+   * @note Careful using this if you don't fully understand the logic.
+   */
   public detachMeter(): void {
     if (!this.handle || !this.node || !this.audioContext || !this.mediaSource) {
       console.warn(`Skipping detach meter call.`, {
