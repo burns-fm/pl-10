@@ -63,9 +63,13 @@ npm run build:client
 ```
 
 If you want to rebuild the styles only then run
-
 ```sh
 npm run build:client:styles
+```
+
+or the code only
+```sh
+npm run build:client:scripts
 ```
 
 If you want to see your changes on the page as you edit the styles, then while your server is running, run this command in another terminal window to auto-compile your styles every time you save:
@@ -109,58 +113,41 @@ Some settings configuration is possible if you want to make some minor changes t
 
 ### Set the page title
 
-<details>
-<summary>
-Default Value
-</summary>
-<div>PL_10_PAGE_TITLE="BRC PL-10"</div>
-<div>
-The media directory included in this repository at the root.
-</div>
-</details>
-
 If you want to use the default layout and set the title text, use the following environment variable `PL_10_PAGE_TITLE`.
 
 Use this for the main page text. Ideal for an artist name or album name, or short promo text. It will also be used for the browser page title (that will show up on the tab).
 
-### Set the page subtitle
+#### DEFAULT VALUE
 
-<details>
-<summary>
-Default Value
-</summary>
-<div>PL_10_PAGE_SUBTITLE="Web Player"</div>
-</details>
+| Variable name    | Value |
+|------------------|-------|
+| PL_10_PAGE_TITLE |   BRC |
+
+### Set the page subtitle
 
 If you want to use the default layout and set the subtitle text, use the following environment variable `PL_10_PAGE_SUBTITLE`.
 
 Use this for an artist name or album name. Something like that.
 
-### Set supporting text
+#### DEFAULT VALUE
 
-<details>
-<summary>
-Default Value
-</summary>
-<div>PL_10_SUPPORTING_TEXT="Simple, self-hosted streaming"</div>
-</details>
+| Variable name       | Value |
+|---------------------|-------|
+| PL_10_PAGE_SUBTITLE | PL-10 |
+
+### Set supporting text
 
 If you want to use the default layout and set the supporting text, use the following environment variable `PL_10_SUPPORTING_TEXT`.
 
 Use this if you have some extra info you want to include like a promotional tagline, shout-out, or release date.
 
+#### DEFAULT VALUE
+
+| Variable name         | Value                         |
+|-----------------------|-------------------------------|
+| PL_10_SUPPORTING_TEXT | Simple, self-hosted streaming |
+
 ### Copyright notice
-
-<details>
-<summary>
-Default Value
-</summary>
-<div>None</div>
-</details>
-
-#### Example
-
-> &copy; 2023 `<your-text-here>`. All rights reserved.
 
 If you want to use the default layout and set the copyright text, use the following environment variable `PL_10_COPYRIGHT`.
 
@@ -169,47 +156,53 @@ The copyright symbol and date are already set for you, so just add any more text
 > **Note:** *To change this text in more detail, you can edit the footer*
 > *template: `/views/includes/footer.ejs`*
 
+#### Example
+
+> &copy; 2023 `<your-text-here>`. All rights reserved.
+
+
+#### DEFAULT VALUE
+
+| Variable name   | Value |
+|-----------------|-------|
+| PL_10_COPYRIGHT |  None |
+
 ### Media Directory
-<summary>
-Default Value
-<details>
-<div>PL_10_MAX_FILES=media</div>
-<div>
-The media directory included in this repository at the root.
-</div>
-</details>
-</summary>
 
 You can set an alternative media directory by setting the environment variable `PL_10_MEDIA_DIR` to where your files are stored. Not all file types are supported yet. See: [server/constants.ts](server/constants.ts)
 
 While the server could theoretically stream any audio file type that includes parse-able metadata, the client code relies on browser compatibility and not all file types are guaranteed to work with every browser. So, Pl-10 by default tries to work with as many browsers as possible for audio playback. You can change those settings if it suits your project.
 
+#### DEFAULT VALUE
+| Variable name   | Value |
+|-----------------|-------|
+| PL_10_MEDIA_DIR | media |
+
 ### Maximum file number
-<summary>
-Default Value
-<details>
-<div>
-PL_10_MAX_FILES=10
-</div>
-</details>
-</summary>
 
 By default, the server has a maximum number of files it will pick up. You can override that number by setting `PL_10_MAX_FILES` to a different number.
+
+#### DEFAULT VALUE
+| Variable name   | Value |
+|-----------------|-------|
+| PL_10_MAX_FILES |    10 |
+
 
 ## Customization
 
 ### Front End
 
-You can change several things about the look of the page.
+You can change anything in the application to suit your needs in as much detail as you'd like. The styles and code are laid out with intention and in a modular way to make finding your way around pretty easy.
 
-  * Player and other functional code: <a href="./client/README.md">See the readme</a>
-  * Player and page styles, colours, fonts: <code>TODO</code>
+- <a href="./client/README.md">See the readme</a>
 
 ### Back End
 
 If you are familiar with JavaScript, HTTP, NPM workflows, then you should find changing the backend functionality relatively simple.
 
 In-depth documentation won't be included with PL-10 at launch, but if you know what you're doing, the best starting point is the set of scripts in `package.json` and the files in the `./server` folder.
+
+- ~~See the readme~~ (forthcoming)
 
 ## Libraries and other references
 
@@ -232,4 +225,4 @@ If you need to understand how to work with some of the files included, you might
 
 ---
 
-&copy; 2022 <a href="https://burns.fm">BRC</a>
+&copy; 2022-2023 <a href="https://burns.fm">BRC</a>
