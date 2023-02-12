@@ -426,13 +426,15 @@ export class Player {
         await this.togglePlayback(e as any);
         break;
       case 'm':
-        this.toggleMute();
+        // this.toggleMute();
+        console.warn(`Volume controls are currently disabled and under development.`);
         break;
       case 'o':
         this.toggleOsc();
         break;
       case 'v':
-        this.toggleVolumeSlider();
+        // this.toggleVolumeSlider();
+        console.warn(`Volume controls are currently disabled and under development.`);
         break;
       default:
         return;
