@@ -287,7 +287,6 @@ export class Player {
       this.setVolume(0);
     }
     (window as any).e = this.audio;
-    console.log(this.audio.muted, this.audio.volume)
     if (this.display.pages.volumeSlider) {
       this.transport.mute.classList.add('active');
       this.display.pages.volumeSlider.querySelector('#current-volume')!.textContent = `${Math.round(this.audio.volume * 100)}`;
@@ -579,8 +578,7 @@ export class Player {
 
     this.data.trackList = await this.getTrackList();
 
-    console.log(`Loaded ${this.data.trackList.length} tracks. Tracklist ready.`);
-    console.log('Track list:', this.data.trackList);
+    console.info(`Loaded ${this.data.trackList.length} tracks. Tracklist ready.`);
 
     this.setupEventListeners();
 

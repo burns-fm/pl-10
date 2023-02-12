@@ -141,7 +141,6 @@ export class Scope {
       this.attached = true;
     } catch(e) {
       console.error(e);
-      alert(e);
     }
   }
 
