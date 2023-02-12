@@ -231,8 +231,8 @@ If you need to understand how to work with some of the files included, you might
 | EJS | <a href="https://ejs.co" target="_blank">https://ejs.co</a> | HTML-based templating language used for setting up the `views` files |
 | SASS/SCSS | <a href="https://sass-lang.com" target="_blank">https://sass-lang.com</a> | The style language used for customizing the look of the HTML (see `./public/app/styles/scss`) |
 
-
-
 ---
+
+Some images are included for demo and display purposes. Except for `noise.png` and the Canada Wordmark, the images are owned by Rob Fairley and Burns Recording Company and should not be redistributed without permission. Feel free to share the cover art included, provided it's unmodified.
 
 &copy; 2022-2023 <a href="https://burns.fm">BRC</a>
