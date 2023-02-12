@@ -111,6 +111,8 @@ Some settings configuration is possible if you want to make some minor changes t
 > *For that reason, if you want more flexibility then you should edit the template file directly.*
 > <div><small>The splash template: `/views/includes/splash.ejs`</div>
 
+---
+
 ### Set the page title
 
 If you want to use the default layout and set the title text, use the following environment variable `PL_10_PAGE_TITLE`.
@@ -122,6 +124,8 @@ Use this for the main page text. Ideal for an artist name or album name, or shor
 | Variable name    | Value |
 |------------------|-------|
 | PL_10_PAGE_TITLE |   BRC |
+
+---
 
 ### Set the page subtitle
 
@@ -135,6 +139,8 @@ Use this for an artist name or album name. Something like that.
 |---------------------|-------|
 | PL_10_PAGE_SUBTITLE | PL-10 |
 
+---
+
 ### Set supporting text
 
 If you want to use the default layout and set the supporting text, use the following environment variable `PL_10_SUPPORTING_TEXT`.
@@ -147,6 +153,8 @@ Use this if you have some extra info you want to include like a promotional tagl
 |-----------------------|-------------------------------|
 | PL_10_SUPPORTING_TEXT | Simple, self-hosted streaming |
 
+---
+
 ### Copyright notice
 
 If you want to use the default layout and set the copyright text, use the following environment variable `PL_10_COPYRIGHT`.
@@ -156,7 +164,7 @@ The copyright symbol and date are already set for you, so just add any more text
 > **Note:** *To change this text in more detail, you can edit the footer*
 > *template: `/views/includes/footer.ejs`*
 
-#### Example
+#### EXAMPLE
 
 > &copy; 2023 `<your-text-here>`. All rights reserved.
 
@@ -165,7 +173,9 @@ The copyright symbol and date are already set for you, so just add any more text
 
 | Variable name   | Value |
 |-----------------|-------|
-| PL_10_COPYRIGHT |  None |
+| PL_10_COPYRIGHT |  None 
+
+---
 
 ### Media Directory
 
@@ -177,6 +187,8 @@ While the server could theoretically stream any audio file type that includes pa
 | Variable name   | Value |
 |-----------------|-------|
 | PL_10_MEDIA_DIR | media |
+
+---
 
 ### Maximum file number
 
