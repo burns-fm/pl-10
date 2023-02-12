@@ -2,7 +2,9 @@
 
 # PL-10
 
-Simple self-hosted audio streaming for the web
+*Simple self-hosted audio streaming for the web*
+
+PL-10 is an open-source, simple, and customizable audio streaming server and website designed for smaller labels, artists, hobbyists, and projects. It provides an opportunity for learning and exploration in the fields of web and audio applications.
 
 Just drop your files in the `media` folder and start the server.
 
@@ -30,12 +32,6 @@ Just drop your files in the `media` folder and start the server.
 There is an interactive demo running at: https://pl-10.x.burns.fm
 
 Note: the machine its running on is not suited for large audiences, so performance may not be ideal.
-
-## Usage
-
-> **Notes on mobile compatibility:** Some effort has been made so far to be mobile-friendly.
-> There are still glitches in playback, seeking, and less importantly, displaying the visualizer.
-> This is due to differences between browser implementation of the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
 
 ## Setup
 
