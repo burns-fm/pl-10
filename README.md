@@ -45,6 +45,8 @@ npm install
 
 Once the packages are installed you'll need to build the server code and start it up.
 
+> **Note on Docker use:** While there is a `Dockerfile`, and it should work for many cases, you may need to make adjustments to allow it to work properly for your server if that's your preferred deployment method. There are a couple of relevant `npm` commands you and view in the `package.json` file.
+
 ### Build the server
 ```sh
 npm run build:server
