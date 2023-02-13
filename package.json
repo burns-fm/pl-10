@@ -54,5 +54,6 @@
   "repository": {
     "url": "https://github.com/burns-fm/pl-10"
   },
-  "homepage": "https://burns.fm"
+  "homepage": "https://burns.fm",
+  "license": "MIT (Modified)"
 }
