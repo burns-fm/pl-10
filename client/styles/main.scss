@@ -27,6 +27,7 @@ html, body {
   background-attachment: fixed;
   color: $foreground;
   width: 100vw;
+  min-height: 100vh;
   margin: 0;
   animation: load 1s;
 }
