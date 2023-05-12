@@ -57,7 +57,7 @@ const embedCode = (req: Request<_NA,_NA,_NA,EmbedCodeSearchParams>, res: Respons
     u.searchParams.append('t', trackId);
   }
   return res.json({
-    html: `<iframe width="${w ?? defaultWidth}" height="${h ?? defaultHeight}" src="${u.toString()}"></iframe>`,
+    html: `<iframe width="${w ?? defaultWidth}" height="${h ?? defaultHeight}" src="${u.toString()}" style="border: 0; border-radius: 4px;"></iframe>`,
   });
 };
 
