@@ -266,9 +266,11 @@ export class Player {
     // Assert the volume is between 0 and 1.
     const v = n < 0 ? 0 : n > 1 ? 1 : n;
 
-    this.audio.volume = v;
-    this.transport.volume.value = v;
-    
+    const normalized = parseFloat(`${v}`.substring(0,4));
+
+    this.audio.volume = normalized;
+    this.transport.volume.value = normalized;
+
     if (n === 0) {
       this.audio.muted = true;
       this.transport.mute.innerHTML = Icons.VolumeZero;
@@ -450,6 +452,7 @@ export class Player {
     this.setVolume(percent);
     this.transport.volume.value = percent;
 
+    // TODO this might be unused and worth deletion...
     const vu = document.querySelector<HTMLCanvasElement>('#vu');
     if (vu) {
       vu.dataset.value = String(this.audio.volume * 20);
@@ -458,7 +461,7 @@ export class Player {
     if (this.display.pages.volumeSlider) {
       this.display.pages.volumeSlider.querySelector('#current-volume')!.textContent = `${Math.round(this.audio.volume * 100)}`;
     }
-  }
+  };
 
   private onUpdateTime = (event: Event): void => {
     if (!this.data.currentTrack) {
