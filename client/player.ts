@@ -34,6 +34,7 @@ interface PlayerDisplay {
   trackInfo: {
     title: HTMLMarqueeElement | HTMLDivElement;
     album: HTMLParagraphElement;
+    artist: HTMLDivElement;
   };
   opts: {
     showVolumeSlider: boolean;
@@ -99,6 +100,7 @@ export class Player {
     trackInfo: {
       title: document.querySelector('.track-info #title')!,
       album: document.querySelector('.track-info #album')!,
+      artist: document.querySelector('.track-info #artist')!,
     },
     opts: {
       showVolumeSlider: false,
@@ -478,9 +480,13 @@ export class Player {
 
   private onUpdateStreamSource = (): void => {
     const title = this.data.currentTrack?.title ?? 'Unknown';
-    this.display.trackInfo.title.innerHTML = title;
+    const album = this.data.currentTrack?.album ?? 'Unknown';
+    const artist = this.data.currentTrack?.artist ?? 'Unknown';
+    this.display.trackInfo.title.textContent = title;
     this.display.trackInfo.title.title = title;
-    this.display.trackInfo.album.innerHTML = this.data.currentTrack?.album ?? 'Unknown';
+    this.display.trackInfo.album.textContent = album;
+    this.display.trackInfo.artist.title = artist;
+    this.display.trackInfo.artist.textContent = artist;
   };
 
   /*** SETUP & TEARDOWN */
@@ -552,7 +558,7 @@ export class Player {
 
   private drawOscilloscope(): void {
     const osc = document.querySelector<HTMLCanvasElement>('#osc');
-    if (osc) {
+    if (osc && this.scope) {
       this.scope.attach(osc);
     }
   }

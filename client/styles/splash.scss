@@ -13,9 +13,8 @@ $light_text_shadow: 0px 0px 10px $background_90;
   max-width: 100%;
   flex-direction: column;
 
-  & > *:first-child {
-    margin-top: $spacing;
-  }
+  margin: $spacing * 2;
+
 
   & > * {
     margin: 0 $spacing * 2;

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PL-10 Embedded Preview</title>
+    <style>
+      code {
+        border: 1px solid grey;
+        border-radius: 4px;
+        padding: 0.5em;
+        background-color: #efefef;
+      }
+      .spaced {
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <fieldset>
+        <legend>Parameters</legend>
+        <div>
+          <label for="w">Width</label>
+          <input type="number" value="888" id="w" name="w" />
+        </div>
+        <div>
+          <label for="h">Height</label>
+          <input type="number" value="333" id="h" name="h" />
+        </div>
+        <div>
+          <label for="trackId">Track ID (if you have one)</label>
+          <input type="text" value="" style="width: 300px;" id="trackId" />
+        </div>
+        <div>
+          <button id="render">Render Preview</button>
+        </div>
+      </fieldset>
+    </div>
+
+    <hr/>
+    <h3>Preview</h3>
+    <div class="spaced">
+      <code id="url">...</code> <button id="copy">COPY</button>
+    </div>
+    <main>
+      <iframe src="/embedded" id="embedded"></iframe>
+    </main>
+    <script>
+      const w = document.querySelector('#w');
+      const h = document.querySelector('#h');
+      const id = document.querySelector('#trackId');
+      const btn = document.querySelector('#render');
+      const embedded = document.querySelector('#embedded');
+      const urlDisplay = document.querySelector('#url');
+
+      embedded.width = 888;
+      embedded.height = 333;
+      urlDisplay.textContent = embedded.parentElement.innerHTML;
+
+      btn.onclick = async e => {
+        e.preventDefault();
+        btn.disabled = true;
+        if (id.value) {
+          embedded.src = `/embedded?t=${id.value}`;
+        }
+        embedded.width = w.value;
+        embedded.height = h.value;
+        embedded.contentDocument.location.reload();
+        urlDisplay.textContent = embedded.parentElement.innerHTML;
+
+        setTimeout(() => {
+          btn.disabled = false;
+        }, 500);
+      };
+
+      const copyBtn = document.querySelector('#copy');
+      copyBtn.onclick = e => {
+        e.preventDefault();
+
+        try {
+          navigator.clipboard.writeText(embedded.parentElement.innerHTML);
+          alert('Copied!');
+        } catch(e) {
+          alert('Unable to copy URL. Not able to access clipboard.');
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -120,13 +120,18 @@ $noise: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixA
         max-width: 100%;
       }
 
-      & #album {
+      & #album, & #artist {
         text-align: center;
 
-        font-size: 2em;
+        font-size: 1.4em;
         margin: 0;
         font-family: $font_LCD;
         line-height: 0.8;
+      }
+
+      & #artist {
+        margin-top: calc($spacing / 4);
+        font-size: 1.2em;
       }
     }
 

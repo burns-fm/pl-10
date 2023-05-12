@@ -32,6 +32,11 @@ html, body {
   animation: load 1s;
 }
 
+body.embedded {
+  background: unset;
+  background-color: $background;
+}
+
 ::selection { 
   background-color: rgba(242,255,255,0.4);
   text-shadow: 0 0 4px rgba(0,0,0,0.3);

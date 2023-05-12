@@ -42,6 +42,7 @@ Created: 23/10/2022
       <div class="track-info">
         <marquee id="title">Loading...</marquee>
         <p id="album">...</p>
+        <p id="artist">...</p>
       </div>
   
       <div class="time">
@@ -105,5 +106,7 @@ Created: 23/10/2022
     If you've changed the keyboard commands in the player scripts,
     make sure to update the file referenced below, or remove it.
   -->
-  <%- include('player-help') %>
+  <% if (includeHelp) { %>
+    <%- include('player-help') %>
+  <% } %>
 </section>

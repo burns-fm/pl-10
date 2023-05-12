@@ -4,6 +4,11 @@
  */
 const { server, constants } = require('../build');
 
-server.listen(constants.PORT, constants.HOSTNAME, () => {
-  console.log(`Listening on ${!!constants.HOSTNAME.match(/^http/) ? constants.HOSTNAME : `http://${constants.HOSTNAME}`}:${constants.PORT}`);
+/**
+ * @type {number | undefined}
+ */
+const port = constants.PORT == 80 ? undefined : constants.PORT;
+
+server.listen(port, constants.HOSTNAME, () => {
+  console.log(`Listening on ${!!constants.HOSTNAME.match(/^http/) ? constants.HOSTNAME : `http://${constants.HOSTNAME}`}${port ? `:${port}` : ''}`);
 });

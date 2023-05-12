@@ -15,10 +15,10 @@ export enum Environment {
 
 export const DEBUG = process.env.DEBUG == 'true';
 
-export const PORT = parseInt(process.env.PL_10_PORT ?? '8347');
+export const PORT = process.env.PL_10_PORT ? parseInt(process.env.PL_10_PORT) : 8347;
 export const HOSTNAME = process.env.PL_10_HOSTNAME ?? 'localhost';
 export const MEDIA_DIR = process.env.PL_10_MEDIA_DIR ?? resolve('media');
-export const MAX_FILE_NUMBER = parseInt(process.env.MAX_FILE_NUMBER ?? '10');
+export const MAX_FILE_NUMBER = process.env.MAX_FILE_NUMBER ? parseInt(process.env.MAX_FILE_NUMBER) : 10;
 
 export const STATIC_DIR = resolve('public');
 export const STYLESHEETS_DIR = resolve('public', 'app', 'styles');

@@ -4,6 +4,8 @@
  */
 
 import { Request, Response, Router } from 'express';
+import { PORT } from '../constants';
+import { _NA } from '../types';
 
 const router = Router();
 
@@ -31,6 +33,42 @@ const homepage = (_req: Request, res: Response) => {
   return res.render('index');
 };
 
+const embedded = (_req: Request, res: Response) => {
+  return res.render('embedded');
+};
+
+interface EmbedCodeSearchParams {
+  w?: number;
+  h?: number;
+  trackId?: string;
+}
+
+const embedCode = (req: Request<_NA,_NA,_NA,EmbedCodeSearchParams>, res: Response) => {
+  const defaultWidth = 888;
+  const defaultHeight = 333;
+  const { w, h, trackId } = req.query;
+
+  const { hostname, protocol, } = req;
+
+  const u = new URL(protocol + '://' + hostname);
+  u.port = `${PORT}`;
+  u.pathname = '/embedded';
+  if (trackId) {
+    u.searchParams.append('t', trackId);
+  }
+  return res.json({
+    html: `<iframe width="${w ?? defaultWidth}" height="${h ?? defaultHeight}" src="${u.toString()}"></iframe>`,
+  });
+};
+
+const embedPreview = (_req: Request, res: Response) => {
+  return res.render('preview');
+};
+
 router.get('/', homepage);
+router.get('/embedded', embedded);
+router.get('/embedded/preview', embedPreview);
+router.get('/embedCode', embedCode);
+
 
 export { router as MainRouter };
