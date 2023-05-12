@@ -25,6 +25,7 @@ Just drop your files in the `media` folder and start the server.
 - <a href="#customization">Customization</a>
   - <a href="#front-end">Front End</a>
   - <a href="#back-end">Back End</a>
+- <a href="#embedding">Embedding</a> <small>in a web page, blog, etc</small>
 - <a href="#libraries-and-other-references">Libraries and other references</a>
 
 ## Demo
@@ -213,6 +214,48 @@ If you are familiar with JavaScript, HTTP, NPM workflows, then you should find c
 In-depth documentation won't be included with PL-10 at launch, but if you know what you're doing, the best starting point is the set of scripts in `package.json` and the files in the `./server` folder.
 
 - ~~See the readme~~ (forthcoming)
+
+## Embedding
+
+PL-10 now supports embedding a player. You can use the direct URL, or set one up using the previewer. You can also make a request to the API for new embed code HTML.
+
+### URL
+
+To embed the player, point an iframe or a popup window at `<your-pl-10-base-url>/embedded`
+
+Demo: https://pl-10.x.burns.fm/embedded
+
+### Previewer
+
+To set up an HTML embed code, go to  `<your-pl-10-base-url>/embedded/preview`
+
+There you can set the height/width and an optional track ID if you want it to start on a specific song.
+
+Demo: https://pl-10.x.burns.fm/embedded/preview
+
+### API
+
+You can get a preset HTML code without using the previewer. Send the height, width, and/or track ID as query parameters.
+
+Make the request to `<your-pl-10-base-url>/embed-code`
+
+Set a query parameter by adding one of the following to your url. [Learn more about query parameters](https://en.wikipedia.org/wiki/Query_string)
+
+| PARAM | TYPE | EXAMPLE |
+|-------|------|---------|
+| `w`   | number | `480`   |
+| `h`   | number | `250`   |
+| `trackId` | string | `648fc2e6-31db-432c-b315-c1bb9b2bbb9a` |
+
+You'll receive a JSON response that looks like this:
+
+```json
+{
+  "html": "<iframe width=\"888\" height=\"333\" src=\"http://localhost:8347/embedded\"></iframe>"
+}
+```
+
+Demo: https://pl-10.x.burns.fm/embedCode
 
 ## Libraries and other references
 

@@ -68,7 +68,7 @@ const embedPreview = (_req: Request, res: Response) => {
 router.get('/', homepage);
 router.get('/embedded', embedded);
 router.get('/embedded/preview', embedPreview);
-router.get('/embedCode', embedCode);
+router.get('/embed-code', embedCode);
 
 
 export { router as MainRouter };
