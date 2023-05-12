@@ -21,18 +21,18 @@
         <legend>Parameters</legend>
         <div>
           <label for="w">Width</label>
-          <input type="number" value="888" id="w" name="w" />
+          <input type="number" value="480" id="w" name="w" />
         </div>
         <div>
           <label for="h">Height</label>
-          <input type="number" value="333" id="h" name="h" />
+          <input type="number" value="250" id="h" name="h" />
         </div>
         <div>
           <label for="trackId">Track ID (if you have one)</label>
           <input type="text" value="" style="width: 300px;" id="trackId" />
         </div>
         <div>
-          <button id="render">Render Preview</button>
+          <button id="render">Render Preview</button> <button id="reset">Reset</button>
         </div>
       </fieldset>
     </div>
@@ -53,16 +53,23 @@
       const embedded = document.querySelector('#embedded');
       const urlDisplay = document.querySelector('#url');
 
-      embedded.width = 888;
-      embedded.height = 333;
+      embedded.width = 480;
+      embedded.height = 250;
       urlDisplay.textContent = embedded.parentElement.innerHTML;
+
+      const src = tid => {
+        const baseUrl = location.href.replace(/\/preview/, '');
+        if (tid) {
+          return `${baseUrl}?t=${tid}`;
+        }
+
+        return baseUrl;
+      };
 
       btn.onclick = async e => {
         e.preventDefault();
         btn.disabled = true;
-        if (id.value) {
-          embedded.src = `/embedded?t=${id.value}`;
-        }
+        embedded.src = src(id.value);
         embedded.width = w.value;
         embedded.height = h.value;
         embedded.contentDocument.location.reload();
@@ -71,6 +78,14 @@
         setTimeout(() => {
           btn.disabled = false;
         }, 500);
+      };
+
+      const resetBtn = document.querySelector('#reset');
+      resetBtn.onclick = e => {
+        w.value = 480;
+        h.value = 250;
+        id.value = '';
+        btn.click();
       };
 
       const copyBtn = document.querySelector('#copy');
