@@ -65,6 +65,7 @@ build
 public/**/*.css
 public/**/*.map
 public/**/*.js
+!public/embedded-preview.css
 
 # Media files
 media/*

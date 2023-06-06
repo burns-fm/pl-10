@@ -1,0 +1,130 @@
+/*
+ * © 2022-2023 Burns Recording Company
+ * Created: 05/06/2023
+ */
+
+ :root {
+  --focusborder: 0 0 0 3px #FFCDCD;
+ }
+
+ ::selection {
+  background-color: #FE9B9B36;
+ }
+
+ pre {
+  border: 1px solid grey;
+  border-radius: 4px;
+  background-color: #FCF8F8;
+  max-width: 800px;
+  overflow: scroll;
+  padding: 1em;
+  display: inline-block;
+  font-family: 'Monaco', 'Courier New', Courier, monospace;
+  font-size: 0.8em;
+  height: calc(44px - calc(1em * 2) - 2px);
+  color: #CD0D0DE6;
+  width: calc(100% - 120px);
+  vertical-align: top;
+  margin: 0;
+}
+
+pre:hover {
+  border-color: #D72222;
+}
+
+.spaced {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+html, body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+legend {
+  font-weight: bold;
+  color: #941B1B;
+}
+
+fieldset {
+  border-radius: 8px;
+}
+
+fieldset > div {
+  margin: 0.5em 0;
+}
+
+fieldset label {
+  font-size: 0.8em;
+}
+
+fieldset input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5em;
+  transition: 150ms ease all;
+}
+
+fieldset input:hover {
+  border: 1px solid #D72222;
+}
+
+fieldset input:focus {
+  outline: 0;
+  border: 1px solid #B51818;
+  box-shadow: var(--focusborder);
+}
+
+button {
+  border: 1px solid #969696;
+  padding: 0.5em;
+  border-radius: 4px;
+  transition: 150ms ease all;
+  background: white;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  margin:2px;
+}
+
+button:hover {
+  border: 1px solid #D72222;
+}
+
+button:active {
+  border: 1px solid #B51818;
+  box-shadow: var(--focusborder);
+}
+
+button:focus {
+  border: 1px solid #B51818;
+  box-shadow: var(--focusborder);
+}
+
+h2, h3, h4, h5, h6 {
+  margin-left: 1em;
+  color: #941B1B;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
+
+.code {
+  display: flex;
+  justify-content: space-around;
+  align-content: flex-start;
+  align-items: flex-start;
+  max-width: 800px;
+}
+
+.code button {
+  vertical-align: top;
+  height: 44px;
+  box-sizing: border-box;
+  margin: 0;
+}
