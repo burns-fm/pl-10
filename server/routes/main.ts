@@ -3,9 +3,11 @@
  * Created: 22/10/2022
  */
 
-import { Request, Response, Router } from 'express';
+import { NextFunction, Request, RequestHandler, Response, Router } from 'express';
+import basicAuth from 'express-basic-auth';
 import { PORT } from '../constants';
 import { _NA } from '../types';
+import { randomUUID } from 'crypto';
 
 const router = Router();
 
@@ -33,10 +35,6 @@ const homepage = (_req: Request, res: Response) => {
   return res.render('index');
 };
 
-const embedded = (_req: Request, res: Response) => {
-  return res.render('embedded');
-};
-
 interface EmbedCodeSearchParams {
   w?: number;
   h?: number;
@@ -61,14 +59,49 @@ const embedCode = (req: Request<_NA,_NA,_NA,EmbedCodeSearchParams>, res: Respons
   });
 };
 
+const embedded = (_req: Request, res: Response) => {
+  return res.render('embedded');
+};
+
 const embedPreview = (_req: Request, res: Response) => {
   return res.render('preview');
 };
 
+const unauthorizedResponse = (ctx: RequestContext) => {
+  // ctx.res.send('Unauthorized');
+  console.log('k');
+
+};
+
+const authorizedResponse = (req: basicAuth.IBasicAuthedRequest, res: Response, next: NextFunction) => {
+  console.log(`User logged in: ${req.auth.user}`);
+  // res.end('Login successful');
+  next();
+};
+
+interface RequestContext {
+  res: Response;
+}
+
+const embedRouter = Router();
+embedRouter.get('/', embedded);
+embedRouter.use('/preview',
+  basicAuth({
+    users: {
+      // TODO force set of user pass
+      [process.env['PL_10_EMBED_USER'] ?? 'admin']: process.env['PL_10_EMBED_PASS'] ?? 'password',
+    },
+    challenge: true,
+    realm: process.env['PL-10-AUTH-REALM'] ?? randomUUID(),
+    unauthorizedResponse,
+  }),
+  authorizedResponse as RequestHandler,
+);
+embedRouter.get('/preview', embedPreview);
+
 router.get('/', homepage);
-router.get('/embedded', embedded);
-router.get('/embedded/preview', embedPreview);
 router.get('/embed-code', embedCode);
+router.use('/embedded', embedRouter);
 
 
 export { router as MainRouter };

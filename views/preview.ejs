@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
     <title>PL-10 Embedded Preview</title>
+    <link rel="stylesheet" href="/embedded-preview.css" />
     <style>
-      code {
-        border: 1px solid grey;
-        border-radius: 4px;
-        padding: 0.5em;
-        background-color: #efefef;
-      }
-      .spaced {
-        margin: 1rem 0;
-      }
+
     </style>
   </head>
 
   <body>
+    <h1>PL-10 Embed Utility</h1>
     <div>
       <fieldset>
         <legend>Parameters</legend>
@@ -37,14 +32,14 @@
       </fieldset>
     </div>
 
-    <hr/>
     <h3>Preview</h3>
+    <main><iframe src="/embedded" id="embedded" style="border: 0; border-radius: 4px;"></iframe></main>
+    <h3>Embed Code</h3>
     <div class="spaced">
-      <code id="url">...</code> <button id="copy">COPY</button>
+      <div class="code">
+        <pre id="url">...</pre> <button id="copy">COPY</button>
+      </div>
     </div>
-    <main>
-      <iframe src="/embedded" id="embedded" style="border: 0; border-radius: 4px;"></iframe>
-    </main>
     <script>
       const w = document.querySelector('#w');
       const h = document.querySelector('#h');
@@ -73,7 +68,7 @@
         embedded.width = w.value;
         embedded.height = h.value;
         embedded.contentDocument.location.reload();
-        urlDisplay.textContent = embedded.parentElement.innerHTML;
+        urlDisplay.textContent = embedded.parentElement.innerHTML.replace(/\n/g, '').trim();
 
         setTimeout(() => {
           btn.disabled = false;
