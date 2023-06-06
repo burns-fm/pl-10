@@ -42,6 +42,22 @@ Install all of the dependencies:
 npm install
 ```
 
+### Authentication
+
+There is a page (`/embedded/preview`) that allows you to set up an embedded player with a username and password, otherwise it will be visible to all users who know about the route.
+
+#### Enable
+
+> **NOTE** If you enable this without setting the username and password, the default credentials will be used. These are logged to the console on startup and change every time you restart the server.
+
+Set the environment variable `PL_10_PREVIEW_AUTH=true`
+
+#### Set username & password
+
+Set the variables:
+- Username: `PL_10_PREVIEW_USER="<username>"`
+- Password: `PL_10_PREVIEW_PASS="<password>"`
+
 ## Startup
 
 Once the packages are installed you'll need to build the server code and start it up.

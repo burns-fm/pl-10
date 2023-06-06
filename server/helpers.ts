@@ -6,6 +6,7 @@ import * as MusicMetadata from 'music-metadata';
 import * as FileType from 'file-type';
 import { Environment } from './constants';
 import { FatalError } from "./errors";
+import { randomBytes } from 'crypto';
 
 /**
  * Helper function to load the `music-metadata` NPM package.
@@ -43,4 +44,13 @@ export const loadEnvironment = (): Environment => {
   }
 
   return NODE_ENV as Environment;
+}
+
+export class Auth {
+  static generateUsername(): string {
+    return Math.floor(Math.random() * 1e8).toString(16);
+  }
+  static generatePassword(): string {
+    return randomBytes(16).toString('base64');
+  }
 }

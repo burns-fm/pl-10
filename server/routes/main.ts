@@ -5,9 +5,10 @@
 
 import { NextFunction, Request, RequestHandler, Response, Router } from 'express';
 import basicAuth from 'express-basic-auth';
-import { PORT } from '../constants';
+import { PORT, USE_PREVIEW_AUTH } from '../constants';
 import { _NA } from '../types';
 import { randomUUID } from 'crypto';
+import { Auth } from '../helpers';
 
 const router = Router();
 
@@ -85,18 +86,26 @@ interface RequestContext {
 
 const embedRouter = Router();
 embedRouter.get('/', embedded);
-embedRouter.use('/preview',
-  basicAuth({
-    users: {
-      // TODO force set of user pass
-      [process.env['PL_10_EMBED_USER'] ?? 'admin']: process.env['PL_10_EMBED_PASS'] ?? 'password',
-    },
-    challenge: true,
-    realm: process.env['PL-10-AUTH-REALM'] ?? randomUUID(),
-    unauthorizedResponse,
-  }),
-  authorizedResponse as RequestHandler,
-);
+
+if (USE_PREVIEW_AUTH) {
+  const username = process.env['PL_10_EMBED_USER'] ?? Auth.generateUsername();
+  const password = process.env['PL_10_EMBED_PASS'] ?? Auth.generatePassword();
+
+  console.info(`\nUSING PREVIEW AUTH\n------------------\nUSERNAME: ${username}\nPASSWORD: ${password}\n------------------\n`);
+
+  embedRouter.use('/preview',
+    basicAuth({
+      users: {
+        [username]: password,
+      },
+      challenge: true,
+      realm: process.env['PL-10-AUTH-REALM'] ?? randomUUID(),
+      unauthorizedResponse,
+    }),
+    authorizedResponse as RequestHandler,
+  );
+}
+
 embedRouter.get('/preview', embedPreview);
 
 router.get('/', homepage);

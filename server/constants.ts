@@ -68,3 +68,5 @@ export const IGNORE_FILES = [
   '.gitkeep',
   '.gitignore',
 ];
+
+export const USE_PREVIEW_AUTH = Boolean(process.env['PL_10_PREVIEW_AUTH']);
