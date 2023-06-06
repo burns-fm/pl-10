@@ -11,9 +11,9 @@
 
   <body>
     <h1>PL-10 Embed Utility</h1>
-    <div>
+    <div class="full">
       <fieldset>
-        <legend>Parameters</legend>
+        <legend><h3>Parameters</h3></legend>
         <div>
           <label for="w">Width</label>
           <input type="number" value="480" id="w" name="w" />
@@ -32,14 +32,23 @@
       </fieldset>
     </div>
 
-    <h3>Preview</h3>
-    <main><iframe src="/embedded" id="embedded" style="border: 0; border-radius: 4px;"></iframe></main>
-    <h3>Embed Code</h3>
-    <div class="spaced">
-      <div class="code">
-        <pre id="url">...</pre> <button id="copy">COPY</button>
-      </div>
+    <div class="full">
+      <fieldset>
+        <legend><h3>Preview</h3></legend>
+        <main><iframe src="/embedded" id="embedded" style="border: 0; border-radius: 4px;"></iframe></main>
+      </fieldset>
     </div>
+    <div class="full">
+      <fieldset>
+        <legend><h3>Embed Code</h3></legend>
+        <div class="spaced">
+          <div class="code">
+            <pre id="url">...</pre> <button id="copy">COPY</button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    
     <script>
       const w = document.querySelector('#w');
       const h = document.querySelector('#h');
