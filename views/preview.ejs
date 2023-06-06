@@ -94,6 +94,13 @@
           alert('Unable to copy URL. Not able to access clipboard.');
         }
       };
+
+
+      /** STARTUP **/
+      window.onload = _ => {
+        embedded.src = src(id.value);
+        urlDisplay.textContent = embedded.parentElement.innerHTML.replace(/\n/g, '').trim();
+      };
     </script>
   </body>
 </html>
