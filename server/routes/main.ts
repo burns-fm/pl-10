@@ -69,14 +69,11 @@ const embedPreview = (_req: Request, res: Response) => {
 };
 
 const unauthorizedResponse = (ctx: RequestContext) => {
-  // ctx.res.send('Unauthorized');
-  console.log('k');
-
+  return ctx.res.send('Unauthorized');
 };
 
-const authorizedResponse = (req: basicAuth.IBasicAuthedRequest, res: Response, next: NextFunction) => {
+const authorizedResponse = (req: basicAuth.IBasicAuthedRequest, _res: Response, next: NextFunction) => {
   console.log(`User logged in: ${req.auth.user}`);
-  // res.end('Login successful');
   next();
 };
 
