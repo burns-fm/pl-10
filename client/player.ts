@@ -121,6 +121,9 @@ export class Player {
       alert(`Something went wrong initializing the player`);
       console.warn(`Error initialling player:`);
       console.error(error);
+    })
+    .finally(() => {
+      this.attachLabel();
     });
   }
 
@@ -430,15 +433,15 @@ export class Player {
         await this.togglePlayback(e as any);
         break;
       case 'm':
-        // this.toggleMute();
-        console.warn(`Volume controls are currently disabled and under development.`);
+        this.toggleMute();
+        // console.warn(`Volume controls are currently disabled and under development.`);
         break;
       case 'o':
         this.toggleOsc();
         break;
       case 'v':
-        // this.toggleVolumeSlider();
-        console.warn(`Volume controls are currently disabled and under development.`);
+        this.toggleVolumeSlider();
+        // console.warn(`Volume controls are currently disabled and under development.`);
         break;
       default:
         return;
@@ -618,5 +621,17 @@ export class Player {
     }
 
     return key;
+  }
+
+  private attachLabel(): void {
+    // in top right corner of player display area, add faint text indicating the model PL-10
+    // and have it link back to burns.fm
+
+    const label = document.createElement('a');
+    label.classList.add('brc--model-number-label');
+    label.href = 'https://burns.fm';
+    label.target = '_blank';
+    label.textContent = 'PL-10';
+    this.display.main.appendChild(label);
   }
 }

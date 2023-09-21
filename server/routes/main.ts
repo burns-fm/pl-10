@@ -5,7 +5,7 @@
 
 import { NextFunction, Request, RequestHandler, Response, Router } from 'express';
 import basicAuth from 'express-basic-auth';
-import { PORT, USE_PREVIEW_AUTH } from '../constants';
+import { PORT, USE_HOMEPAGE, USE_PREVIEW_AUTH } from '../constants';
 import { _NA } from '../types';
 import { randomUUID } from 'crypto';
 import { Auth } from '../helpers';
@@ -33,7 +33,7 @@ const router = Router();
  * @link https://ejs.co/#docs
  */
 const homepage = (_req: Request, res: Response) => {
-  return res.render('index');
+  return USE_HOMEPAGE ? res.render('index') : res.redirect('/embedded');
 };
 
 interface EmbedCodeSearchParams {

@@ -33,7 +33,7 @@
   &--cover-art {
     @include flex-center;
     
-    max-width: 100%;
+    max-width: 88%;
     position: relative;
     
     -moz-user-select: none;
@@ -56,30 +56,31 @@
       user-drag: none;
     }
 
+    
     &.jumbo {
       & img {
         width: 100%;
       }
     }
-
+    
     &.large {
       & img {
         width: 80%;
       }
     }
-
+    
     &.medium {
       & img {
         width: 60%;
       }
     }
-
+    
     &.small {
       & img {
         width: 30%;
       }
     }
-
+    
     @media screen and (max-width: $max-width) {
       & img {
         width: 80%;
@@ -87,4 +88,20 @@
     }
   }
   
+  &--model-number-label {
+    position: absolute;
+    bottom: 15px;
+    right: 6px;
+    z-index: 1;
+    color: #fff;
+    text-decoration: none;
+    // font-weight: bold;
+    opacity: 0.44;
+    will-change: opacity;
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 }

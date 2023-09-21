@@ -113,6 +113,10 @@ npm run start:debug
 
 ## Configuration
 
+> ***Did you know?*** *(Turning on the homepage route)*</br>
+  You can use the provided preview homepage as a template and customize it to suit your record release, or whatever your project is. It is disabled by default, and won't show unless you set an environment variable `PL_10_USE_HOMEPAGE` to `true`. You can do this from your command line as in the example below, or in your
+  shell environment's configuration.<br/>`export PL_10_USE_HOMEPAGE=true`
+
 Some settings configuration is possible if you want to make some minor changes to how things are run.
 
 - <a href="#set-the-page-title">Set the page title</a>

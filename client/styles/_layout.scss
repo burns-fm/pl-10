@@ -17,9 +17,15 @@ $max-width: 520px;
   align-items: center;
 }
 
+.center {
+  @include flex-center;
+}
+
 .container {
-  max-width: $max-width;
-  width: $max-width;
+  // max-width: $max-width;
+  // width: $max-width;
+
+  
 
   @media screen and (max-width: $max-width) {
     max-width: 100%;

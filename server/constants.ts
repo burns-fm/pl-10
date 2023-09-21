@@ -27,7 +27,7 @@ export const SCRIPTS_DIR = resolve('public', 'app');
 export const PageText = {
   Title: process.env.PL_10_PAGE_TITLE ?? 'BRC',
   Subtitle: process.env.PL_10_PAGE_SUBTITLE ?? 'PL-10',
-  SupportingText: process.env.PL_10_SUPPORTING_TEXT ?? 'Self-hosted audio streaming',
+  SupportingText: process.env.PL_10_SUPPORTING_TEXT ?? 'Free & open-source embed-able audio streaming server and web player',
   Copyright: process.env.PL_10_COPYRIGHT ?? 'Burns Recording Company',
 };
 
@@ -70,3 +70,4 @@ export const IGNORE_FILES = [
 ];
 
 export const USE_PREVIEW_AUTH = Boolean(process.env['PL_10_PREVIEW_AUTH']);
+export const USE_HOMEPAGE = Boolean(process.env['PL_10_USE_HOMEPAGE']);
