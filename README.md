@@ -8,6 +8,12 @@ PL-10 is an open-source, simple, and customizable audio streaming server and web
 
 Just drop your files in the `media` folder and start the server.
 
+## ⚠️ Friendly caution about use in production ⚠️
+
+This project is designed to be a learning and starter kit for developing your own project. Some care should be taken when using it for in a production environment as security and privacy concerns are not thoroughly considered. It may also not be suitable for high-traffic environments. If you have a lot of fans, you might want to send them to a different service (like the forthcoming [Subvert](https://subvert.fm)).
+
+With a little work, PL-10 could function well to promote your music.
+
 ## Contents
 
 - <a href="#demo">Demo</a>
@@ -275,7 +281,7 @@ You'll receive a JSON response that looks like this:
 }
 ```
 
-Demo: https://pl-10.x.burns.fm/embedCode
+Demo: https://pl-10.x.burns.fm/embed-code
 
 ## Libraries and other references
 
