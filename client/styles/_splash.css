@@ -1,0 +1,39 @@
+/*
+ * © 2021-2024 Lleu Labs Inc.
+ * https://burns.fm
+ * Created: 24/11/2024
+ */
+
+.splash {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  max-width: 100%;
+  flex-direction: column;
+
+  margin: calc(var(--spacing) * 2);
+
+  & > * {
+    margin: 0 calc(var(--spacing) * 2);
+  }
+
+  & h1 {
+    font-size: 2.3em;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--yellow);
+    text-shadow: var(--light-text-shadow);
+  }
+  
+  & h2 {
+    font-size: 3em;
+    font-weight: 300;
+    text-shadow: var(--light-text-shadow);
+  }
+
+  & p {
+    font-size: 1.1em;
+    text-shadow: var(--light-text-shadow);
+  }
+}

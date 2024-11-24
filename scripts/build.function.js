@@ -5,6 +5,7 @@
 const { Parcel } = require('@parcel/core');
 const path = require('node:path');
 const fs = require('node:fs/promises');
+const { cp, readdirSync } = require('node:fs');
 
 const SOURCE_DIR = path.resolve('client');
 const ENTRY_FILE = path.resolve(SOURCE_DIR, 'index.ts');
@@ -26,7 +27,15 @@ async function build() {
 
    const result = await bundler.run();
    const bundles = result.bundleGraph.getBundles();
-   console.log(`Bundled in ${result.buildTime}ms`);
+
+   const cssFiles = readdirSync('client/styles').filter(file => file.endsWith('.css'));
+   for (const cssFile of cssFiles) {
+     const cssFilePath = path.resolve('client/styles', cssFile);
+      cp(cssFilePath, path.resolve(OUTPUT_DIR, 'styles', cssFile), err => {
+        if (err) throw err;
+      });
+   }
+   console.log(`Bundled in ${result.buildTime}ms. ${bundles.length} bundles`);
   } catch (e) {
     console.error(e);
     process.exit(1);
