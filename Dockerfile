@@ -23,7 +23,6 @@ COPY . /app/
 
 RUN npm install
 RUN npm run build:client
-RUN npm run build:client:styles
 RUN npm run build:server
 
 ENV PL_10_HOSTNAME="0.0.0.0"
