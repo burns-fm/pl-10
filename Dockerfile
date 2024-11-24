@@ -18,6 +18,7 @@
 FROM node:lts
 
 WORKDIR /app
+VOLUME /media
 
 COPY . /app/
 
