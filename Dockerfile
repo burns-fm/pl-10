@@ -15,11 +15,15 @@
 # You may have to make further changes here to fit your needs.
 # For more information visit: https://docs.docker.com/engine/reference/builder/
 
-FROM node:lts
-
+FROM node:18-alpine
 WORKDIR /app
+VOLUME /media
 
 COPY . /app/
+
+RUN apk add --no-cache python3 py3-pip make g++ \
+    && ln -sf python3 /usr/bin/python \
+    && ln -sf pip3 /usr/bin/pip
 
 RUN npm install
 RUN npm run build:client
