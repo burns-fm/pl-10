@@ -1,4 +1,4 @@
-<img src="./public/img/brc-wordmark.png" height="50" alt="Burns Recording Company" />
+<img src="https://burns.fm/images/burns_w_disc_logo.svg" height="50" alt="Burns Recording Company" />
 
 # PL-10
 
